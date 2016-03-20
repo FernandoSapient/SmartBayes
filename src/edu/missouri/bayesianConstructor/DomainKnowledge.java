@@ -500,19 +500,18 @@ public class DomainKnowledge {
 								+ dependencyTable[i].length + " columns)");
 
 		// check if it's right for this relationship
-		DirectedEdge id = new DirectedEdge(independent, dependent);
-		if (rows != this.dependencyTables.get(id).length)
+		if (rows != (this.layerVariables.get(independent) == null ? 0 : this.layerVariables.get(independent).size()))
 			throw new IllegalArgumentException(
 					"dependencyTable has the wrong number of rows (layer "
 							+ independent + " has "
-							+ this.dependencyTables.get(id).length
+							+ this.layerVariables.get(independent).size()
 							+ " variables, but the dependencyTable is for "
 							+ rows + " variables)");
-		if (rows > 0 && cols != this.dependencyTables.get(id)[0].length)
+		if (rows > 0 && cols != (this.layerVariables.get(dependent) == null ? 0 :this.layerVariables.get(dependent).size()))
 			throw new IllegalArgumentException(
-					"dependencyTable has the wrong number of rows (layer "
+					"dependencyTable has the wrong number of columns (layer "
 							+ dependent + " has "
-							+ this.dependencyTables.get(id)[0].length
+							+ this.layerVariables.get(dependent).size()
 							+ " variables, but the dependencyTable is for "
 							+ cols + " variables)");
 	}
@@ -792,7 +791,7 @@ public class DomainKnowledge {
 					Double[][] dependency = this.dependencyTables
 							.get(new DirectedEdge(parentLayer, layer));
 					List<String> parentVariables = this.layerVariables
-							.get(layer);
+							.get(parentLayer);
 					for (int i = 0; i < parentVariables.size(); i++) {
 						if (dependency[i][j].compareTo(threshold) >= 0) {
 							check = out.addEdge(parentVariables.get(i), v);
