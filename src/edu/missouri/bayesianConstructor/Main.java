@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import edu.ucla.belief.BeliefNetwork;
 import edu.ucla.belief.BeliefNetworkImpl;
+import edu.ucla.belief.FiniteVariable;
 import edu.ucla.belief.FiniteVariableImpl;
 import edu.ucla.belief.io.hugin.HuginNodeImpl;
 import edu.ucla.belief.io.xmlbif.XmlbifWriter;
@@ -27,7 +28,8 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @since 0.3 2016-03-18
+ * @version 0.05 2016-03-20
+ * @since 0.03 2016-03-18
  */
 public class Main {
 	/**
@@ -39,7 +41,8 @@ public class Main {
 	 * >standard error of the predicted y-value for each x in a linear
 	 * regression</a> as defined by Microsoft:
 	 * &radic;((&sum;(<i>Y</i>&minus;<i>Y</i>&#x305) &minus;
-	 * (&sum;(<i>X</i>&minus;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305))&sup2; /
+	 * (&sum;(<i>X</i>&minus
+	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305))&sup2; /
 	 * &sum;((<i>X</i>&minus;<i>X</i>&#x305)&sup2;)) / (n-2)) STE returns values
 	 * in the (0, <i>Y</i>&#x305) interval where <i>Y</i>&#x305 is the
 	 * arithmetic sample means of <i>Y</i>.
@@ -53,9 +56,11 @@ public class Main {
 	 *            The list of values for the variable thought to be independent
 	 * @return the dependency score, a number between 0 and <i>Y</i>&#x305
 	 * @throws IllegalArgumentException
+	 * @since 0.01 2016-03-15
 	 */
 	// TODO: There MUST be a way to make this more efficient (see
-	// https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm )
+	// https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Online_algorithm
+	// )
 	public static double dependency(List<Double> X, List<Double> Y)
 			throws IllegalArgumentException {
 		if (X.size() != Y.size())
@@ -113,6 +118,7 @@ public class Main {
 	 * kept. If a forward dependency comes out less than the minimum, it is
 	 * returned as {@code Double.NEGATIVE_INFINITY}. If these values are
 	 * desired, {@code minimum} can be safely set to 0.
+	 * @since 0.01 2016-03-15
 	 */
 	public static Double[][] getDependency(List<List<Double>> independent,
 			List<List<Double>> dependent, double minimum) {
@@ -146,10 +152,11 @@ public class Main {
 	 * result should be between -1 and 1 unless the values are less than the
 	 * 0.5.
 	 * <p/>
-	 * Only the values whose forward dependency is greater than 0.5 are
-	 * kept. If a forward dependency comes out less than 0.5, it is
-	 * returned as {@code Double.NEGATIVE_INFINITY}. If these values are
-	 * desired, use {@code getDependency(independent, dependent, 0)}
+	 * Only the values whose forward dependency is greater than 0.5 are kept. If
+	 * a forward dependency comes out less than 0.5, it is returned as
+	 * {@code Double.NEGATIVE_INFINITY}. If these values are desired, use
+	 * {@code getDependency(independent, dependent, 0)}
+	 * @since 0.01 2016-03-15
 	 */
 	public static Double[][] getDependency(List<List<Double>> independent,
 			List<List<Double>> dependent) {
@@ -162,16 +169,18 @@ public class Main {
 	 * {@code values} as the variables possible finite values.
 	 * 
 	 * @param g
-	 *            the graph to be converted
+	 *            the graph to be converted. Vertices must be {@code String}s
 	 * @param values
 	 *            list of values for the new variables
 	 * @return a graph g' were every vertex <i>v</i> now contains
 	 *         {@code StandardNode(v,values)}
 	 * @throws ClassCastException
 	 *             if the vertices in g are not {@code String}s
+	 * @since 0.03 2016-03-15
 	 */
+	@Deprecated
 	@SuppressWarnings({ "unchecked" })
-	public static DirectedGraph toVariableGraph(DirectedGraph g, String[] values) {
+	public static DirectedGraph graphToNodeGraph(DirectedGraph g, String[] values) {
 		DirectedGraph g_prime = (DirectedGraph) g.clone();
 		Iterator<String> V = (Iterator<String>) (g.vertices().iterator());
 		while (V.hasNext()) {
@@ -182,6 +191,51 @@ public class Main {
 									// from?
 		}
 		return g_prime;
+	}
+
+	/**
+	 * Converts the given graph {@code g} into a {@code BeliefNetwork}. The
+	 * function iterates through all the elements in the graph linearly and
+	 * creates a {@code BeliefNetwork} copy as it goes. All nodes in the new
+	 * Belief Network are given the same set of possible values: those in the
+	 * {@code values} parameter. For this reason a universal set of names for
+	 * discretized parameters is encouraged (such as "high", and "low")
+	 * 
+	 * @param g
+	 *            The graph to base the new {@code BeliefNetwork} on. Vertices
+	 *            must be {@code String}s
+	 * @param values
+	 *            The possible values for all nodes
+	 * @return a {@code BeliefNetwork} with one node and edge for every node and
+	 *         edge in the given graph {@code g}
+	 * @since 0.05 2016-03-20
+	 */
+	@SuppressWarnings("unchecked")
+	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
+		BeliefNetwork out = new BeliefNetworkImpl();
+		Iterator<String> V = (Iterator<String>) (g.vertices().iterator());
+		while (V.hasNext()) {
+			String v = V.next();
+			FiniteVariable representation = new FiniteVariableImpl(v, values);
+			boolean added = out.addVariable(representation, true);
+			assert added; // if this fails, g had two nodes with the same name,
+							// which is impossible
+			Iterator<String> parents = (Iterator<String>) (g.inComing(v)
+					.iterator());
+			while (parents.hasNext()) {
+				String p = parents.next();
+				added = out.addEdge(new FiniteVariableImpl(p, values),
+						representation);
+				if (!added)
+					throw new IllegalArgumentException(
+							"the graph given might not be a precedence graph: an arc from "
+									+ p + " to " + v + " was detected, but "
+									+ v + " appears before " + p
+									+ " in the list of vertices.");
+			}
+		}
+
+		return out;
 	}
 
 	/**
@@ -278,9 +332,8 @@ public class Main {
 		String[] values = { "high", "med", "low" };
 
 		// convert to bayesian network
-		BeliefNetwork out = new BeliefNetworkImpl(toVariableGraph(
-				variableGraph, values)); // Note that this may not be working
-											// properly
+		//BeliefNetwork out = new BeliefNetworkImpl(graphToNodeGraph(variableGraph, values)); // Does not seem to be working properly
+		BeliefNetwork out = graphToNetwork(variableGraph, values);
 
 		PrintStream f = new PrintStream(new File("testOut.txt"));
 		XmlbifWriter w = new XmlbifWriter();
