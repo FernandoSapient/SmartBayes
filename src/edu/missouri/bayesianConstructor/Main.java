@@ -7,9 +7,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -222,26 +224,41 @@ public class Main {
 	 * @since 0.05 2016-03-20
 	 */
 	@SuppressWarnings("unchecked")
+	//TODO: Make this more efficient by storing pending edges hashed by their second vertex.
+	//		That way, they can all be added as soon as the missing vertex is created
 	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
 		BeliefNetwork out = new BeliefNetworkImpl();
-		boolean added;
+		boolean added;//used to check correctness
+		Set<String> vertices = (Set<String>)g.vertices();
+		Map<String, FiniteVariable> representations = new HashMap<String,FiniteVariable>(vertices.size()); //allows working around FiniteVariable's lack of an "equals" method
 		Set<Edge> pending = new HashSet<Edge>(); //Stores edges that couldn't be added due to hash ordering
-		Iterator<String> V = (Iterator<String>) (g.vertices().iterator());
+		FiniteVariable v_rep, d_rep;
+		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
-			FiniteVariable representation = new FiniteVariableImpl(v, values);
-			added = out.addVariable(representation, true);
+			if(representations.containsKey(v)){
+				v_rep = representations.get(v); 
+			}else{
+				v_rep = new FiniteVariableImpl(v, values);
+				representations.put(v, v_rep);
+			}
+			added = out.addVariable(v_rep, true);
 			assert added; // if this fails, g had two nodes with the same name,
 							// which is impossible
 			Iterator<String> dependents = (Iterator<String>) (g.outGoing(v)
 					.iterator());
 			while (dependents.hasNext()) {
 				String d = dependents.next();
-				FiniteVariable d_representation = new FiniteVariableImpl(d, values); 
-				if(g.contains(d_representation)){
-					added = out.addEdge(representation, d_representation);
+				if(representations.containsKey(d)){
+					d_rep = representations.get(d); 
 				}else{
-					added = pending.add(new Edge(representation, d_representation));
+					d_rep = new FiniteVariableImpl(d, values);
+					representations.put(d, d_rep);
+				}
+				if(out.contains(d_rep)){
+					added = out.addEdge(v_rep, d_rep);
+				}else{
+					added = pending.add(new Edge(v_rep, d_rep));
 				}
 				if (!added)
 					throw new IllegalArgumentException(
