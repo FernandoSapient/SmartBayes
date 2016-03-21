@@ -29,7 +29,7 @@ import com.opencsv.CSVReader;
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
  * @version 0.05 2016-03-20
- * @since 0.03 2016-03-18
+ * @since {@link bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
 	/**
@@ -80,8 +80,8 @@ public class Main {
 			}
 		}
 
-		double stdNumX = 0;// standard deviation numerator (x-avg(x))^2
-		double stdNumY = 0;// standard deviation numerator (x-avg(x))^2
+		double stdNumX = 0;// X's standard deviation numerator (x-avg(x))^2
+		double stdNumY = 0;// Y's standard deviation numerator (y-avg(y))^2
 		double covNum = 0;// covariance numerator ((x-avg(x))(y-avg(y))^2)
 		int processed = 0;
 		for (int i = 0; i < n; i++) {
@@ -177,7 +177,15 @@ public class Main {
 	 * @throws ClassCastException
 	 *             if the vertices in g are not {@code String}s
 	 * @since 0.03 2016-03-15
+	 * @deprecated since version 0.05 (2016-03-20). A graph of
+	 *             nodes serves no other purpose than to create a
+	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the
+	 *             graphs returned by this function are not fully supported
+	 *             by {@code BeliefNetwork} (CPT tables do not get initialized
+	 *             properly). Use {@link #graphToNetwork(DirectedGraph, String[])
+	 *             for this purpose instead.
 	 */
+	//Note Hugin nodes are the only instantiable subclass of StandardNode
 	@Deprecated
 	@SuppressWarnings({ "unchecked" })
 	public static DirectedGraph graphToNodeGraph(DirectedGraph g, String[] values) {
@@ -224,14 +232,20 @@ public class Main {
 					.iterator());
 			while (parents.hasNext()) {
 				String p = parents.next();
-				added = out.addEdge(new FiniteVariableImpl(p, values),
-						representation);
+				try{
+					added = out.addEdge(new FiniteVariableImpl(p, values),
+							representation);
+				}catch(IllegalArgumentException e){
+					throw new IllegalArgumentException(
+							"the graph given might not be a precedence graph: an arc from \""
+									+ p + "\" to \"" + v + "\" was detected, but \""
+									+ v + "\" appears before \"" + p
+									+ "\" in the list of vertices.", e);
+				}
 				if (!added)
 					throw new IllegalArgumentException(
-							"the graph given might not be a precedence graph: an arc from "
-									+ p + " to " + v + " was detected, but "
-									+ v + " appears before " + p
-									+ " in the list of vertices.");
+							"Could not add edge from "+p+" to "+values+". Please make sure "
+								+"the graph provided is not a multigraph.");
 			}
 		}
 

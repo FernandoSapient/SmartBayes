@@ -91,14 +91,17 @@ import edu.ucla.structure.HashDirectedGraph;
  * Consequently, if a dependency is created involving a layer with zero
  * variables, the associated dependency table will have one of its dimensions
  * set to zero. This is intended, to allow for "placeholder" layers (i.e. some
- * future caller may need to compute) the list of variables after creating the
+ * future caller may need to compute the list of variables after creating the
  * layer).
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.01 2016-03-14
+ * @version 1.03 2016-03-20
  * @since {@link bayesianConstructor} version 0.01
  */
 // TODO: let user specify type for the layer and variable identifiers <generics>
+// 		(May require switching to a different Graph library)
+// TODO: add support for having the same variable in several layers (note that
+// 		this may complicate preservation of aciclycity)
 public class DomainKnowledge {
 	/**
 	 * Stores the dependence relations between the layers; as such, the graph
@@ -407,6 +410,7 @@ public class DomainKnowledge {
 	 * @throws SecurityException
 	 *             if adding the edge results in a cycle being created
 	 */
+	// TODO: use maintainsAcyclicity instead PRIOR to adding
 	private void preserveAcyclicity(String independent, String dependent)
 			throws SecurityException {
 		if (!this.layerStructure.isAcyclic()) {
@@ -500,14 +504,17 @@ public class DomainKnowledge {
 								+ dependencyTable[i].length + " columns)");
 
 		// check if it's right for this relationship
-		if (rows != (this.layerVariables.get(independent) == null ? 0 : this.layerVariables.get(independent).size()))
+		if (rows != (this.layerVariables.get(independent) == null ? 0
+				: this.layerVariables.get(independent).size()))
 			throw new IllegalArgumentException(
 					"dependencyTable has the wrong number of rows (layer "
 							+ independent + " has "
 							+ this.layerVariables.get(independent).size()
 							+ " variables, but the dependencyTable is for "
 							+ rows + " variables)");
-		if (rows > 0 && cols != (this.layerVariables.get(dependent) == null ? 0 :this.layerVariables.get(dependent).size()))
+		if (rows > 0
+				&& cols != (this.layerVariables.get(dependent) == null ? 0
+						: this.layerVariables.get(dependent).size()))
 			throw new IllegalArgumentException(
 					"dependencyTable has the wrong number of columns (layer "
 							+ dependent + " has "
@@ -761,6 +768,8 @@ public class DomainKnowledge {
 	 * 
 	 * @since 1.01 2016-03-14
 	 */
+	// TODO: change IllegalStateException into a warning, to support having the
+	// same variable in different layers
 	@SuppressWarnings("unchecked")
 	public DirectedGraph variableDependency(Double threshold)
 			throws IllegalStateException, NullPointerException {
