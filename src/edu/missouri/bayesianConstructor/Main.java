@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 import edu.ucla.belief.BeliefNetwork;
@@ -18,6 +20,7 @@ import edu.ucla.belief.FiniteVariableImpl;
 import edu.ucla.belief.io.hugin.HuginNodeImpl;
 import edu.ucla.belief.io.xmlbif.XmlbifWriter;
 import edu.ucla.structure.DirectedGraph;
+import edu.ucla.structure.Edge;
 
 import com.opencsv.CSVReader;
 
@@ -28,7 +31,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05 2016-03-20
+ * @version 0.05&frac12; 2016-03-21
  * @since {@link bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -221,34 +224,49 @@ public class Main {
 	@SuppressWarnings("unchecked")
 	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
 		BeliefNetwork out = new BeliefNetworkImpl();
+		boolean added;
+		Set<Edge> pending = new HashSet<Edge>(); //Stores edges that couldn't be added due to hash ordering
 		Iterator<String> V = (Iterator<String>) (g.vertices().iterator());
 		while (V.hasNext()) {
 			String v = V.next();
 			FiniteVariable representation = new FiniteVariableImpl(v, values);
-			boolean added = out.addVariable(representation, true);
+			added = out.addVariable(representation, true);
 			assert added; // if this fails, g had two nodes with the same name,
 							// which is impossible
-			Iterator<String> parents = (Iterator<String>) (g.inComing(v)
+			Iterator<String> dependents = (Iterator<String>) (g.outGoing(v)
 					.iterator());
-			while (parents.hasNext()) {
-				String p = parents.next();
-				try{
-					added = out.addEdge(new FiniteVariableImpl(p, values),
-							representation);
-				}catch(IllegalArgumentException e){
-					throw new IllegalArgumentException(
-							"the graph given might not be a precedence graph: an arc from \""
-									+ p + "\" to \"" + v + "\" was detected, but \""
-									+ v + "\" appears before \"" + p
-									+ "\" in the list of vertices.", e);
+			while (dependents.hasNext()) {
+				String d = dependents.next();
+				FiniteVariable d_representation = new FiniteVariableImpl(d, values); 
+				if(g.contains(d_representation)){
+					added = out.addEdge(representation, d_representation);
+				}else{
+					added = pending.add(new Edge(representation, d_representation));
 				}
 				if (!added)
 					throw new IllegalArgumentException(
-							"Could not add edge from "+p+" to "+values+". Please make sure "
+							"Could not add edge from "+d+" to "+v+". Please make sure "
 								+"the graph provided is not a multigraph.");
+				assert out.isAcyclic();
 			}
 		}
-
+		Set<FiniteVariable> addedVertices = (Set<FiniteVariable>)(out.vertices());
+		assert addedVertices.size() == out.vertices().size();
+		assert g.numEdges() > out.numEdges();
+		
+		Iterator<Edge> missingEdges = pending.iterator();
+		while(missingEdges.hasNext()){
+			Edge e = missingEdges.next();
+			assert addedVertices.contains(e.v1());
+			assert addedVertices.contains(e.v2());
+			added = out.addEdge(e.v1(), e.v2());
+			if (!added)
+				throw new IllegalArgumentException(
+						"Could not add edge from "+e.v1()+" to "+e.v2()+". Please make sure "
+							+"the graph provided is not a multigraph.");
+			assert out.isAcyclic();
+		}
+		assert g.numEdges() == out.numEdges();
 		return out;
 	}
 

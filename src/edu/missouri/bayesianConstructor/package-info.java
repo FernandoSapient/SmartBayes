@@ -1,4 +1,4 @@
-//TODO: add support for converting directly to Weka bayesian network
+//TODO: add support for converting to il2 bayesian network and Weka bayesian network
 //		(may require changing Graph library)
 /**Contains classes to automatically build and evaluate a Bayesian Network.
  * Typical usage is to create a model of the {@link DomainKnowledge},
@@ -24,7 +24,7 @@
  * 		<td>0.08</td>
  * 		<td>2016-03-21</td>
  * 		<td>Fixed {@link Main#graphToNodeGraph(edu.ucla.structure.DirectedGraph,
- * 			String[])} to account for hashing order ({@link Main} is now
+ * 			String[])} to account for hashing order (Once fixed, {@link Main} will be
  * 			version 0.06)</td>
  * 	</tr>
  * 	<tr>
