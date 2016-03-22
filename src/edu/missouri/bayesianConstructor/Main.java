@@ -123,6 +123,7 @@ public class Main {
 	 * kept. If a forward dependency comes out less than the minimum, it is
 	 * returned as {@code Double.NEGATIVE_INFINITY}. If these values are
 	 * desired, {@code minimum} can be safely set to 0.
+	 * 
 	 * @since 0.01 2016-03-15
 	 */
 	public static Double[][] getDependency(List<List<Double>> independent,
@@ -161,6 +162,7 @@ public class Main {
 	 * a forward dependency comes out less than 0.5, it is returned as
 	 * {@code Double.NEGATIVE_INFINITY}. If these values are desired, use
 	 * {@code getDependency(independent, dependent, 0)}
+	 * 
 	 * @since 0.01 2016-03-15
 	 */
 	public static Double[][] getDependency(List<List<Double>> independent,
@@ -182,18 +184,20 @@ public class Main {
 	 * @throws ClassCastException
 	 *             if the vertices in g are not {@code String}s
 	 * @since 0.03 2016-03-15
-	 * @deprecated since version 0.05 (2016-03-20). A graph of
-	 *             nodes serves no other purpose than to create a
-	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the
-	 *             graphs returned by this function are not fully supported
-	 *             by {@code BeliefNetwork} (CPT tables do not get initialized
-	 *             properly). Use {@link #graphToNetwork(DirectedGraph, String[])
-	 *             for this purpose instead.
+	 * @deprecated since version 0.05 (2016-03-20). A graph of nodes serves no
+	 *             other purpose than to create a
+	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the graphs
+	 *             returned by this function are not fully supported by
+	 *             {@code BeliefNetwork} (CPT tables do not get initialized
+	 *             properly). Use
+	 *             {@link #graphToNetwork(DirectedGraph, String[]) for this
+	 *             purpose instead.
 	 */
-	//Note Hugin nodes are the only instantiable subclass of StandardNode
+	// Note Hugin nodes are the only instantiable subclass of StandardNode
 	@Deprecated
 	@SuppressWarnings({ "unchecked" })
-	public static DirectedGraph graphToNodeGraph(DirectedGraph g, String[] values) {
+	public static DirectedGraph graphToNodeGraph(DirectedGraph g,
+			String[] values) {
 		DirectedGraph g_prime = (DirectedGraph) g.clone();
 		Iterator<String> V = (Iterator<String>) (g.vertices().iterator());
 		while (V.hasNext()) {
@@ -224,22 +228,27 @@ public class Main {
 	 * @since 0.05 2016-03-20
 	 */
 	@SuppressWarnings("unchecked")
-	//TODO: Make this more efficient by storing pending edges hashed by their second vertex.
-	//		That way, they can all be added as soon as the missing vertex is created
+	// TODO: Make this more efficient by storing pending edges hashed by their
+	// second vertex.
+	// That way, they can all be added as soon as the missing vertex is created
 	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
 		BeliefNetwork out = new BeliefNetworkImpl();
-		boolean added;//used to check correctness
-		Set<String> vertices = (Set<String>)g.vertices();
-		Map<String, FiniteVariable> representations = new HashMap<String,FiniteVariable>(vertices.size()); //allows working around FiniteVariable's lack of an "equals" method
-		Set<Edge> pending = new HashSet<Edge>(); //Stores edges that couldn't be added due to hash ordering
+		boolean added;// used to check correctness
+		Set<String> vertices = (Set<String>) g.vertices();
+		Map<String, FiniteVariable> representations = new HashMap<String, FiniteVariable>(
+				vertices.size()); // allows working around FiniteVariable's lack
+									// of an "equals" method
+		Set<Edge> pending = new HashSet<Edge>(); // Stores edges that couldn't
+													// be added due to hash
+													// reordering
 		FiniteVariable v_rep, d_rep;
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
-			if(representations.containsKey(v)){
-				v_rep = representations.get(v); 
-			}else{
-				v_rep = new FiniteVariableImpl(v, values);
+			if (representations.containsKey(v)) {
+				v_rep = representations.get(v);
+			} else {
+				v_rep = new HuginNodeImpl(new FiniteVariableImpl(v, values));
 				representations.put(v, v_rep);
 			}
 			added = out.addVariable(v_rep, true);
@@ -249,38 +258,40 @@ public class Main {
 					.iterator());
 			while (dependents.hasNext()) {
 				String d = dependents.next();
-				if(representations.containsKey(d)){
-					d_rep = representations.get(d); 
-				}else{
-					d_rep = new FiniteVariableImpl(d, values);
+				if (representations.containsKey(d)) {
+					d_rep = representations.get(d);
+				} else {
+					d_rep = new HuginNodeImpl(new FiniteVariableImpl(d, values));
 					representations.put(d, d_rep);
 				}
-				if(out.contains(d_rep)){
+				if (out.contains(d_rep)) {
 					added = out.addEdge(v_rep, d_rep);
-				}else{
+				} else {
 					added = pending.add(new Edge(v_rep, d_rep));
 				}
 				if (!added)
 					throw new IllegalArgumentException(
-							"Could not add edge from "+d+" to "+v+". Please make sure "
-								+"the graph provided is not a multigraph.");
+							"Could not add edge from " + d + " to " + v
+									+ ". Please make sure "
+									+ "the graph provided is not a multigraph.");
 				assert out.isAcyclic();
-			}
-		}
-		Set<FiniteVariable> addedVertices = (Set<FiniteVariable>)(out.vertices());
+			}// while (dependents.hasNext())
+		}// while (V.hasNext())
+		Set<FiniteVariable> addedVertices = (Set<FiniteVariable>) (out
+				.vertices());
 		assert addedVertices.size() == out.vertices().size();
 		assert g.numEdges() > out.numEdges();
-		
+
 		Iterator<Edge> missingEdges = pending.iterator();
-		while(missingEdges.hasNext()){
+		while (missingEdges.hasNext()) {
 			Edge e = missingEdges.next();
 			assert addedVertices.contains(e.v1());
 			assert addedVertices.contains(e.v2());
 			added = out.addEdge(e.v1(), e.v2());
 			if (!added)
-				throw new IllegalArgumentException(
-						"Could not add edge from "+e.v1()+" to "+e.v2()+". Please make sure "
-							+"the graph provided is not a multigraph.");
+				throw new IllegalArgumentException("Could not add edge from "
+						+ e.v1() + " to " + e.v2() + ". Please make sure "
+						+ "the graph provided is not a multigraph.");
 			assert out.isAcyclic();
 		}
 		assert g.numEdges() == out.numEdges();
@@ -381,12 +392,15 @@ public class Main {
 		String[] values = { "high", "med", "low" };
 
 		// convert to bayesian network
-		//BeliefNetwork out = new BeliefNetworkImpl(graphToNodeGraph(variableGraph, values)); // Does not seem to be working properly
+		// BeliefNetwork out = new BeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
+			//Does not seem to be working properly
 		BeliefNetwork out = graphToNetwork(variableGraph, values);
 
 		PrintStream f = new PrintStream(new File("testOut.txt"));
 		XmlbifWriter w = new XmlbifWriter();
-		w.write(out, f);
+		boolean result = w.write(out, f);
+		if(result)
+			System.err.println("File ");
 	}
 
 }
