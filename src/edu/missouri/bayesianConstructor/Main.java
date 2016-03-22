@@ -17,8 +17,8 @@ import java.util.Vector;
 
 import edu.ucla.belief.BeliefNetwork;
 import edu.ucla.belief.BeliefNetworkImpl;
-import edu.ucla.belief.FiniteVariable;
 import edu.ucla.belief.FiniteVariableImpl;
+import edu.ucla.belief.io.StandardNode;
 import edu.ucla.belief.io.hugin.HuginNodeImpl;
 import edu.ucla.belief.io.xmlbif.XmlbifWriter;
 import edu.ucla.structure.DirectedGraph;
@@ -33,7 +33,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05&frac12; 2016-03-21
+ * @version 0.07 2016-03-21
  * @since {@link bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -188,12 +188,12 @@ public class Main {
 	 *             other purpose than to create a
 	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the graphs
 	 *             returned by this function are not fully supported by
-	 *             {@code BeliefNetwork} (CPT tables do not get initialized
+	 *             {@code BeliefNetwork} (Edges do not get updated
 	 *             properly). Use
 	 *             {@link #graphToNetwork(DirectedGraph, String[]) for this
 	 *             purpose instead.
 	 */
-	// Note Hugin nodes are the only instantiable subclass of StandardNode
+	// NOTE: Hugin nodes are the only instantiable subclass of StandardNode
 	@Deprecated
 	@SuppressWarnings({ "unchecked" })
 	public static DirectedGraph graphToNodeGraph(DirectedGraph g,
@@ -203,9 +203,7 @@ public class Main {
 		while (V.hasNext()) {
 			String v = V.next();
 			g_prime.replaceVertex(v, new HuginNodeImpl(new FiniteVariableImpl(
-					v, values)));// this begs the question: if Hugin Nodes
-									// contain CPTs, where do they get them
-									// from?
+					v, values))); // Method creates null pointers
 		}
 		return g_prime;
 	}
@@ -228,20 +226,22 @@ public class Main {
 	 * @since 0.05 2016-03-20
 	 */
 	@SuppressWarnings("unchecked")
-	// TODO: Make this more efficient by storing pending edges hashed by their
-	// second vertex.
-	// That way, they can all be added as soon as the missing vertex is created
+	// TODO:Make this more efficient by storing pending edges hashed by their
+	// 		second vertex. That way, they can all be added as soon as the missing vertex is created
+	// NOTE: Hugin nodes are the only instantiable subclass of StandardNode
 	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
 		BeliefNetwork out = new BeliefNetworkImpl();
 		boolean added;// used to check correctness
 		Set<String> vertices = (Set<String>) g.vertices();
-		Map<String, FiniteVariable> representations = new HashMap<String, FiniteVariable>(
+		Map<String, StandardNode> representations = new HashMap<String, StandardNode>(
 				vertices.size()); // allows working around FiniteVariable's lack
 									// of an "equals" method
 		Set<Edge> pending = new HashSet<Edge>(); // Stores edges that couldn't
 													// be added due to hash
-													// reordering
-		FiniteVariable v_rep, d_rep;
+													// reordering (both
+													// vertices must exist for
+													// an edge to be created)
+		StandardNode v_rep, d_rep;
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
@@ -275,12 +275,12 @@ public class Main {
 									+ ". Please make sure "
 									+ "the graph provided is not a multigraph.");
 				assert out.isAcyclic();
-			}// while (dependents.hasNext())
-		}// while (V.hasNext())
-		Set<FiniteVariable> addedVertices = (Set<FiniteVariable>) (out
+			}// end depedendents iteration
+		}// end vertices iteration
+		Set<StandardNode> addedVertices = (Set<StandardNode>) (out
 				.vertices());
 		assert addedVertices.size() == out.vertices().size();
-		assert g.numEdges() > out.numEdges();
+		assert addedVertices.size() == representations.size();
 
 		Iterator<Edge> missingEdges = pending.iterator();
 		while (missingEdges.hasNext()) {
@@ -299,14 +299,32 @@ public class Main {
 	}
 
 	/**
-	 * Sample main program
+	 * Sample main program. The program receives a CSV file where the first row
+	 * is assumed to be the column names, and in every other row, the first
+	 * column is assumed to be a filtering criterion. Which filter criterion to
+	 * use can be specified by using the third argument. The program looks for
+	 * exact (case sensitive) string matching. Filtering is optional.
+	 * <p/>
+	 * The program assumes all useful data to be real numbers. Anything that
+	 * cannot be cast to a real number is represented as {@code null}. For this
+	 * reason, the names of columns that do not contain real numbers should not
+	 * be included in the domain model.
+	 * <p/>
+	 * The program generates a Bayesian network with the data and stores it in
+	 * XML-BIF format. The resulting file has the filename given in the second
+	 * argument.
 	 * 
 	 * @param args
+	 *            An array of length 2 or 3, where the first position contains
+	 *            the name of the file containing the input data, the second
+	 *            position contains the name of the file to write to, and the
+	 *            third position (in the case of length 3) contains a filtering
+	 *            criterion.
 	 */
 	public static void main(String[] args) throws Exception {
-		if (args.length < 1) {
+		if (args.length < 2) {
 			System.err
-					.println("Usage: java Main <data file> [filter criterion]");
+					.println("Usage: java Main <input data file> <output file name> [filter criterion]");
 			return;
 		}
 
@@ -318,8 +336,11 @@ public class Main {
 																// this later
 		assert titles != null;
 		int cols = titles.size();
-		System.err.println(cols + " variable columns found. Filtering by "
-				+ titles.get(0) + " equal to " + args[1]);
+		System.out.println(cols + " variable columns found.");
+		if (args.length >= 2) {
+			System.out.println("Filtering by " + titles.get(0) + " equal to "
+					+ args[2] + "...");
+		}
 
 		// initialize data array
 		@SuppressWarnings("unchecked")
@@ -332,7 +353,7 @@ public class Main {
 		int rows = 0;
 		while ((nextLine = reader.readNext()) != null) {
 			assert nextLine.length == cols;
-			if (args.length >= 1 && args[1].equals(nextLine[0])) {
+			if (args.length < 2 || args[2].equals(nextLine[0])) {
 				rows++;
 				for (int i = 0; i < cols; i++) {
 					if (nextLine[i].isEmpty())
@@ -349,7 +370,7 @@ public class Main {
 			}
 		}
 		reader.close();
-		System.err.println("loaded " + rows + " rows of data");
+		System.out.println("loaded " + rows + " rows of data");
 
 		// expected names
 		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]", secondary = "Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]", tertiary = "Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]", journal = "Scientific and technical journal articles [IP.JRN.ARTC.SC]", trademark = "Trademark applications, total [IP.TMK.TOTL]", government = "General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]", foreignAid = "Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]", agriculture = "Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]", industry = "Industry, value added (% of GDP) [NV.IND.TOTL.ZS]", manufacture = "Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]", services = "Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]", unemployed = "Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]", growth = "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]", PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
@@ -392,15 +413,17 @@ public class Main {
 		String[] values = { "high", "med", "low" };
 
 		// convert to bayesian network
-		// BeliefNetwork out = new BeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
-			//Does not seem to be working properly
+		// BeliefNetwork out = new
+		// BeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
 		BeliefNetwork out = graphToNetwork(variableGraph, values);
 
-		PrintStream f = new PrintStream(new File("testOut.txt"));
+		PrintStream f = new PrintStream(new File(args[1]));
 		XmlbifWriter w = new XmlbifWriter();
 		boolean result = w.write(out, f);
-		if(result)
-			System.err.println("File ");
+		if (result)
+			System.out.println("File \"" + args[1] + "\" created successfully");
+		else
+			System.err.println("Could not write file \"" + args[1] + "\".");
 	}
 
 }

@@ -81,7 +81,7 @@ import edu.ucla.structure.HashDirectedGraph;
  * <i>j</i><sup>th</sup> variable of <i>I</i>&mdash;that is, {@code T[j][k]}
  * stores the strength of {@code I.get(j)}&rarr;{@code D.get(k)}.
  * <p/>
- * Typical usage of this class will see the graph getting built, the dependency
+ * <b>Typical usage</b> of this class will see the graph getting built, the dependency
  * tables getting filled and finally a call to
  * {@code #variableDependency(Double)}, at which point the resulting graph
  * between the variables can safely be used instead.
@@ -93,6 +93,10 @@ import edu.ucla.structure.HashDirectedGraph;
  * set to zero. This is intended, to allow for "placeholder" layers (i.e. some
  * future caller may need to compute the list of variables after creating the
  * layer).
+ * <p/>
+ * This class uses the {@code edu.ucla.structure} library, which precedes
+ * generics and hence requires casting from {@code Object} and suppressing
+ * the resulting warning in Java 1.5 and above.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
  * @version 1.03 2016-03-20

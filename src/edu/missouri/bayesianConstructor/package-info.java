@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.07 2016-03-20
+ * @version	0.09 2016-03-21
  * 
  * <h2>Version history</h2>
  * <table>
@@ -21,11 +21,17 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.09</td>
+ * 		<td>2016-03-21</td>
+ * 		<td>{@link Main#main(String[])} now receives output file as a parameter
+ * 			({@link Main} is now version 0.07)</td>
+ * 	</tr>
+ * 	<tr>
  * 		<td>0.08</td>
  * 		<td>2016-03-21</td>
  * 		<td>Fixed {@link Main#graphToNodeGraph(edu.ucla.structure.DirectedGraph,
- * 			String[])} to account for hashing order (Once fixed, {@link Main} will be
- * 			version 0.06)</td>
+ * 			String[])} to account for hashing order and {@code BeliefNetwork} 
+ * 			limitations ({@link Main} is now version 0.06)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.07</td>
