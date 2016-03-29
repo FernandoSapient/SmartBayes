@@ -21,6 +21,12 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.10</td>
+ * 		<td>2016-03-29</td>
+ * 		<td>Added {@link NodePlacer} to help ouputted files be more readable in SamIam viewer.
+ * 			{@link Main} is now version 0.08.</td>
+ * 	</tr>
+ * 	<tr>
  * 		<td>0.09</td>
  * 		<td>2016-03-21</td>
  * 		<td>{@link Main#main(String[])} now receives output file as a parameter

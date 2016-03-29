@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -33,7 +35,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.07 2016-03-21
+ * @version 0.08 2016-03-29
  * @since {@link bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -188,12 +190,10 @@ public class Main {
 	 *             other purpose than to create a
 	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the graphs
 	 *             returned by this function are not fully supported by
-	 *             {@code BeliefNetwork} (Edges do not get updated
-	 *             properly). Use
-	 *             {@link #graphToNetwork(DirectedGraph, String[]) for this
+	 *             {@code BeliefNetwork} (Edges do not get updated properly).
+	 *             Use {@link #graphToNetwork(DirectedGraph, String[]) for this
 	 *             purpose instead.
 	 */
-	// NOTE: Hugin nodes are the only instantiable subclass of StandardNode
 	@Deprecated
 	@SuppressWarnings({ "unchecked" })
 	public static DirectedGraph graphToNodeGraph(DirectedGraph g,
@@ -203,9 +203,55 @@ public class Main {
 		while (V.hasNext()) {
 			String v = V.next();
 			g_prime.replaceVertex(v, new HuginNodeImpl(new FiniteVariableImpl(
-					v, values))); // Method creates null pointers
+					v, values))); // NOTE: Hugin nodes are the only instantiable
+									// subclass of StandardNode
+
+			// replaceVertex creates null pointers
 		}
 		return g_prime;
+	}
+
+	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
+		Iterator<List<U>> layers = x.values().iterator();
+		int out = 0;
+		while (layers.hasNext())
+			out = Math.max(out, layers.next().size());
+		return out;
+	}
+
+	/** finds the index of the layer {@code d} is in, in {@code structure} */
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+		Iterator<List<U>> layers = structure.values().iterator();
+		int i = 0;
+		while (layers.hasNext()) {
+			i++;
+			if (layers.next().contains(d))
+				return i;
+		}
+		throw (new IllegalArgumentException(d.toString()
+				+ " could not be found in any of the layers"));
+	}
+
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+		Iterator<List<U>> layers = structure.values().iterator();
+		while (layers.hasNext()) {
+			int out = layers.next().indexOf(d);
+			if (out > -1)
+				return out;
+		}
+		throw (new IllegalArgumentException(d.toString()
+				+ " could not be found in any of the layers"));
+	}
+
+	private static <T,U> int findSize(Map<T, List<U>> structure, U d) {
+		Iterator<List<U>> layers = structure.values().iterator();
+		while (layers.hasNext()) {
+			List<U> L = layers.next();
+			if (L.contains(d))
+				return L.size();
+		}
+		throw (new IllegalArgumentException(d.toString()
+				+ " could not be found in any of the layers"));
 	}
 
 	/**
@@ -227,9 +273,9 @@ public class Main {
 	 */
 	@SuppressWarnings("unchecked")
 	// TODO:Make this more efficient by storing pending edges hashed by their
-	// 		second vertex. That way, they can all be added as soon as the missing vertex is created
-	// NOTE: Hugin nodes are the only instantiable subclass of StandardNode
-	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
+	// second vertex. That way, they can all be added as soon as the missing
+	// vertex is created
+	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values, Map<String, List<String>> structure) {
 		BeliefNetwork out = new BeliefNetworkImpl();
 		boolean added;// used to check correctness
 		Set<String> vertices = (Set<String>) g.vertices();
@@ -242,6 +288,8 @@ public class Main {
 													// vertices must exist for
 													// an edge to be created)
 		StandardNode v_rep, d_rep;
+		NodePlacer placer = new NodePlacer(structure.keySet().size(),
+				biggestLayer(structure), NodePlacer.GEOMETRIC);
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
@@ -249,11 +297,23 @@ public class Main {
 				v_rep = representations.get(v);
 			} else {
 				v_rep = new HuginNodeImpl(new FiniteVariableImpl(v, values));
+				// NOTE: Hugin nodes are the only instantiable subclass of
+				// StandardNode
+				v_rep.setLocation(placer.position(findLayer(structure, v),
+						findIndex(structure, v), structure.keySet().size(),
+						findSize(structure, v)));
+				System.out.println("placed \""+v+"\" (layer "+findLayer(structure, v)
+						+", node "+findIndex(structure, v)+" of "+findSize(structure, v)
+						+") at "+placer.position(findLayer(structure, v),
+								findIndex(structure, v), structure.keySet().size(),
+								findSize(structure, v))
+						);
 				representations.put(v, v_rep);
 			}
 			added = out.addVariable(v_rep, true);
 			assert added; // if this fails, g had two nodes with the same name,
 							// which is impossible
+
 			Iterator<String> dependents = (Iterator<String>) (g.outGoing(v)
 					.iterator());
 			while (dependents.hasNext()) {
@@ -262,6 +322,17 @@ public class Main {
 					d_rep = representations.get(d);
 				} else {
 					d_rep = new HuginNodeImpl(new FiniteVariableImpl(d, values));
+					// NOTE: Hugin nodes are the only instantiable subclass of
+					// StandardNode
+					d_rep.setLocation(placer.position(findLayer(structure, d),
+							findIndex(structure, d), structure.keySet().size(),
+							findSize(structure, d)));
+					System.out.println("placed \""+d+"\" (layer "+findLayer(structure, d)
+							+", node "+findIndex(structure, d)+" of "+findSize(structure, d)
+							+") at "+placer.position(findLayer(structure, d),
+									findIndex(structure, d), structure.keySet().size(),
+									findSize(structure, d))
+							);
 					representations.put(d, d_rep);
 				}
 				if (out.contains(d_rep)) {
@@ -277,8 +348,7 @@ public class Main {
 				assert out.isAcyclic();
 			}// end depedendents iteration
 		}// end vertices iteration
-		Set<StandardNode> addedVertices = (Set<StandardNode>) (out
-				.vertices());
+		Set<StandardNode> addedVertices = (Set<StandardNode>) (out.vertices());
 		assert addedVertices.size() == out.vertices().size();
 		assert addedVertices.size() == representations.size();
 
@@ -415,7 +485,8 @@ public class Main {
 		// convert to bayesian network
 		// BeliefNetwork out = new
 		// BeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
-		BeliefNetwork out = graphToNetwork(variableGraph, values);
+		BeliefNetwork out = graphToNetwork(variableGraph, values,
+				m.layerVariables);
 
 		PrintStream f = new PrintStream(new File(args[1]));
 		XmlbifWriter w = new XmlbifWriter();
