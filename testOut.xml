@@ -3,7 +3,7 @@
 <!--
   Bayesian network in XMLBIF v0.3 (BayesNet Interchange Format)
   Produced by SamIam http://reasoning.cs.ucla.edu/samiam
-  Output created Mar 29, 2016 12:01:51 PM
+  Output created Mar 30, 2016 3:11:10 AM
 -->
 
 <BIF VERSION="0.3">
@@ -15,7 +15,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, -319)</PROPERTY>
+    <PROPERTY>position = (546, 226)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -23,7 +23,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, 532)</PROPERTY>
+    <PROPERTY>position = (-94, 396)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -31,7 +31,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (-35, 226)</PROPERTY>
+    <PROPERTY>position = (322, -94)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -39,7 +39,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, -163)</PROPERTY>
+    <PROPERTY>position = (546, 354)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -47,7 +47,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, 359)</PROPERTY>
+    <PROPERTY>position = (-94, -30)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -55,7 +55,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (-457, 226)</PROPERTY>
+    <PROPERTY>position = (2, -94)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -63,7 +63,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, -592)</PROPERTY>
+    <PROPERTY>position = (546, 98)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -71,7 +71,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (1135, 226)</PROPERTY>
+    <PROPERTY>position = (290, 546)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -79,7 +79,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (-35, 226)</PROPERTY>
+    <PROPERTY>position = (482, -94)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -87,7 +87,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, -163)</PROPERTY>
+    <PROPERTY>position = (546, 482)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -95,7 +95,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, 381)</PROPERTY>
+    <PROPERTY>position = (-94, 183)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -103,7 +103,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (-231, 226)</PROPERTY>
+    <PROPERTY>position = (162, -94)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -111,7 +111,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (226, -862)</PROPERTY>
+    <PROPERTY>position = (546, -30)</PROPERTY>
   </VARIABLE>
 
   <VARIABLE TYPE="nature">
@@ -119,7 +119,7 @@
     <OUTCOME>high</OUTCOME>
     <OUTCOME>med</OUTCOME>
     <OUTCOME>low</OUTCOME>
-    <PROPERTY>position = (743, 226)</PROPERTY>
+    <PROPERTY>position = (-30, 546)</PROPERTY>
   </VARIABLE>
 
   <DEFINITION>

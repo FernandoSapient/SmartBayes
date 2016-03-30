@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.09 2016-03-21
+ * @version	0.13 2016-03-29
  * 
  * <h2>Version history</h2>
  * <table>
@@ -19,6 +19,24 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.13</td>
+ * 		<td>2016-03-29</td>
+ * 		<td>Fixed {@link NodePlacer#GEOMETRIC} mode.
+ * 			{@link NodePlacer} is now version 1.3.</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.12</td>
+ * 		<td>2016-03-29</td>
+ * 		<td>Fixed {@link NodePlacer#LAYERED} mode.
+ * 			{@link NodePlacer} is now version 1.2.</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.11</td>
+ * 		<td>2016-03-29</td>
+ * 		<td>Added {@link NodePlacer#ASTERISK} mode after a happy accident.
+ * 			{@link NodePlacer} is now version 1.1.</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.10</td>

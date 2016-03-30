@@ -29,7 +29,13 @@ import java.awt.Point;
  * 			This configuration is preferred when relations are restricted to
  * 			the immediately preceding and the immediately following component. 
  * 		</li>
- * 		<li><b>Star clustered:</b> The members of a component are placed along a circle
+ * 		<li><b>Asterisk:</b> the class places each component along a line radiating
+ * 			from the center. 
+ * 			This configuration is preferred when relations are restricted to
+ * 			the immediately preceding and the immediately following component,
+ * 			with possible relations between the first and last components. 
+ * 		</li>
+ * 		<li><b>Star:</b> The members of a component are placed along a circle
  * 			The circles are also placed along a circle, except for the first component
  * 			which is placed in the center. This configuration is preferred if there
  * 			is one central component which is known to be the source of all others,
@@ -74,7 +80,7 @@ import java.awt.Point;
  * and causing erratic behavior.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.0 2016-03-29
+ * @version 1.3 2016-03-29
  * @since {@link bayesianConstructor} version 0.10 2016-03-29
  */
 public class NodePlacer {
@@ -90,7 +96,7 @@ public class NodePlacer {
 	
 	/**Number of pixels to leave unoccupied around each node.
 	 * Should be greater than the size a node is expected to take up
-	 * in the final placing. The default leeway is 128 pixels.
+	 * in the final placing. The default leeway is 128.
 	 * Note that once this value is set, it can no
 	 * longer be changed.
 	 */
@@ -127,6 +133,9 @@ public class NodePlacer {
 	/**Value for {@link #configuration} for the layered configuration (L)
 	 */
 	public static final char LAYERED = 'L';
+	/**Value for {@link #configuration} for the Asterisk configuration (A)
+	 */
+	public static final char ASTERISK = 'A';
 	/**Value for {@link #configuration} for the Star configuration (S)
 	 */
 	public static final char STAR = 'S';
@@ -136,9 +145,10 @@ public class NodePlacer {
 	 * @throws IllegalArgumentException if it isn't
 	 */
 	private void validConfiguration(char c){
-		if(c != GEOMETRIC && c != LAYERED && c != STAR)
-			throw new IllegalArgumentException("configuration can only be "+LAYERED+
-					", "+GEOMETRIC+", or "+STAR+", but "+this.configuration+" was found.");
+		if(c != GEOMETRIC && c != LAYERED && c != STAR && c != ASTERISK)
+			throw new IllegalArgumentException("Configuration can only be "+LAYERED+
+					", "+GEOMETRIC+", "+ASTERISK+", or "+STAR+", but "
+					+this.configuration+" was found instead.");
 	}
 	
 	/**Initializes the class setting the parameters to the specified values
@@ -255,17 +265,20 @@ public class NodePlacer {
 	public int computeCanvas(int components){
 		switch(this.configuration){
 			case LAYERED:
-				return components*this.leeway*this.maxSize;
+				return this.leeway*this.maxSize;
 			case GEOMETRIC:
 				return (int) (this.maxSize*this.leeway * Math.sin( Math.PI/components ));
+			case ASTERISK:
+				return this.maxSize*this.leeway;
 			case STAR:
 				return (int) (this.leeway*Math.sin(Math.PI/this.maxSize) * Math.sin( Math.PI/components ));
 			default:
 				//if none of the above, throw the same exception as validConfiguraiton
 				//Note that all constructors should call validConfiguration, so
 				//this case should never occur
-				throw new IllegalStateException("configuration can only be "+LAYERED+
-						", "+GEOMETRIC+", or "+STAR+", but "+this.configuration+" was found.");
+				throw new IllegalStateException("Configuration can only be "+LAYERED+
+						", "+GEOMETRIC+", "+ASTERISK+", or "+STAR+", but "
+						+this.configuration+" was found instead.");
 		}
 	}
 	
@@ -369,7 +382,7 @@ public class NodePlacer {
 	 * @param i
 	 * 		Desired corner
 	 * @param n
-	 * 		Numer of sides in the polygon
+	 * 		Number of sides in the polygon
 	 * @param theta
 	 * 		Base angle of rotation
 	 * @param theta
@@ -394,8 +407,8 @@ public class NodePlacer {
 	 */
 	public Point componentCenter(int component, int number) {
 		if(this.configuration == LAYERED){
-			int componentSize = Math.max(this.canvas*component/number, this.leeway);
-			int offset = componentSize*component;
+			int trueCanvasSize = Math.max(this.canvas, this.leeway*number);
+			int offset = trueCanvasSize*component/number;
 			int x = Math.round((float)Math.cos(this.angle-Math.PI/2)*offset);
 			int y = Math.round((float)Math.sin(this.angle-Math.PI/2)*offset);
 			return new Point(x, y);
@@ -406,9 +419,15 @@ public class NodePlacer {
 					return center;
 				}else{
 					component--;
+					number--;
 					//proceed as with geometric
 				}
-			Point offset = geometricCorner(component,number, this.angle, this.maxSize);
+			float circle;	//separation between components
+			if(this.configuration == ASTERISK)
+				circle = (int)(this.leeway*number*Math.sin( Math.PI/number ));
+			else
+				circle = (float)this.canvas;
+			Point offset = geometricCorner(component,number, this.angle, circle);
 			return new Point(center.x+offset.x, center.y+offset.y);
 		}
 	}
@@ -433,13 +452,25 @@ public class NodePlacer {
 			return geometricCorner(node, size, this.angle, this.maxSize);
 		}else{
 			double angle = this.angle;
-			if(this.configuration == GEOMETRIC){
+			if(this.configuration == ASTERISK){
 				angle += 2*Math.PI * component/number;
 				//proceed as with layered
 			}
-			//return placeAlongLine(this.canvas*node/size, this.leeway, angle);
-			int componentSize = Math.max(this.canvas*node/size, this.leeway);
-			int offset = componentSize*component;
+			if(this.configuration == GEOMETRIC){
+				angle += 2*Math.PI * component/number - Math.PI/number;
+				//proceed as with layered
+			}
+			
+			int componentSize = this.maxSize*this.leeway;//size of the lines to draw the nodes along
+			if(this.configuration != ASTERISK)
+				componentSize = Math.max((int)(this.canvas/Math.sin( Math.PI/number )), componentSize);
+			
+			//move to new function placeAlongLine( length of line (componentsize) , angle);
+			int offset = componentSize*node/size; //offset with respect to corner
+			if(this.configuration == GEOMETRIC){
+				//convert to offset with respect to center
+				offset -= componentSize/2 + 2*this.leeway;
+			}
 			int x = Math.round((float)Math.cos(angle)*offset);
 			int y = Math.round((float)Math.sin(angle)*offset);
 			return new Point(x, y);
@@ -479,7 +510,9 @@ public class NodePlacer {
 			throw new IllegalArgumentException("Cannot place the "+component+"th "
 					+"component of a set of "+number+" components");
 		Point componentCenter = componentCenter(component, number);
+		System.out.println("Component "+component+" of "+number+" is centered at "+componentCenter);
 		Point offset = nodeOffset(component, node, number, size);
+		System.out.println("Node "+node+" of "+size+" offset by "+offset);
 		return new Point(componentCenter.x+offset.x, componentCenter.y+offset.y);
 	}
 	

@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -224,9 +222,9 @@ public class Main {
 		Iterator<List<U>> layers = structure.values().iterator();
 		int i = 0;
 		while (layers.hasNext()) {
-			i++;
 			if (layers.next().contains(d))
 				return i;
+			i++;
 		}
 		throw (new IllegalArgumentException(d.toString()
 				+ " could not be found in any of the layers"));
@@ -289,7 +287,7 @@ public class Main {
 													// an edge to be created)
 		StandardNode v_rep, d_rep;
 		NodePlacer placer = new NodePlacer(structure.keySet().size(),
-				biggestLayer(structure), NodePlacer.GEOMETRIC);
+				biggestLayer(structure), Math.PI*3/4, NodePlacer.GEOMETRIC);
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
