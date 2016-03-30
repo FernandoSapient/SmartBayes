@@ -80,7 +80,7 @@ import java.awt.Point;
  * and causing erratic behavior.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.3 2016-03-29
+ * @version 1.4 2016-03-30
  * @since {@link bayesianConstructor} version 0.10 2016-03-29
  */
 public class NodePlacer {
@@ -271,7 +271,7 @@ public class NodePlacer {
 			case ASTERISK:
 				return this.maxSize*this.leeway;
 			case STAR:
-				return (int) (this.leeway*Math.sin(Math.PI/this.maxSize) * Math.sin( Math.PI/components ));
+				return (int) (this.maxSize*2*this.leeway*Math.sin(Math.PI/this.maxSize) * Math.sin( Math.PI/components ));
 			default:
 				//if none of the above, throw the same exception as validConfiguraiton
 				//Note that all constructors should call validConfiguration, so
@@ -420,6 +420,8 @@ public class NodePlacer {
 				}else{
 					component--;
 					number--;
+					assert component >=0;
+					assert number >= 0;
 					//proceed as with geometric
 				}
 			float circle;	//separation between components
@@ -449,7 +451,7 @@ public class NodePlacer {
 	 */
 	public Point nodeOffset(int component, int node, int number, int size) {
 		if(this.configuration == STAR){
-			return geometricCorner(node, size, this.angle, this.maxSize);
+			return geometricCorner(node, size, this.angle, (int)(2*this.leeway*Math.sin(Math.PI/this.maxSize)));
 		}else{
 			double angle = this.angle;
 			if(this.configuration == ASTERISK){

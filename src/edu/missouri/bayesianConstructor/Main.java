@@ -287,7 +287,7 @@ public class Main {
 													// an edge to be created)
 		StandardNode v_rep, d_rep;
 		NodePlacer placer = new NodePlacer(structure.keySet().size(),
-				biggestLayer(structure), Math.PI*3/4, NodePlacer.GEOMETRIC);
+				biggestLayer(structure), NodePlacer.STAR);
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
