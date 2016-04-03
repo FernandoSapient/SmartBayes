@@ -1,17 +1,14 @@
 package edu.missouri.bayesianEvaluator;
 
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
 import weka.classifiers.bayes.BayesNet;
-import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
-import weka.filters.unsupervised.attribute.RemoveByName;
 import weka.filters.unsupervised.instance.SubsetByExpression;
 
 /**
@@ -19,7 +16,7 @@ import weka.filters.unsupervised.instance.SubsetByExpression;
  * of a Bayesian Network.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.02 2016-04-03
+ * @version 0.03 2016-04-03
  * @since {@link bayesianEvaluator} version 0.02 2016-04-02
  */
 public class Trainer {
@@ -41,6 +38,8 @@ public class Trainer {
 	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
 	 * 3.7.12). The program might fail if the Bayesian network is not in Weka
 	 * format (use {@link BifUpdate} for this purpose).
+	 * A filtering criterion can be specified, against which only the elements
+	 * of the first attribute which are equal to it will be selected.
 	 * 
 	 * @param args
 	 *            An array containing, at {@code args[0]}, the pat of the data
@@ -52,57 +51,55 @@ public class Trainer {
 	 * @throws Exception
 	 *            If any of the files could not be read
 	 */
+	// TODO figure out a way to parse any regular expression as filter criterion
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
 			System.err
 					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion]");
 			return;
 		}
+
 		DataSource source = new DataSource(args[0]);
 		Instances data = source.getDataSet();
 		BayesNet bn = BifUpdate.loadBayesNet(args[1]);
 		Set<String> nodes = getNodeNames(bn);
 
-		int attributes = data.numAttributes();
-		int checked = 0;
-		RemoveByName r = new RemoveByName();
-		r.setInputFormat(data);
-		// remove attributes not in the bayesian network
-		if (data.classIndex() != -1) {
-			// dataset loader auto-assigned a class (enumerateAttributes does
-			// not return the class)
-			if (!nodes.contains(data.classAttribute().name())) {
-				r.setExpression(data.classAttribute().name());
-				data = Filter.useFilter(data, r);
-			}
-			checked++;
-		}
-		for (Enumeration<Attribute> e = data.enumerateAttributes(); e
-				.hasMoreElements();) {
-			// This isn't working
-			// TODO use numerical indices instead (remove instead of
-			// removeByName)
-			String a = e.nextElement().name();
-			if (!nodes.contains(a)) {
-				r.setExpression("\"" + a + "\"");
-				data = Filter.useFilter(data, r);
-				assert data.attribute(a) == null; // it must have actually been
-													// removed
-			}
-			checked++;
-		}
-		assert checked == attributes;
-
+		//filter out by criterion
 		if (args.length >= 3) {
 			// TODO move to method so garbage collector can take care of it
-			// TODO figure out a way to parse any regular expression in this
-			// parameter
 			data.setClassIndex(0);
 			SubsetByExpression f = new SubsetByExpression();
 			f.setInputFormat(data);
 			f.setExpression("CLASS is \'" + args[3] + "\'");
 			data = Filter.useFilter(data, f);
+			//TODO assert containsOnly(data.attribute(0), args[3])
 		}
+
+		
+		int attributes = data.numAttributes();
+		int checked = 0;
+		Remove r = new Remove();
+		
+		// remove attributes not in the bayesian network
+		for (int i = 0; i<data.numAttributes();) {
+			String a = data.attribute(i).name();
+			if (!nodes.contains(a)) {
+				r.setAttributeIndices(Integer.toString(i+1));
+				r.setInputFormat(data);
+				data = Filter.useFilter(data, r);
+				assert data.attribute(a) == null; // it must have actually been
+													// removed
+			}else{
+				i++;
+			}
+			
+			checked++;
+		}
+		assert checked == attributes;
+		//TODO assert nodes.equals(getAttributeNames(data)); 
+		
+		//TODO discretize data according to BN value labels
+		
 		data.setClassIndex(data.numAttributes() - 1);
 
 		bn.m_Instances = data;
@@ -111,5 +108,6 @@ public class Trainer {
 		PrintWriter f = new PrintWriter(args[2]);
 		f.write(bn.toXMLBIF03());
 		f.close();
+		System.out.println(args[2]+" created successfully");
 	}
 }
