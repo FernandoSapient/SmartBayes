@@ -1,13 +1,13 @@
 //TODO: add support for converting to il2 bayesian network and Weka bayesian network
 //		(may require changing Graph library)
-/**Contains classes to automatically build and evaluate a Bayesian Network.
+/**Contains classes to automatically build a Bayesian Network.
  * Typical usage is to create a model of the {@link DomainKnowledge},
- * export this into a {@link edu.ucla.belief.BeliefNetwork} or
- * {@link il2.model.BayesianNetwork} (from
+ * export this into a {@link edu.ucla.belief.BeliefNetwork} (from
  * <a href="http://reasoning.cs.ucla.edu/samiam">SamIam</a>), and then
- * train or evaluate the belief network representation. The reader is
- * encouraged to try other exportations, but no support for them is
- * provided in this package at the present time.
+ * train or evaluate the belief network representation using methods
+ * from another package. The programmer is  encouraged to try 
+ * exporting the Domain Knowledge model into other structures, 
+ * but no support for them is provided in this package at the present time.
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 

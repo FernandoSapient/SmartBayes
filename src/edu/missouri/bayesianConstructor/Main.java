@@ -421,7 +421,7 @@ public class Main {
 		int rows = 0;
 		while ((nextLine = reader.readNext()) != null) {
 			assert nextLine.length == cols;
-			if (args.length < 2 || args[2].equals(nextLine[0])) {
+			if (args.length < 2 || args[2].equals(nextLine[0])) {	//evaluate regexp instead of using string.equals
 				rows++;
 				for (int i = 0; i < cols; i++) {
 					if (nextLine[i].isEmpty())

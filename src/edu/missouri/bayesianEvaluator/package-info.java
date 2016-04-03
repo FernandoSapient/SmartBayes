@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.01 2016-04-01
+ * @version	0.02 2016-04-02
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,13 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.02</td>
+ * 		<td>2016-04-02</td>
+ * 		<td>Added {@link Trainer}; moved XMLBIF loading calls in
+ * 			{@link BifUpdate#main(String[])} to {@link BifUpdate#loadBayesNet(String)}.
+ * 			{@link BifUpdate} is now version 0.02</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.01</td>
