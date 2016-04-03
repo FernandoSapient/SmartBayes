@@ -23,10 +23,10 @@ import weka.filters.unsupervised.instance.SubsetByExpression;
  * @since {@link bayesianEvaluator} version 0.02 2016-04-02
  */
 public class Trainer {
-	/**
+	/**Gets the names of all the nodes in the given bayesian network
 	 * 
-	 * @param bn
-	 * @return
+	 * @param bn The bayesian Network to get the node names from
+	 * @return A {@code Set} containing all of the node names
 	 */
 	private static Set<String> getNodeNames(BayesNet bn) {
 		Set<String> out = new HashSet<String>();
@@ -61,6 +61,37 @@ public class Trainer {
 		DataSource source = new DataSource(args[0]);
 		Instances data = source.getDataSet();
 		BayesNet bn = BifUpdate.loadBayesNet(args[1]);
+		Set<String> nodes = getNodeNames(bn);
+
+		int attributes = data.numAttributes();
+		int checked = 0;
+		RemoveByName r = new RemoveByName();
+		r.setInputFormat(data);
+		// remove attributes not in the bayesian network
+		if (data.classIndex() != -1) {
+			// dataset loader auto-assigned a class (enumerateAttributes does
+			// not return the class)
+			if (!nodes.contains(data.classAttribute().name())) {
+				r.setExpression(data.classAttribute().name());
+				data = Filter.useFilter(data, r);
+			}
+			checked++;
+		}
+		for (Enumeration<Attribute> e = data.enumerateAttributes(); e
+				.hasMoreElements();) {
+			// This isn't working
+			// TODO use numerical indices instead (remove instead of
+			// removeByName)
+			String a = e.nextElement().name();
+			if (!nodes.contains(a)) {
+				r.setExpression("\"" + a + "\"");
+				data = Filter.useFilter(data, r);
+				assert data.attribute(a) == null; // it must have actually been
+													// removed
+			}
+			checked++;
+		}
+		assert checked == attributes;
 
 		if (args.length >= 3) {
 			// TODO move to method so garbage collector can take care of it
