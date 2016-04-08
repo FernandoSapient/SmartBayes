@@ -478,7 +478,7 @@ public class Main {
 		DirectedGraph variableGraph = m.variableDependency(.03);
 
 		// define values
-		String[] values = { "high", "med", "low" };
+		String[] values = { "low", "med", "high" };
 
 		// convert to bayesian network
 		// BeliefNetwork out = new
