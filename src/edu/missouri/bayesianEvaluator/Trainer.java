@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import weka.classifiers.bayes.BayesNet;
+import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.converters.CSVLoader;
@@ -20,7 +21,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * of a Bayesian Network.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05 2016-04-08
+ * @version 0.07 2016-04-09
  * @since {@link bayesianEvaluator} version 0.02 2016-04-02
  */
 public class Trainer {
@@ -91,8 +92,12 @@ public class Trainer {
 			data = filterByCriterion(args[3], data, 0);
 		}
 		
+		System.out.println("Conforming data to network...");
 		// remove attributes not in the bayesian network
 		data = restrictToAttributeSet(data, nodes);
+
+		// reorder to match (required by estimateCPTs)
+		data = reorderAttributes(data, nodes);
 
 		// discretize data according to BN value labels
 		if (args.length >= 5)
@@ -104,12 +109,78 @@ public class Trainer {
 		System.out.println("Setting "+data.classAttribute().name() + " as class...");
 
 		bn.m_Instances = data;
+		System.out.println("Training network...");
 		bn.estimateCPTs();
 
 		PrintWriter f = new PrintWriter(args[2]);
 		f.write(bn.toXMLBIF03());
 		f.close();
 		System.out.println(args[2] + " created successfully");
+	}
+
+	/**
+	 * Reorders the attributes in the given dataset to be in the order specified
+	 * </P> Note: {@code data} <em>will be modified</em> by this function
+	 * 
+	 * @param data
+	 *            The dataset to be ordered
+	 * @param attributeOrder
+	 *            A list of attribute names giving the order desired
+	 * @return A modified dataset with each instance having its attributes in
+	 *         the order given by {@code attributeOrder}
+	 * @throws IllegalArgumentException
+	 *             if {@code attributeOrder} is not composed of the attributes
+	 *             from the given dataset
+	 * @since 0.07 2016-04-09
+	 */
+	public static Instances reorderAttributes(Instances data,
+			List<String> attributeOrder) throws IllegalArgumentException {
+		int n = data.numAttributes();
+		if (attributeOrder.size() != n)
+			throw new IllegalArgumentException(
+					"The number of attributes"
+							+ " in the ordering does not match the number of attributes"
+							+ " in the data");
+		List<String> attributeNames = getAttributeNames(data);
+		
+		//test "equality" by double contention
+		assert attributeOrder.containsAll(attributeNames); // TODO: throw a
+															// proper exception
+		assert attributeNames.containsAll(attributeOrder); // TODO: throw a
+															// proper exception
+
+		int m = data.numInstances();
+
+		// convert each attribute to column vectors and reinsert
+		for (int i = 0; i < n; i++) {
+			attributeNames = getAttributeNames(data); //the order of the attribute names will change dynamically
+			int source = attributeNames.indexOf(attributeOrder.get(i));
+			assert source != -1; //if it is, double contention test was wrong
+			
+			Attribute a = data.attribute(source);
+			assert a.name().equals(attributeOrder.get(i));
+			
+			double[] values = data.attributeToDoubleArray(source);
+			assert values.length == m;
+			
+			// reinsert at end
+			data.deleteAttributeAt(source);
+			data.insertAttributeAt(a, n - 1);
+			assert data.attribute(n-1).equals(a);
+			for (int j = 0; j < m; j++){
+				if(Double.isNaN(values[j])){
+					assert data.instance(j).isMissing(n-1);
+				}else{
+					data.instance(j).setValue(n-1, values[j]);
+					assert data.instance(j).value(n-1) == values[j];
+				}
+			}
+			// TODO: assert missingValues(values) ==
+			// missingValues(data.attributeToDoubleArray(n-1));
+		}
+		assert attributeOrder.equals(getAttributeNames(data));
+
+		return data;
 	}
 
 	/**

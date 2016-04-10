@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.07 2016-04-08
+ * @version	0.08 2016-04-09
  * 
  * <h2>Version history</h2>
  * <table>
@@ -19,7 +19,21 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
- * 		<td>0.05</td>
+ * 		<td>0.08</td>
+ * 		<td>2016-04-09</td>
+ * 		<td>Added {@link Trainer#reorderAttributes(weka.core.Instances, java.util.List)}.
+ * 			to reduce the chance that {@code weka.classifiers.bayes.BayesNet.estimateCPTs()}
+ * 			will swap the node names.
+ * 			{@link Trainer} is now version 0.07</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.07</td>
+ * 		<td>2016-04-08</td>
+ * 		<td>Improved user feedback in {@link Trainer#main(String[])}.
+ * 			{@link Trainer} is now version 0.06</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.06</td>
  * 		<td>2016-04-08</td>
  * 		<td>Added
  * 				{@link Trainer#filterByCriterion(String, weka.core.Instances, int)}
