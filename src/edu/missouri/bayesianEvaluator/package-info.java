@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.08 2016-04-09
+ * @version	0.09 2016-04-10
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,12 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.09</td>
+ * 		<td>2016-04-10</td>
+ * 		<td>Added {@link Trainer#conformToNetwork(weka.core.Instances, weka.classifiers.bayes.BayesNet, boolean)}.
+ * 			{@link Trainer} is now version 0.08</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.08</td>

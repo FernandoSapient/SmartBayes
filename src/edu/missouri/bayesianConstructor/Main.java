@@ -33,7 +33,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.08 2016-03-29
+ * @version 0.09 2016-04-08
  * @since {@link bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -209,6 +209,7 @@ public class Main {
 		return g_prime;
 	}
 
+	/** Finds the index of the layyer with the most elements */
 	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
 		Iterator<List<U>> layers = x.values().iterator();
 		int out = 0;
@@ -217,7 +218,7 @@ public class Main {
 		return out;
 	}
 
-	/** finds the index of the layer {@code d} is in, in {@code structure} */
+	/** Finds the index of the layer {@code d} is in, in {@code structure} */
 	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
 		Iterator<List<U>> layers = structure.values().iterator();
 		int i = 0;
@@ -230,6 +231,11 @@ public class Main {
 				+ " could not be found in any of the layers"));
 	}
 
+	/**
+	 * Finds the index of {@code d} within the layer that it's in, in
+	 * {@code structure}. To find which layer this is use
+	 * {@link #findLayer(Map, Object)}
+	 */
 	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
 		Iterator<List<U>> layers = structure.values().iterator();
 		while (layers.hasNext()) {
@@ -241,7 +247,11 @@ public class Main {
 				+ " could not be found in any of the layers"));
 	}
 
-	private static <T,U> int findSize(Map<T, List<U>> structure, U d) {
+	/**
+	 * Finds the number of element of the layer {@code d} is in, in
+	 * {@code structure}
+	 */
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
 		Iterator<List<U>> layers = structure.values().iterator();
 		while (layers.hasNext()) {
 			List<U> L = layers.next();
@@ -265,15 +275,27 @@ public class Main {
 	 *            must be {@code String}s
 	 * @param values
 	 *            The possible values for all nodes
+	 * @param structure
+	 *            A map showing what nodes should be grouped together when
+	 *            plotted. (Each key is a component identifier and each list is
+	 *            the nodes in that component. {@link DomainKnowledge#layerMap()}
+	 *            can be used).
+	 * @param config
+	 *            How to dispose the nodes on the canvas. Must be one of the
+	 *            {@link NodePlacer} valid configurations
+	 * @param angle
+	 *            What angle to use for the placement (see {@link NodePlacer})
 	 * @return a {@code BeliefNetwork} with one node and edge for every node and
 	 *         edge in the given graph {@code g}
-	 * @since 0.05 2016-03-20
+	 * @since 0.09 2016-04-08
 	 */
 	@SuppressWarnings("unchecked")
 	// TODO:Make this more efficient by storing pending edges hashed by their
 	// second vertex. That way, they can all be added as soon as the missing
 	// vertex is created
-	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values, Map<String, List<String>> structure) {
+	public static BeliefNetwork graphToNetwork(DirectedGraph g,
+			String[] values, Map<String, List<String>> structure, char config,
+			double angle) {
 		BeliefNetwork out = new BeliefNetworkImpl();
 		boolean added;// used to check correctness
 		Set<String> vertices = (Set<String>) g.vertices();
@@ -287,7 +309,7 @@ public class Main {
 													// an edge to be created)
 		StandardNode v_rep, d_rep;
 		NodePlacer placer = new NodePlacer(structure.keySet().size(),
-				biggestLayer(structure), NodePlacer.STAR);
+				biggestLayer(structure), angle, config);
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
@@ -300,12 +322,18 @@ public class Main {
 				v_rep.setLocation(placer.position(findLayer(structure, v),
 						findIndex(structure, v), structure.keySet().size(),
 						findSize(structure, v)));
-				System.out.println("placed \""+v+"\" (layer "+findLayer(structure, v)
-						+", node "+findIndex(structure, v)+" of "+findSize(structure, v)
-						+") at "+placer.position(findLayer(structure, v),
-								findIndex(structure, v), structure.keySet().size(),
-								findSize(structure, v))
-						);
+				System.out.println("placed \""
+						+ v
+						+ "\" (layer "
+						+ findLayer(structure, v)
+						+ ", node "
+						+ findIndex(structure, v)
+						+ " of "
+						+ findSize(structure, v)
+						+ ") at "
+						+ placer.position(findLayer(structure, v),
+								findIndex(structure, v), structure.keySet()
+										.size(), findSize(structure, v)));
 				representations.put(v, v_rep);
 			}
 			added = out.addVariable(v_rep, true);
@@ -325,12 +353,18 @@ public class Main {
 					d_rep.setLocation(placer.position(findLayer(structure, d),
 							findIndex(structure, d), structure.keySet().size(),
 							findSize(structure, d)));
-					System.out.println("placed \""+d+"\" (layer "+findLayer(structure, d)
-							+", node "+findIndex(structure, d)+" of "+findSize(structure, d)
-							+") at "+placer.position(findLayer(structure, d),
-									findIndex(structure, d), structure.keySet().size(),
-									findSize(structure, d))
-							);
+					System.out.println("placed \""
+							+ d
+							+ "\" (layer "
+							+ findLayer(structure, d)
+							+ ", node "
+							+ findIndex(structure, d)
+							+ " of "
+							+ findSize(structure, d)
+							+ ") at "
+							+ placer.position(findLayer(structure, d),
+									findIndex(structure, d), structure.keySet()
+											.size(), findSize(structure, d)));
 					representations.put(d, d_rep);
 				}
 				if (out.contains(d_rep)) {
@@ -367,6 +401,38 @@ public class Main {
 	}
 
 	/**
+	 * Converts the given graph {@code g} into a {@code BeliefNetwork} displaced
+	 * using a {@link NodePlacer#LAYERED} configuration. All nodes in the new
+	 * Belief Network are given the same set of possible values: those in the
+	 * {@code values} parameter. For this reason a universal set of names for
+	 * discretized parameters is encouraged (such as "high", and "low")
+	 * <p/>
+	 * This function is shorthand for <a href=#graphToNetwork(DirectedGraph,
+	 * String[], Map, char, double)>{@code graphToNetwork}</a>(
+	 * {@code g, values, structure,} {@link NodePlacer#LAYERED}, {@code Math.PI}
+	 * ) as of version 0.05
+	 * 
+	 * @param g
+	 *            The graph to base the new {@code BeliefNetwork} on. Vertices
+	 *            must be {@code String}s
+	 * @param values
+	 *            The possible values for all nodes
+	 * @param structure
+	 *            A map showing what nodes should be grouped together when
+	 *            plotted. (Each key is a component identifier and each list is
+	 *            the nodes in that component {@link DomainKnowledge#layerMap()}
+	 *            can be used).
+	 * @return a {@code BeliefNetwork} with one node and edge for every node and
+	 *         edge in the given graph {@code g}
+	 * @since 0.05 2016-03-20
+	 */
+	public static BeliefNetwork graphToNetwork(DirectedGraph g,
+			String[] values, Map<String, List<String>> structure) {
+		return Main.graphToNetwork(g, values, structure, NodePlacer.LAYERED,
+				Math.PI);
+	}
+
+	/**
 	 * Sample main program. The program receives a CSV file where the first row
 	 * is assumed to be the column names, and in every other row, the first
 	 * column is assumed to be a filtering criterion. Which filter criterion to
@@ -392,7 +458,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		if (args.length < 2) {
 			System.err
-					.println("Usage: java Main <input data file> <output file name> [filter criterion]");
+					.println("Usage: java Main <input data file> <output file name> [filter criterion] [plot mode]");
 			return;
 		}
 
@@ -421,7 +487,11 @@ public class Main {
 		int rows = 0;
 		while ((nextLine = reader.readNext()) != null) {
 			assert nextLine.length == cols;
-			if (args.length < 2 || args[2].equals(nextLine[0])) {	//evaluate regexp instead of using string.equals
+			if (args.length < 2 || args[2].equals(nextLine[0])) { // evaluate
+																	// regexp
+																	// instead
+																	// of using
+																	// string.equals
 				rows++;
 				for (int i = 0; i < cols; i++) {
 					if (nextLine[i].isEmpty())
@@ -481,10 +551,13 @@ public class Main {
 		String[] values = { "low", "med", "high" };
 
 		// convert to bayesian network
-		// BeliefNetwork out = new
-		// BeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
-		BeliefNetwork out = graphToNetwork(variableGraph, values,
-				m.layerVariables);
+		BeliefNetwork out;
+		// out=newBeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
+		if (args.length >= 4)
+			out = graphToNetwork(variableGraph, values, m.layerVariables,
+					args[3].charAt(0), 0);
+		else
+			out = graphToNetwork(variableGraph, values, m.layerVariables);
 
 		PrintStream f = new PrintStream(new File(args[1]));
 		XmlbifWriter w = new XmlbifWriter();

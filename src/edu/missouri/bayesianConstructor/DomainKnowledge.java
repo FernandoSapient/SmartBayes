@@ -81,8 +81,8 @@ import edu.ucla.structure.HashDirectedGraph;
  * <i>j</i><sup>th</sup> variable of <i>I</i>&mdash;that is, {@code T[j][k]}
  * stores the strength of {@code I.get(j)}&rarr;{@code D.get(k)}.
  * <p/>
- * <b>Typical usage</b> of this class will see the graph getting built, the dependency
- * tables getting filled and finally a call to
+ * <b>Typical usage</b> of this class will see the graph getting built, the
+ * dependency tables getting filled and finally a call to
  * {@code #variableDependency(Double)}, at which point the resulting graph
  * between the variables can safely be used instead.
  * <p/>
@@ -95,17 +95,17 @@ import edu.ucla.structure.HashDirectedGraph;
  * layer).
  * <p/>
  * This class uses the {@code edu.ucla.structure} library, which precedes
- * generics and hence requires casting from {@code Object} and suppressing
- * the resulting warning in Java 1.5 and above.
+ * generics and hence requires casting from {@code Object} and suppressing the
+ * resulting warning in Java 1.5 and above.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.03 2016-03-20
+ * @version 1.04 2016-04-10
  * @since {@link bayesianConstructor} version 0.01
  */
 // TODO: let user specify type for the layer and variable identifiers <generics>
-// 		(May require switching to a different Graph library)
+// (May require switching to a different Graph library)
 // TODO: add support for having the same variable in several layers (note that
-// 		this may complicate preservation of aciclycity)
+// this may complicate preservation of aciclycity)
 public class DomainKnowledge {
 	/**
 	 * Stores the dependence relations between the layers; as such, the graph
@@ -334,6 +334,20 @@ public class DomainKnowledge {
 	 */
 	public Set<String> layerSet() {
 		return this.layerVariables.keySet();
+	}
+
+	/**
+	 * Gets the map indicating which layers contain which nodes
+	 * 
+	 * @return A map where each key is a layer name and each list contains the
+	 *         names of the nodes in that layer. Note that this list may be
+	 *         safely modified without altering the {@code DomainKnowledge}
+	 *         instance
+	 * 
+	 * @since 1.04 2016-04-10
+	 */
+	public Map<String, List<String>> layerMap() {
+		return new HashMap<String, List<String>>(this.layerVariables);
 	}
 
 	/**
@@ -974,7 +988,7 @@ public class DomainKnowledge {
 
 	/**
 	 * Performs a full correctness test to ensure the class is working
-	 * correctly, then presents
+	 * correctly
 	 * 
 	 * @param args
 	 * @throws Exception
@@ -986,7 +1000,7 @@ public class DomainKnowledge {
 		d.tddTest(10);
 		d = new DomainKnowledge();
 
-		// TODO: Interactive console
+		// TODO: then presents the user with an interactive console
 	}
 
 }

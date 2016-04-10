@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.14 2016-03-30
+ * @version	0.16 2016-04-09
  * 
  * <h2>Version history</h2>
  * <table>
@@ -21,6 +21,21 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.16</td>
+ * 		<td>2016-04-09</td>
+ * 		<td>Added {@link DomainKnowledge#layerMap()} to allow callers to use
+ * 			both {@link Main#graphToNetwork} methods securely
+ * 			({@link DomainKnowledge} is now version 1.04)</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.15</td>
+ * 		<td>2016-04-08</td>
+ * 		<td>Added {@link Main#graphToNetwork(edu.ucla.structure.DirectedGraph, 
+ * 							String[], java.util.Map, char, double)}
+ * 			to allow the caller to specify the parameters of the {@link NodePlacer}
+ * 			to use. 
+ * 			({@link Main} is now version 0.09)</td>
+ * 	</tr>
  * 	<tr>
  * 		<td>0.14</td>
  * 		<td>2016-03-30</td>
@@ -80,8 +95,8 @@
  * 	<tr>
  * 		<td>0.05</td>
  * 		<td>2016-03-18</td>
- * 		<td>Added sample CSV data and openCSV library, added CSV support to
- * 			{@link Main#Main()} (now version 0.03)</td>
+ * 		<td>Added added CSV support to {@link Main#Main()} through
+ * 			<a href="http://opencsv.sourceforge.net">openCSV</a> (now version 0.03)</td>
  * 	</tr>
  * 		<td>0.04</td>
  * 		<td>2016-03-17</td>
