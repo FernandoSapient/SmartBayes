@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.16 2016-04-09
+ * @version	0.17 2016-04-18
  * 
  * <h2>Version history</h2>
  * <table>
@@ -19,6 +19,15 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.17</td>
+ * 		<td>2016-04-18</td>
+ * 		<td>Improved documentation in {@link DomainKnowledge} and {@link Main};
+ * 			added {@link Main#graphToNetwork(edu.ucla.structure.DirectedGraph, String[])
+ * 			as a true successor function to {@link Main#graphToNodeGraph(edu.ucla.structure.DirectedGraph, String[])}.
+ * 			({@link DomainKnowledge} is now version 1.05
+ * 			({@link Main} is now version 1.10)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.16</td>

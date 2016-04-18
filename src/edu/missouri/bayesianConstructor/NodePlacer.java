@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.missouri.bayesianConstructor;
 
 import java.awt.Point;
@@ -81,7 +78,7 @@ import java.awt.Point;
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
  * @version 1.4 2016-03-30
- * @since {@link bayesianConstructor} version 0.10 2016-03-29
+ * @since {@code bayesianConstructor} version 0.10 2016-03-29
  */
 public class NodePlacer {
 	/**Specifies the angle (in radians) at which all placement computations

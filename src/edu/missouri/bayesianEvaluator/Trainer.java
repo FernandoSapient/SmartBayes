@@ -26,7 +26,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
  * @version 0.08 2016-04-10
- * @since {@link bayesianEvaluator} version 0.02 2016-04-02
+ * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 public class Trainer {
 	/**

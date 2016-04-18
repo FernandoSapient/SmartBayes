@@ -4,7 +4,9 @@
 package edu.missouri.bayesianConstructor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,8 +35,8 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.09 2016-04-08
- * @since {@link bayesianConstructor} version 0.03 2016-03-18
+ * @version 0.10 2016-04-18
+ * @since {@code bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
 	/**
@@ -45,13 +47,13 @@ public class Main {
 	 * "https://support.office.com/en-us/article/STEYX-function-6ce74b2c-449d-4a6e-b9ac-f9cef5ba48ab"
 	 * >standard error of the predicted y-value for each x in a linear
 	 * regression</a> as defined by Microsoft:
-	 * &radic;((&sum;(<i>Y</i>&minus;<i>Y</i>&#x305) &minus;
+	 * &radic;((&sum;(<i>Y</i>&minus;<i>Y</i>&#x305;) &minus;
 	 * (&sum;(<i>X</i>&minus
-	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305))&sup2; /
+	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305;))&sup2; /
 	 * &sum;((<i>X</i>&minus;<i>X</i>&#x305)&sup2;)) / (n-2)) STE returns values
-	 * in the (0, <i>Y</i>&#x305) interval where <i>Y</i>&#x305 is the
+	 * in the (0, <i>Y</i>&#x305;) interval where <i>Y</i>&#x305 is the
 	 * arithmetic sample means of <i>Y</i>.
-	 * <p?>
+	 * <p/>
 	 * If a value is {@code null}; it, and the corresponding value in the other
 	 * list, are ignored.
 	 * 
@@ -59,8 +61,9 @@ public class Main {
 	 *            The list of values for the variable thought to be independent
 	 * @param Y
 	 *            The list of values for the variable thought to be independent
-	 * @return the dependency score, a number between 0 and <i>Y</i>&#x305
+	 * @return the dependency score, a number between 0 and <i>Y</i>&#x305;
 	 * @throws IllegalArgumentException
+	 *             If {@code X} and {@code Y} are not of equal size
 	 * @since 0.01 2016-03-15
 	 */
 	// TODO: There MUST be a way to make this more efficient (see
@@ -111,7 +114,7 @@ public class Main {
 	/**
 	 * Compute the degree to which {@code dependent} depends on
 	 * {@code independent} by subtracting the forward dependency minus the
-	 * negative dependency. The forward dependency is defined as
+	 * backward dependency. The forward dependency is defined as
 	 * 1&minus;<i>STE</i>(<i>X</i>&rarr;<i>Y</i>)/<i>Y</i>&#x305; while the
 	 * backward dependency is defined as
 	 * 1&minus;<i>STE</i>(<i>Y</i>&rarr;<i>X</i>)/<i>X</i>&#x305; where <i>X</i>
@@ -123,6 +126,21 @@ public class Main {
 	 * kept. If a forward dependency comes out less than the minimum, it is
 	 * returned as {@code Double.NEGATIVE_INFINITY}. If these values are
 	 * desired, {@code minimum} can be safely set to 0.
+	 * <p/>
+	 * 
+	 * @param independent
+	 *            the list of values for the variables assumed to be
+	 *            independent&mdash;each sublist is assumed to be a different
+	 *            variable.
+	 * @param dependent
+	 *            the list of values for the variables assumed to be
+	 *            dependent&mdash;each sublist is assumed to be a different
+	 *            variable.
+	 * 
+	 * @return a {@code independent.size()} by {@code dependent.size()} table of
+	 *         {@code Double}s containing, in each position <i>i</i>, <i>j</i>,
+	 *         the degree at which {@code dependent.get(j)} depends on
+	 *         {@code dependent.get(i)}
 	 * 
 	 * @since 0.01 2016-03-15
 	 */
@@ -209,7 +227,7 @@ public class Main {
 		return g_prime;
 	}
 
-	/** Finds the index of the layyer with the most elements */
+	/** Finds the index of the layer with the most elements */
 	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
 		Iterator<List<U>> layers = x.values().iterator();
 		int out = 0;
@@ -278,8 +296,8 @@ public class Main {
 	 * @param structure
 	 *            A map showing what nodes should be grouped together when
 	 *            plotted. (Each key is a component identifier and each list is
-	 *            the nodes in that component. {@link DomainKnowledge#layerMap()}
-	 *            can be used).
+	 *            the nodes in that component.
+	 *            {@link DomainKnowledge#layerMap()} can be used).
 	 * @param config
 	 *            How to dispose the nodes on the canvas. Must be one of the
 	 *            {@link NodePlacer} valid configurations
@@ -433,6 +451,37 @@ public class Main {
 	}
 
 	/**
+	 * Converts the given graph {@code g} into a {@code BeliefNetwork} displaced
+	 * using a {@link NodePlacer#GEOMETRIC} configuration, placing each node in a different component
+	 * All nodes in the new Belief Network are given the same set of possible values: those in the
+	 * {@code values} parameter. For this reason a universal set of names for
+	 * discretized parameters is encouraged (such as "high", and "low")
+	 * 
+	 * @param g
+	 *            The graph to base the new {@code BeliefNetwork} on. Vertices
+	 *            must be {@code String}s
+	 * @param values
+	 *            The possible values for all nodes
+	 * @return a {@code BeliefNetwork} with one node and edge for every node and
+	 *         edge in the given graph {@code g}
+	 * @since 0.10 2016-04-18
+	 */
+	@SuppressWarnings("unchecked")
+	public static BeliefNetwork graphToNetwork(DirectedGraph g,
+			String[] values) {
+		Set<String> vertices = (Set<String>) g.vertices();
+		Map<String, List<String>> structure = new HashMap<String, List<String>>(vertices.size());
+		Iterator<String> V = vertices.iterator();
+		while (V.hasNext()) {
+			String v = V.next();
+			structure.put(v, Arrays.asList(v));
+		}
+		
+		return Main.graphToNetwork(g, values, structure, NodePlacer.GEOMETRIC, 0);
+		
+	}
+	
+	/**
 	 * Sample main program. The program receives a CSV file where the first row
 	 * is assumed to be the column names, and in every other row, the first
 	 * column is assumed to be a filtering criterion. Which filter criterion to
@@ -449,13 +498,19 @@ public class Main {
 	 * argument.
 	 * 
 	 * @param args
-	 *            An array of length 2 or 3, where the first position contains
+	 *            An array of length 2-4, where the first position contains
 	 *            the name of the file containing the input data, the second
-	 *            position contains the name of the file to write to, and the
+	 *            position contains the name of the file to write to, the
 	 *            third position (in the case of length 3) contains a filtering
-	 *            criterion.
+	 *            criterion, and the fourth position (in the case of length 4)
+	 *            contains one of the {@link NodePlacer} configuration codes.
+	 * @throws IOException
+	 *             if the input file could not be read
+	 * @throws FileNotFoundException
+	 *             if the output file could not be created
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException,
+			FileNotFoundException {
 		if (args.length < 2) {
 			System.err
 					.println("Usage: java Main <input data file> <output file name> [filter criterion] [plot mode]");
@@ -466,7 +521,7 @@ public class Main {
 		CSVReader reader = new CSVReader(new FileReader(args[0]));
 		List<String> titles = Arrays.asList(reader.readNext()); // we will need
 																// to check
-																// "contains" on
+																// "indexOf" on
 																// this later
 		assert titles != null;
 		int cols = titles.size();

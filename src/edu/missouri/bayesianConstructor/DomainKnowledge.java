@@ -99,8 +99,8 @@ import edu.ucla.structure.HashDirectedGraph;
  * resulting warning in Java 1.5 and above.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.04 2016-04-10
- * @since {@link bayesianConstructor} version 0.01
+ * @version 1.05 2016-04-18
+ * @since {@code bayesianConstructor} version 0.01
  */
 // TODO: let user specify type for the layer and variable identifiers <generics>
 // (May require switching to a different Graph library)
@@ -597,7 +597,7 @@ public class DomainKnowledge {
 	 * @param dependent
 	 *            Name of the layer it is desired to see depends on
 	 *            {@code independent}
-	 * @return {@code true if a relationship exists where {@code dependent}
+	 * @return {@code true} if a relationship exists where {@code dependent}
 	 *         depends on {@code independent}; {@code false} if the
 	 *         {@code independent}&rarr;{@code dependent}
 	 */
@@ -775,6 +775,9 @@ public class DomainKnowledge {
 	 * layers. Note that to perform this conversion, the same variable name
 	 * can't appear in two different layers or indeed in the same layer
 	 * 
+	 * @param threshold
+	 *            Minimum dependency strength in {@link #dependencyTables} for
+	 *            the variables to be considered related
 	 * @return a graph where each vertex is a variable and each arc indicates if
 	 *         there's a dependence between them greater than or equal to the
 	 *         threshold. The graph is guaranteed to be acyclic.
@@ -858,6 +861,7 @@ public class DomainKnowledge {
 	 * is created with as many variables as the layer name (thus, layer 0 has
 	 * zero variables, layer 1 has one, etc).
 	 * 
+	 * @layers Number of layers to run the test with
 	 * @throws AssertionError
 	 *             if any of the checks fail
 	 */
@@ -987,15 +991,14 @@ public class DomainKnowledge {
 	}
 
 	/**
-	 * Performs a full correctness test to ensure the class is working
-	 * correctly
+	 * Performs a full correctness test to ensure the class is working correctly
 	 * 
 	 * @param args
-	 * @throws Exception
+	 * @throws AssertionError
 	 *             if the correctness test fails
 	 */
 	// TODO: parse command line arguments
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws AssertionError {
 		DomainKnowledge d = new DomainKnowledge();
 		d.tddTest(10);
 		d = new DomainKnowledge();
