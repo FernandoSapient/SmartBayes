@@ -511,20 +511,36 @@ public class Main {
 		System.out.println("loaded " + rows + " rows of data");
 
 		// expected names
-		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]", secondary = "Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]", tertiary = "Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]", journal = "Scientific and technical journal articles [IP.JRN.ARTC.SC]", trademark = "Trademark applications, total [IP.TMK.TOTL]", government = "General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]", foreignAid = "Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]", agriculture = "Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]", industry = "Industry, value added (% of GDP) [NV.IND.TOTL.ZS]", manufacture = "Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]", services = "Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]", unemployed = "Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]", growth = "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]", PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
+		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]";
+		String secondary = "Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]";
+		String tertiary = "Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]";
+		String journal = "Scientific and technical journal articles [IP.JRN.ARTC.SC]";
+		String trademark = "Trademark applications, total [IP.TMK.TOTL]";
+		String government = "General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]";
+		String foreignAid = "Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]";
+		String agriculture = "Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]";
+		String industry = "Industry, value added (% of GDP) [NV.IND.TOTL.ZS]";
+		String manufacture = "Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]";
+		String services = "Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]";
+		String unemployed = "Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]";
+		String growth = "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]";
+		String PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
 
 		// set categories
 		List<List<Double>> education = Arrays.asList(
 				data[titles.indexOf(primary)], data[titles.indexOf(secondary)],
-				data[titles.indexOf(tertiary)]), innovation = Arrays.asList(
+				data[titles.indexOf(tertiary)]);
+		List<List<Double>> innovation = Arrays.asList(
 				data[titles.indexOf(journal)], data[titles.indexOf(trademark)],
 				data[titles.indexOf(government)],
-				data[titles.indexOf(foreignAid)]), production = Arrays.asList(
+				data[titles.indexOf(foreignAid)]);
+		List<List<Double>> production = Arrays.asList(
 				data[titles.indexOf(agriculture)],
 				data[titles.indexOf(industry)],
 				data[titles.indexOf(manufacture)],
 				data[titles.indexOf(services)],
-				data[titles.indexOf(unemployed)]), economic = Arrays.asList(
+				data[titles.indexOf(unemployed)]);
+		List<List<Double>> economic = Arrays.asList(
 				data[titles.indexOf(growth)], data[titles.indexOf(PPP)]);
 
 		// Hardwire 3-layer structure
