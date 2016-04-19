@@ -77,7 +77,7 @@ import java.awt.Point;
  * and causing erratic behavior.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.4 2016-03-30
+ * @version 1.5 2016-04-19
  * @since {@code bayesianConstructor} version 0.10 2016-03-29
  */
 public class NodePlacer {
@@ -509,9 +509,7 @@ public class NodePlacer {
 			throw new IllegalArgumentException("Cannot place the "+component+"th "
 					+"component of a set of "+number+" components");
 		Point componentCenter = componentCenter(component, number);
-		System.out.println("Component "+component+" of "+number+" is centered at "+componentCenter);
 		Point offset = nodeOffset(component, node, number, size);
-		System.out.println("Node "+node+" of "+size+" offset by "+offset);
 		return new Point(componentCenter.x+offset.x, componentCenter.y+offset.y);
 	}
 	

@@ -33,7 +33,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.12 2016-04-19
+ * @version 0.13 2016-04-19
  * @since {@code bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -178,6 +178,15 @@ public class Main {
 	 * a forward dependency comes out less than 0.5, it is returned as
 	 * {@code Double.NEGATIVE_INFINITY}. If these values are desired, use
 	 * {@code getDependency(independent, dependent, 0)}
+	 * 
+	 * @param independent
+	 *            the list of values for the variables assumed to be
+	 *            independent&mdash;each sublist is assumed to be a different
+	 *            variable.
+	 * @param dependent
+	 *            the list of values for the variables assumed to be
+	 *            dependent&mdash;each sublist is assumed to be a different
+	 *            variable.
 	 * 
 	 * @since 0.01 2016-03-15
 	 */
@@ -340,18 +349,6 @@ public class Main {
 				v_rep.setLocation(placer.position(findLayer(structure, v),
 						findIndex(structure, v), structure.keySet().size(),
 						findSize(structure, v)));
-				System.out.println("placed \""
-						+ v
-						+ "\" (layer "
-						+ findLayer(structure, v)
-						+ ", node "
-						+ findIndex(structure, v)
-						+ " of "
-						+ findSize(structure, v)
-						+ ") at "
-						+ placer.position(findLayer(structure, v),
-								findIndex(structure, v), structure.keySet()
-										.size(), findSize(structure, v)));
 				representations.put(v, v_rep);
 			}
 			added = out.addVariable(v_rep, true);
@@ -515,7 +512,7 @@ public class Main {
 	 * @throws NumberFormatException
 	 *             if {@code args[3]} is not a valid index because it is not a
 	 *             number
-	 * @throws ArrayIndexOutOfBounds
+	 * @throws ArrayIndexOutOfBoundsException
 	 *             if {@code args[3]} is not a valid index because it does not
 	 *             fall within the dataset
 	 */
@@ -542,10 +539,51 @@ public class Main {
 			filterIndex = Integer.parseInt(args[3]);
 
 		// Read data
-		FileReader inputFile = new FileReader(args[0]);
-		Map<String, List<Double>> data = loadCSVwithFiltering(inputFile,
-				filterExp, filterIndex);
+		Map<String, List<Double>> data = loadCSVwithFiltering(new FileReader(
+				args[0]), filterExp, filterIndex);
 
+		// TODO: read domain knowledge structure from file
+		DomainKnowledge m = buildUnescoModel(data);
+
+		DirectedGraph variableGraph = m.variableDependency(.03);
+
+		// define values
+		String[] values = { "low", "med", "high" };
+
+		// convert to bayesian network
+		BeliefNetwork out;
+		// out=newBeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
+		if (args.length >= 5)
+			out = graphToNetwork(variableGraph, values, m.layerMap(),
+					args[4].charAt(0), 0);
+		else
+			out = graphToNetwork(variableGraph, values, m.layerMap());
+
+		boolean result = networkToFile(out, args[1]);
+		if (result)
+			System.out.println("File \"" + args[1] + "\" created successfully");
+		else
+			System.err.println("Could not write file \"" + args[1] + "\".");
+	}
+
+	/**
+	 * Builds a full {@link DomainKnowledge} model following the structure
+	 * proposed in the UNESCO world engineering report. This method is included
+	 * as sample code and will be deprecated as soon as file-reading support is
+	 * added
+	 * 
+	 * @param data
+	 *            A {@cod Map} representing a column-majoral table, where each
+	 *            key is the table's header and the list mapped to is the
+	 *            contents of the column with that name.
+	 * @return A {@link DomainKnowledge} model with dependnecy tables reflecting
+	 *         the relations in the given data
+	 * @throws IllegalArgumentException
+	 *             If the lists in {@code data} are not all the same size
+	 * @since 0.13 2016-04-19
+	 */
+	private static DomainKnowledge buildUnescoModel(
+			Map<String, List<Double>> data) throws IllegalArgumentException {
 		// expected names
 		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]";
 		String secondary = "Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]";
@@ -574,43 +612,25 @@ public class Main {
 		List<List<Double>> economic = Arrays.asList(data.get(growth),
 				data.get(PPP));
 
-		// Hardwire 3-layer structure
-		// TODO: read domain knowledge structure from file
+		// Structure
 		DomainKnowledge m = new DomainKnowledge();
+		m.addLayer("Economic", Arrays.asList(growth, PPP));
 		m.addLayer("Education", Arrays.asList(primary, secondary, tertiary));
 		m.addLayer("Innovation",
 				Arrays.asList(journal, trademark, government, foreignAid));
 		m.addLayer("Production", Arrays.asList(agriculture, industry,
 				manufacture, services, unemployed));
-		m.addLayer("Economic", Arrays.asList(growth, PPP));
 		m.addDependency("Education", "Innovation",
 				getDependency(education, innovation));
 		m.addDependency("Education", "Production",
 				getDependency(education, production));
 		// m.addDependency("Innovation", "Production", getDependency(innovation,
 		// production));
+		m.addDependency("Innovation", "Economic",
+				Main.getDependency(innovation, economic));
 		m.addDependency("Production", "Economic",
 				getDependency(production, economic));
-
-		DirectedGraph variableGraph = m.variableDependency(.03);
-
-		// define values
-		String[] values = { "low", "med", "high" };
-
-		// convert to bayesian network
-		BeliefNetwork out;
-		// out=newBeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
-		if (args.length >= 5)
-			out = graphToNetwork(variableGraph, values, m.layerVariables,
-					args[4].charAt(0), 0);
-		else
-			out = graphToNetwork(variableGraph, values, m.layerVariables);
-
-		boolean result = networkToFile(out, args[1]);
-		if (result)
-			System.out.println("File \"" + args[1] + "\" created successfully");
-		else
-			System.err.println("Could not write file \"" + args[1] + "\".");
+		return m;
 	}
 
 	/**
