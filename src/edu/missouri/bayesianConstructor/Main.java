@@ -35,7 +35,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.10 2016-04-18
+ * @version 0.11 2016-04-18
  * @since {@code bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -311,6 +311,8 @@ public class Main {
 	// TODO:Make this more efficient by storing pending edges hashed by their
 	// second vertex. That way, they can all be added as soon as the missing
 	// vertex is created
+	// TODO:Move main body to a method that takes a NodePlacer, that way callers
+	// can set all the options themselves
 	public static BeliefNetwork graphToNetwork(DirectedGraph g,
 			String[] values, Map<String, List<String>> structure, char config,
 			double angle) {
@@ -452,10 +454,11 @@ public class Main {
 
 	/**
 	 * Converts the given graph {@code g} into a {@code BeliefNetwork} displaced
-	 * using a {@link NodePlacer#GEOMETRIC} configuration, placing each node in a different component
-	 * All nodes in the new Belief Network are given the same set of possible values: those in the
-	 * {@code values} parameter. For this reason a universal set of names for
-	 * discretized parameters is encouraged (such as "high", and "low")
+	 * using a {@link NodePlacer#GEOMETRIC} configuration, placing each node in
+	 * a different component All nodes in the new Belief Network are given the
+	 * same set of possible values: those in the {@code values} parameter. For
+	 * this reason a universal set of names for discretized parameters is
+	 * encouraged (such as "high", and "low")
 	 * 
 	 * @param g
 	 *            The graph to base the new {@code BeliefNetwork} on. Vertices
@@ -467,26 +470,27 @@ public class Main {
 	 * @since 0.10 2016-04-18
 	 */
 	@SuppressWarnings("unchecked")
-	public static BeliefNetwork graphToNetwork(DirectedGraph g,
-			String[] values) {
+	public static BeliefNetwork graphToNetwork(DirectedGraph g, String[] values) {
 		Set<String> vertices = (Set<String>) g.vertices();
-		Map<String, List<String>> structure = new HashMap<String, List<String>>(vertices.size());
+		Map<String, List<String>> structure = new HashMap<String, List<String>>(
+				vertices.size());
 		Iterator<String> V = vertices.iterator();
 		while (V.hasNext()) {
 			String v = V.next();
 			structure.put(v, Arrays.asList(v));
 		}
-		
-		return Main.graphToNetwork(g, values, structure, NodePlacer.GEOMETRIC, 0);
-		
+
+		return Main.graphToNetwork(g, values, structure, NodePlacer.GEOMETRIC,
+				0);
+
 	}
-	
+
 	/**
 	 * Sample main program. The program receives a CSV file where the first row
 	 * is assumed to be the column names, and in every other row, the first
 	 * column is assumed to be a filtering criterion. Which filter criterion to
-	 * use can be specified by using the third argument. The program looks for
-	 * exact (case sensitive) string matching. Filtering is optional.
+	 * use can be specified by using the third argument. Any regular expression
+	 * may be used in filtering. Filtering is optional.
 	 * <p/>
 	 * The program assumes all useful data to be real numbers. Anything that
 	 * cannot be cast to a real number is represented as {@code null}. For this
@@ -498,22 +502,31 @@ public class Main {
 	 * argument.
 	 * 
 	 * @param args
-	 *            An array of length 2-4, where the first position contains
-	 *            the name of the file containing the input data, the second
-	 *            position contains the name of the file to write to, the
-	 *            third position (in the case of length 3) contains a filtering
-	 *            criterion, and the fourth position (in the case of length 4)
+	 *            An array of length 2-5, where the first position contains the
+	 *            name of the file containing the input data, the second
+	 *            position contains the name of the file to write to, the third
+	 *            position (in the case of length 3) contains a filtering
+	 *            regular expression, the fourth (in the case of length 4)
+	 *            contains the index this criterion is to be applied to (zero by
+	 *            default), and the fifth position (in the case of length 5)
 	 *            contains one of the {@link NodePlacer} configuration codes.
 	 * @throws IOException
 	 *             if the input file could not be read
 	 * @throws FileNotFoundException
 	 *             if the output file could not be created
+	 * @throws NumberFormatException
+	 *             if {@code args[3]} is not a valid index because it is not a
+	 *             number
+	 * @throws ArrayIndexOutOfBounds
+	 *             if {@code args[3]} is not a valid index because it does not
+	 *             fall within the dataset
 	 */
+	// improve parameter handling. See JCLAP for potential solution
 	public static void main(String[] args) throws IOException,
-			FileNotFoundException {
+			FileNotFoundException, NumberFormatException {
 		if (args.length < 2) {
 			System.err
-					.println("Usage: java Main <input data file> <output file name> [filter criterion] [plot mode]");
+					.println("Usage: java Main <input data file> <output file name> [filter criterion] [filter index] [plot mode]");
 			return;
 		}
 
@@ -526,27 +539,35 @@ public class Main {
 		assert titles != null;
 		int cols = titles.size();
 		System.out.println(cols + " variable columns found.");
+
+		int filterIndex;
+		if (args.length < 3)
+			filterIndex = 0;
+		else
+			filterIndex = Integer.parseInt(args[3]);
+
 		if (args.length >= 2) {
-			System.out.println("Filtering by " + titles.get(0) + " equal to "
+			System.out.println("Filtering by " + titles.get(filterIndex) + " equal to "
 					+ args[2] + "...");
 		}
 
 		// initialize data array
+		// TODO move this to a method that returns a Map from titles to vectors
+		// this will prevent having to do indexOf
 		@SuppressWarnings("unchecked")
 		Vector<Double>[] data = (Vector<Double>[]) new Vector[cols];
 		for (int i = 0; i < cols; i++)
 			data[i] = new Vector<Double>();
-
 		// load file into data array
 		String[] nextLine;
 		int rows = 0;
 		while ((nextLine = reader.readNext()) != null) {
 			assert nextLine.length == cols;
-			if (args.length < 2 || args[2].equals(nextLine[0])) { // evaluate
-																	// regexp
-																	// instead
-																	// of using
-																	// string.equals
+			if (args.length < 2 || args[2].equals(nextLine[filterIndex])) { // evaluate
+				// regexp
+				// instead
+				// of using
+				// string.equals
 				rows++;
 				for (int i = 0; i < cols; i++) {
 					if (nextLine[i].isEmpty())
@@ -624,19 +645,37 @@ public class Main {
 		// convert to bayesian network
 		BeliefNetwork out;
 		// out=newBeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
-		if (args.length >= 4)
+		if (args.length >= 5)
 			out = graphToNetwork(variableGraph, values, m.layerVariables,
-					args[3].charAt(0), 0);
+					args[4].charAt(0), 0);
 		else
 			out = graphToNetwork(variableGraph, values, m.layerVariables);
 
-		PrintStream f = new PrintStream(new File(args[1]));
-		XmlbifWriter w = new XmlbifWriter();
-		boolean result = w.write(out, f);
+		boolean result = networkToFile(out, args[1]);
 		if (result)
 			System.out.println("File \"" + args[1] + "\" created successfully");
 		else
 			System.err.println("Could not write file \"" + args[1] + "\".");
+	}
+
+	/**
+	 * Stores the given {@code BeliefNetwork} in an XML-BIF file with the file
+	 * name provided
+	 * 
+	 * @param bn
+	 *            The network to be saved in {@code filename}
+	 * @param filename
+	 *            The name of the file that will encode {@code bn}
+	 * @return {@code True}
+	 * @throws FileNotFoundException
+	 *             if {@code filename} could not be created
+	 */
+	public static boolean networkToFile(BeliefNetwork bn, String filename)
+			throws FileNotFoundException {
+		PrintStream f = new PrintStream(new File(filename));
+		XmlbifWriter w = new XmlbifWriter();
+		boolean result = w.write(bn, f);
+		return result;
 	}
 
 }
