@@ -543,6 +543,7 @@ public class Main {
 				args[0]), filterExp, filterIndex);
 
 		// TODO: read domain knowledge structure from file
+		// this will herald in a new major version
 		DomainKnowledge m = buildUnescoModel(data);
 
 		DirectedGraph variableGraph = m.variableDependency(.03);

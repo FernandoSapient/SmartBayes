@@ -28,6 +28,8 @@ import weka.filters.unsupervised.attribute.Discretize;
  * @version 0.08 2016-04-10
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
+//TODO: create non-static versions of all methods
+//(store the bayesian network you're training as an attribute)
 public class Trainer {
 	/**
 	 * Gets the names of all the nodes in the given bayesian network
@@ -356,6 +358,7 @@ public class Trainer {
 	 * @since 0.01 2016-04-02
 	 */
 	// TODO figure out a way to parse any regular expression as filter criterion
+	// TODO improve parameter handling. See JCLAP for potential solution
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
 			System.err

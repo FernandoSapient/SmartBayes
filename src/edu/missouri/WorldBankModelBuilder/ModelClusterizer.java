@@ -126,7 +126,8 @@ public class ModelClusterizer {
 		String unemployed = "Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]";
 		String growth = "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]";
 		String PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
-
+		
+		//TODO: perform in a method to allow others to call it and get their clusterings
 		while(C.hasNext()){
 			String country = C.next();
 			Map<String, List<Double>> data = Main.loadCSVwithFiltering(new FileReader(filename),
