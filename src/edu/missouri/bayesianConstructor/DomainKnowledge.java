@@ -99,11 +99,12 @@ import edu.ucla.structure.HashDirectedGraph;
  * resulting warning in Java 1.5 and above.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 1.05 2016-04-18
+ * @version 1.06 2016-04-19
  * @since {@code bayesianConstructor} version 0.01
  */
 // TODO: let user specify type for the layer and variable identifiers <generics>
-// (May require switching to a different Graph library)
+// (May require switching to a different Graph library) This will herald in a
+// new major version
 // TODO: add support for having the same variable in several layers (note that
 // this may complicate preservation of aciclycity)
 public class DomainKnowledge {
@@ -781,19 +782,19 @@ public class DomainKnowledge {
 	 * @return a graph where each vertex is a variable and each arc indicates if
 	 *         there's a dependence between them greater than or equal to the
 	 *         threshold. The graph is guaranteed to be acyclic.
-	 * @throws IllegalStateException
-	 *             if the variable names are not unique
 	 * @throws NullPointerException
 	 *             if any one of the {@link #dependencyTables}' cells have not
 	 *             been initialized
 	 * 
 	 * @since 1.01 2016-03-14
 	 */
+	 /* @throws IllegalStateException
+	 *             if the variable names are not unique*/
 	// TODO: change IllegalStateException into a warning, to support having the
 	// same variable in different layers
 	@SuppressWarnings("unchecked")
 	public DirectedGraph variableDependency(Double threshold)
-			throws IllegalStateException, NullPointerException {
+			throws NullPointerException {
 		DirectedGraph out = new HashDirectedGraph(t(this.layerVariables.size()));
 
 		Iterator<String> layerNames = this.layerVariables.keySet().iterator();
@@ -806,15 +807,15 @@ public class DomainKnowledge {
 				String v = variables.get(j);
 				// create in the output graph
 				boolean check = out.addVertex(v);
-				if (!check)
-					throw new IllegalStateException(
-							"Duplicate detected! Variable "
-									+ v
-									+ " occurs in "
-									+ layer
-									+ " even though a variable with that name exists elsewhere.");
-
+				// TODO: Reinstate the following sanity check, accounting for
+				// the possibility that addEdge may also create vertices
+				/*
+				 * if (!check){throw new IllegalStateException(
+				 * "Duplicate detected! Variable " + v + " occurs in " + layer +
+				 * " even though a variable with that name exists elsewhere.");}}
+				 */
 				// connect it with the other layers
+				// layers are more likely to be ordered parent to child
 				Iterator<String> D = dependsOn.iterator();
 				while (D.hasNext()) {
 					String parentLayer = D.next();
@@ -826,6 +827,9 @@ public class DomainKnowledge {
 						if (dependency[i][j].compareTo(threshold) >= 0) {
 							check = out.addEdge(parentVariables.get(i), v);
 							assert check;
+							// TODO: check if this created a vertex and if so,
+							// inform the sanity check above (store it in
+							// something it can check)
 						}
 					}// end for of parentVariables
 				}// end while of parentLayers
@@ -1004,6 +1008,7 @@ public class DomainKnowledge {
 		d = new DomainKnowledge();
 
 		// TODO: then presents the user with an interactive console
+		// This will herald in a new major version
 	}
 
 }

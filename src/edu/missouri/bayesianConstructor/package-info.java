@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.20 2016-04-19
+ * @version	0.21 2016-04-19
  * 
  * <h2>Version history</h2>
  * <table>
@@ -19,6 +19,13 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.21</td>
+ * 		<td>2016-04-19</td>
+ * 		<td>{@link DomainKnowledge#variableDependency} no longer assumes
+ * 			layer names are ordered from source to sink
+ * 			({@link DomainKnowledge} is now version 1.06)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.20</td>
