@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.missouri.bayesianConstructor;
 
 import java.io.File;
@@ -8,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +33,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.11 2016-04-18
+ * @version 0.12 2016-04-19
  * @since {@code bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -526,65 +524,27 @@ public class Main {
 			FileNotFoundException, NumberFormatException {
 		if (args.length < 2) {
 			System.err
-					.println("Usage: java Main <input data file> <output file name> [filter criterion] [filter index] [plot mode]");
+					.println("Usage: java Main <input data file> <output file name>"
+							+ " [filter criterion] [filter index] [plot mode]");
 			return;
 		}
 
-		// Read data
-		CSVReader reader = new CSVReader(new FileReader(args[0]));
-		List<String> titles = Arrays.asList(reader.readNext()); // we will need
-																// to check
-																// "indexOf" on
-																// this later
-		assert titles != null;
-		int cols = titles.size();
-		System.out.println(cols + " variable columns found.");
+		String filterExp;
+		if (args.length < 3)
+			filterExp = null;
+		else
+			filterExp = args[2];
 
 		int filterIndex;
-		if (args.length < 3)
+		if (args.length < 4)
 			filterIndex = 0;
 		else
 			filterIndex = Integer.parseInt(args[3]);
 
-		if (args.length >= 2) {
-			System.out.println("Filtering by " + titles.get(filterIndex) + " equal to "
-					+ args[2] + "...");
-		}
-
-		// initialize data array
-		// TODO move this to a method that returns a Map from titles to vectors
-		// this will prevent having to do indexOf
-		@SuppressWarnings("unchecked")
-		Vector<Double>[] data = (Vector<Double>[]) new Vector[cols];
-		for (int i = 0; i < cols; i++)
-			data[i] = new Vector<Double>();
-		// load file into data array
-		String[] nextLine;
-		int rows = 0;
-		while ((nextLine = reader.readNext()) != null) {
-			assert nextLine.length == cols;
-			if (args.length < 2 || args[2].equals(nextLine[filterIndex])) { // evaluate
-				// regexp
-				// instead
-				// of using
-				// string.equals
-				rows++;
-				for (int i = 0; i < cols; i++) {
-					if (nextLine[i].isEmpty())
-						data[i].addElement(null);
-					else
-						try {
-							data[i].addElement(new Double(nextLine[i]));
-						} catch (NumberFormatException e) {
-							data[i].addElement(null);
-						}
-					assert data[i].size() == rows; // all vectors must be same
-													// size
-				}
-			}
-		}
-		reader.close();
-		System.out.println("loaded " + rows + " rows of data");
+		// Read data
+		FileReader inputFile = new FileReader(args[0]);
+		Map<String, List<Double>> data = loadCSVwithFiltering(inputFile,
+				filterExp, filterIndex);
 
 		// expected names
 		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]";
@@ -603,21 +563,16 @@ public class Main {
 		String PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
 
 		// set categories
-		List<List<Double>> education = Arrays.asList(
-				data[titles.indexOf(primary)], data[titles.indexOf(secondary)],
-				data[titles.indexOf(tertiary)]);
-		List<List<Double>> innovation = Arrays.asList(
-				data[titles.indexOf(journal)], data[titles.indexOf(trademark)],
-				data[titles.indexOf(government)],
-				data[titles.indexOf(foreignAid)]);
-		List<List<Double>> production = Arrays.asList(
-				data[titles.indexOf(agriculture)],
-				data[titles.indexOf(industry)],
-				data[titles.indexOf(manufacture)],
-				data[titles.indexOf(services)],
-				data[titles.indexOf(unemployed)]);
-		List<List<Double>> economic = Arrays.asList(
-				data[titles.indexOf(growth)], data[titles.indexOf(PPP)]);
+		List<List<Double>> education = Arrays.asList(data.get(primary),
+				data.get(secondary), data.get(tertiary));
+		List<List<Double>> innovation = Arrays
+				.asList(data.get(journal), data.get(trademark),
+						data.get(government), data.get(foreignAid));
+		List<List<Double>> production = Arrays.asList(data.get(agriculture),
+				data.get(industry), data.get(manufacture), data.get(services),
+				data.get(unemployed));
+		List<List<Double>> economic = Arrays.asList(data.get(growth),
+				data.get(PPP));
 
 		// Hardwire 3-layer structure
 		// TODO: read domain knowledge structure from file
@@ -659,6 +614,128 @@ public class Main {
 	}
 
 	/**
+	 * Loads the rows from a CSV file that match the given criterion. If all
+	 * rows are desired, set {@code filterExp} to {@code null}
+	 * 
+	 * @param inputFile
+	 *            A {@code Reader} that has opened the desired file
+	 * @param filterExp
+	 *            A regular expression indicating how to filter the
+	 *            {@code filterIndex}<sup>th</sup> column
+	 * @param filterIndex
+	 *            Index of the column desired to be filtered (indices start at
+	 *            zero)
+	 * @return A {@cod Map} representing a column-majoral table, where each key
+	 *         is the table's header and the list mapped to is the contents of
+	 *         the column with that name.
+	 * @throws IOException
+	 *             if at any point it cannot read the next line of the file
+	 * @throws IllegalArgumentException
+	 *             if the file given contains zero columns in its column header
+	 * @throws IllegalStateException
+	 *             If not all rows contain the same number of columns
+	 * @throws ArrayIndexOutOfBoundsException
+	 *             If {@code filterIndex} is greater than the number of columns,
+	 *             or if it's negative
+	 * @since 0.12 2016-04-19
+	 */
+	public static Map<String, List<Double>> loadCSVwithFiltering(
+			Reader inputFile, String filterExp, int filterIndex)
+			throws IOException, IllegalArgumentException,
+			IllegalStateException, ArrayIndexOutOfBoundsException {
+		CSVReader reader = new CSVReader(inputFile);
+		String[] titles = reader.readNext();
+		int cols = titles.length;
+		if (cols < 1) {
+			reader.close();
+			throw new IllegalArgumentException("No columns found");
+		}
+
+		// initialize data table
+		Map<String, List<Double>> data = new HashMap<String, List<Double>>(cols);
+		for (int i = 0; i < cols; i++)
+			data.put(titles[i], new Vector<Double>());
+
+		// load file into data table
+		String[] nextLine;
+		int rows = 0;
+		while ((nextLine = reader.readNext()) != null) {
+			if (nextLine.length != cols) {
+				reader.close();
+				throw new IllegalStateException(
+						"File contains an uneven number of columns in row "
+								+ rows);
+			}
+			if (filterExp == null || filterExp.matches(nextLine[filterIndex])) {
+				rows++;
+				for (int i = 0; i < cols; i++) {
+					if (nextLine[i].isEmpty())
+						data.get(titles[i]).add(null);
+					else
+						try {
+							data.get(titles[i]).add(new Double(nextLine[i]));
+						} catch (NumberFormatException e) {
+							data.get(titles[i]).add(null);
+						}
+					assert data.get(titles[i]).size() == rows; // all vectors
+																// same size
+				}
+			}
+		}
+		reader.close();
+		return data;
+	}
+
+	/**
+	 * Loads the rows from a CSV file whose first column match the given
+	 * criterion. If all rows are desired, set {@code filterExp} to {@code null}
+	 * 
+	 * @param inputFile
+	 *            A {@code Reader} that has opened the desired file
+	 * @param filterExp
+	 *            A regular expression indicating how to filter the
+	 *            {@code filterIndex}<sup>th</sup> column
+	 * @return A {@cod Map} representing a column-majoral table, where each key
+	 *         is the table's header and the list mapped to is the contents of
+	 *         the column with that name.
+	 * @throws IOException
+	 *             if at any point it cannot read the next line of the file
+	 * @throws IllegalArgumentException
+	 *             if the file given contains zero columns in its column header
+	 * @throws IllegalStateException
+	 *             If not all rows contain the same number of columns
+	 * @since 0.12 2016-04-19
+	 */
+	public static Map<String, List<Double>> loadCSVwithFiltering(
+			Reader inputFile, String filterExp) throws IOException,
+			IllegalArgumentException, IllegalStateException {
+		return loadCSVwithFiltering(inputFile, filterExp, 0);
+	}
+
+	/**
+	 * Loads a CSV file into a column-majoral representation
+	 * 
+	 * @param inputFile
+	 *            A {@code Reader} that has opened the desired file
+	 * 
+	 * @return A {@code Map} representing a column-majoral table, where each key
+	 *         is the table's header and the list mapped to is the contents of
+	 *         the column with that name.
+	 * @throws IOException
+	 *             if at any point it cannot read the next line of the file
+	 * @throws IllegalArgumentException
+	 *             if the file given contains zero columns in its column header
+	 * @throws IllegalStateException
+	 *             If not all rows contain the same number of columns
+	 * @since 0.12 2016-04-19
+	 */
+	public static Map<String, List<Double>> loadCSVwithFiltering(
+			Reader inputFile) throws IOException, IllegalArgumentException,
+			IllegalStateException {
+		return loadCSVwithFiltering(inputFile, null);
+	}
+
+	/**
 	 * Stores the given {@code BeliefNetwork} in an XML-BIF file with the file
 	 * name provided
 	 * 
@@ -669,6 +746,7 @@ public class Main {
 	 * @return {@code True}
 	 * @throws FileNotFoundException
 	 *             if {@code filename} could not be created
+	 * @since 0.10 2016-04-18
 	 */
 	public static boolean networkToFile(BeliefNetwork bn, String filename)
 			throws FileNotFoundException {

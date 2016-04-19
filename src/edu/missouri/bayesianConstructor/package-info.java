@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.18 2016-04-18
+ * @version	0.19 2016-04-19
  * 
  * <h2>Version history</h2>
  * <table>
@@ -21,11 +21,20 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.19</td>
+ * 		<td>2016-04-19</td>
+ * 		<td>Added {@link Main#loadCSVwithFiltering(java.io.Reader, String, int)},
+ * 			{@link Main#loadCSVwithFiltering(java.io.Reader, String)}, and
+ * 			{@link Main#loadCSVwithFiltering(java.io.Reader)}
+ * 			to permit other callers to use it.
+ * 			({@link Main} is now version 1.12)</td>
+ * 	</tr>
+ * 	<tr>
  * 		<td>0.18</td>
  * 		<td>2016-04-18</td>
  * 		<td>Added {@link Main#networkToFile(edu.ucla.belief.BeliefNetwork, String)}
- * 			to permit other callers to use it, added compatibility for regular expressions
- * 			and filtering of any column.
+ * 			to permit other callers to use it, added compatibility for regular 
+ * 			expressions and filtering of any column.
  * 			({@link Main} is now version 1.11)</td>
  * 	</tr>
  * 	<tr>
