@@ -368,18 +368,6 @@ public class Main {
 					d_rep.setLocation(placer.position(findLayer(structure, d),
 							findIndex(structure, d), structure.keySet().size(),
 							findSize(structure, d)));
-					System.out.println("placed \""
-							+ d
-							+ "\" (layer "
-							+ findLayer(structure, d)
-							+ ", node "
-							+ findIndex(structure, d)
-							+ " of "
-							+ findSize(structure, d)
-							+ ") at "
-							+ placer.position(findLayer(structure, d),
-									findIndex(structure, d), structure.keySet()
-											.size(), findSize(structure, d)));
 					representations.put(d, d_rep);
 				}
 				if (out.contains(d_rep)) {
