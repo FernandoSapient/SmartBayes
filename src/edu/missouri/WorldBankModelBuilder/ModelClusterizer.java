@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -129,7 +130,7 @@ public class ModelClusterizer {
 		
 		//TODO: perform in a method to allow others to call it and get their clusterings
 		while(C.hasNext()){
-			String country = C.next();
+			String country = C.next().trim();
 			Map<String, List<Double>> data = Main.loadCSVwithFiltering(new FileReader(filename),
 					country, groupByIndex);
 			
@@ -169,7 +170,7 @@ public class ModelClusterizer {
 			m.addDependency("Education", "Production",
 					Main.getDependency(education, production));
 			m.addDependency("Innovation", "Production", Main.getDependency(innovation, production));
-			//m.addDependency("Innovation", "Economic", Main.getDependency(innovation, economic));
+			m.addDependency("Innovation", "Economic", Main.getDependency(innovation, economic));
 			m.addDependency("Production", "Economic",
 					Main.getDependency(production, economic));
 			
@@ -182,12 +183,30 @@ public class ModelClusterizer {
 			String[] values = { "low", "med", "high" };
 
 			// convert to bayesian network
+			Map<String, List<String>> orderedLayers = new LinkedHashMap<String, List<String>>(m.layerSet().size());
+			if(args.length >= 3 && args[2].charAt(0)=='S'){
+				//"satellite dish" display 
+				orderedLayers.put("spacer", new Vector<String>());
+				orderedLayers.put("spacer", new Vector<String>());
+				orderedLayers.put("Economic", m.getLayer("Economic"));
+				orderedLayers.put("spacer", new Vector<String>());
+				orderedLayers.put("spacer", new Vector<String>());
+			}
+			orderedLayers.put("Previous Economy", m.getLayer("Previous Economy"));
+			orderedLayers.put("Education", m.getLayer("Education"));
+			orderedLayers.put("Innovation", m.getLayer("Innovation"));
+			orderedLayers.put("Production", m.getLayer("Production"));
+			if(args.length < 3 || args[2].charAt(0)!='S'){
+				orderedLayers.put("Economic", m.getLayer("Economic"));
+			}
+
+			
 			BeliefNetwork out;
 			if (args.length >= 3)
-				out = Main.graphToNetwork(variableGraph, values, m.layerMap(),
+				out = Main.graphToNetwork(variableGraph, values, orderedLayers,
 						args[2].charAt(0), 0);
 			else
-				out = Main.graphToNetwork(variableGraph, values, m.layerMap());
+				out = Main.graphToNetwork(variableGraph, values, orderedLayers);
 			
 			boolean result = Main.networkToFile(out, "out\\"+country+".xml");
 			if (result)
