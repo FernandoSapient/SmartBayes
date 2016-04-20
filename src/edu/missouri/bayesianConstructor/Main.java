@@ -46,10 +46,10 @@ public class Main {
 	 * >standard error of the predicted y-value for each x in a linear
 	 * regression</a> as defined by Microsoft:
 	 * &radic;((&sum;(<i>Y</i>&minus;<i>Y</i>&#x305;) &minus;
-	 * (&sum;(<i>X</i>&minus
-	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305;))&sup2; /
-	 * &sum;((<i>X</i>&minus;<i>X</i>&#x305)&sup2;)) / (n-2)) STE returns values
-	 * in the (0, <i>Y</i>&#x305;) interval where <i>Y</i>&#x305 is the
+	 * (&sum;(<i>X</i>&minus;<i>X</i>&#x305;)
+	 * (<i>Y</i>&minus;<i>Y</i>&#x305;))&sup2; /
+	 * &sum;((<i>X</i>&minus;<i>X</i>&#x305;)&sup2;)) / (n-2)) STE returns values
+	 * in the (0, <i>Y</i>&#x305;) interval where <i>Y</i>&#x305; is the
 	 * arithmetic sample means of <i>Y</i>.
 	 * <p/>
 	 * If a value is {@code null}; it, and the corresponding value in the other
@@ -127,13 +127,16 @@ public class Main {
 	 * <p/>
 	 * 
 	 * @param independent
-	 *            the list of values for the variables assumed to be
+	 *            The list of values for the variables assumed to be
 	 *            independent&mdash;each sublist is assumed to be a different
 	 *            variable.
 	 * @param dependent
-	 *            the list of values for the variables assumed to be
+	 *            The list of values for the variables assumed to be
 	 *            dependent&mdash;each sublist is assumed to be a different
 	 *            variable.
+	 * @param minimum
+	 *            Value for the forward dependency below which the result is
+	 *            discarded
 	 * 
 	 * @return a {@code independent.size()} by {@code dependent.size()} table of
 	 *         {@code Double}s containing, in each position <i>i</i>, <i>j</i>,
@@ -187,6 +190,11 @@ public class Main {
 	 *            the list of values for the variables assumed to be
 	 *            dependent&mdash;each sublist is assumed to be a different
 	 *            variable.
+	 * @return a {@code independent.size()} by {@code dependent.size()} table of
+	 *         {@code Double}s containing, in each position <i>i</i>, <i>j</i>,
+	 *         the degree at which {@code dependent.get(j)} depends on
+	 *         {@code dependent.get(i)}
+	 * 
 	 * 
 	 * @since 0.01 2016-03-15
 	 */
@@ -214,7 +222,7 @@ public class Main {
 	 *             {@code edu.ucla.belief.BeliefNetwork}; however, the graphs
 	 *             returned by this function are not fully supported by
 	 *             {@code BeliefNetwork} (Edges do not get updated properly).
-	 *             Use {@link #graphToNetwork(DirectedGraph, String[]) for this
+	 *             Use {@link #graphToNetwork(DirectedGraph, String[])} for this
 	 *             purpose instead.
 	 */
 	@Deprecated
@@ -562,7 +570,7 @@ public class Main {
 	 * added
 	 * 
 	 * @param data
-	 *            A {@cod Map} representing a column-majoral table, where each
+	 *            A {@code Map} representing a column-majoral table, where each
 	 *            key is the table's header and the list mapped to is the
 	 *            contents of the column with that name.
 	 * @return A {@link DomainKnowledge} model with dependnecy tables reflecting
@@ -634,7 +642,7 @@ public class Main {
 	 * @param filterIndex
 	 *            Index of the column desired to be filtered (indices start at
 	 *            zero)
-	 * @return A {@cod Map} representing a column-majoral table, where each key
+	 * @return A {@code Map} representing a column-majoral table, where each key
 	 *         is the table's header and the list mapped to is the contents of
 	 *         the column with that name.
 	 * @throws IOException
@@ -704,7 +712,7 @@ public class Main {
 	 * @param filterExp
 	 *            A regular expression indicating how to filter the
 	 *            {@code filterIndex}<sup>th</sup> column
-	 * @return A {@cod Map} representing a column-majoral table, where each key
+	 * @return A {@code Map} representing a column-majoral table, where each key
 	 *         is the table's header and the list mapped to is the contents of
 	 *         the column with that name.
 	 * @throws IOException

@@ -1,0 +1,730 @@
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NZL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FJI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PNG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ZAR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/STP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/WLD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MHL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CUB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SDN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GMB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CEB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CUW.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MYS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MIC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/POL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ARB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/OMN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SUR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ARE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KEN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ARG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GNB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HPC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ARM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/UZB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BTN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SEN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TGO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IRL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IRN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/QAT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BDI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NLD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IRQ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SVK.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SVN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GNQ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/THA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ABW.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ASM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SWE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ISL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LIC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MKD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BEL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ISR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KWT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LIE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DZA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BEN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/RUS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ATG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ITA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SWZ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TZA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PAK.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BFA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PAN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SGP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/UKR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KGZ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CHE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DJI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CHI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CHL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PRI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CHN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PRK.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SXM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MLI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ADO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BWA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HRV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KHM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IDN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PRT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MLT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TJK.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/VNM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CYM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PRY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CYP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SYC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/RWA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BGD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/AUS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/AUT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NOC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LKA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GAB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ZWE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/UMC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BGR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EMU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SYR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CZE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NOR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CIV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PSS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MMR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KIR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TKM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GRD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GRC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HTI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GRL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/YEM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MNA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/AFG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MNE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MNG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NPL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BHS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BHR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MNP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GBR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DMA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/WBG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BIH.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HUN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LMC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/AGO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/OSS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/WSM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NAC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FRA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TMP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LMY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MOZ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NAM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PER.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DNK.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GTM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FRO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SLB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SLE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SLV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GUM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FSM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DOM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CMR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GUY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/AZE.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/OEC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MAC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/OED.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GEO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TON.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MAF.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EAP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EAS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NCL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FCS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SMR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ERI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MAR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KNA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/VCT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BLR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MRT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BLZ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PHL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/COG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PYF.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/URY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/COM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/COL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/USA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ECA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ESP.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HIC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EST.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BMU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ZMB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KOR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LAC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SOM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ECS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/VUT.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ECU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ALB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ETH.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MCO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NER.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LAO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/VEN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GHA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CPV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MDA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MDG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LBN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LBR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BOL.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MDV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LBY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EUU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HKG.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MEA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CAF.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LSO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NGA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MUS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LCA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/JOR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/GIN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CAN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ROM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TCA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TCD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IMY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LCN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CRI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/IND.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MEX.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SRB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SAS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KAZ.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SAU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/JPN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LDC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LTU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TTO.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/INX.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/PLW.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/MWI.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SSA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/CSS.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SSD.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SSF.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/NIC.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/FIN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TUN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LUX.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/UGA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/KSV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BRA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TUR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BRB.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/TUV.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/DEU.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/SST.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/EGY.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/LVA.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/JAM.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/ZAF.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/VIR.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/BRN.xml" created successfully
+warning: XmlbifWriter.write() failed to write network name: java.lang.NullPointerException
+File "out/nets/HND.xml" created successfully
+233 distinct networks were built:
+Cluster: [PYF]
+Cluster: [SWZ]
+Cluster: [GNQ]
+Cluster: [MNG]
+Cluster: [FJI]
+Cluster: [OSS]
+Cluster: [LMY]
+Cluster: [SSA, SSF]
+Cluster: [LBY]
+Cluster: [GMB]
+Cluster: [KOR]
+Cluster: [UMC]
+Cluster: [HND]
+Cluster: [FSM]
+Cluster: [CZE]
+Cluster: [ATG]
+Cluster: [LAC]
+Cluster: [BRA]
+Cluster: [ISR]
+Cluster: [TKM]
+Cluster: [LUX]
+Cluster: [SMR]
+Cluster: [AFG]
+Cluster: [YEM]
+Cluster: [SUR]
+Cluster: [NLD]
+Cluster: [TZA]
+Cluster: [AUT]
+Cluster: [TGO]
+Cluster: [KNA]
+Cluster: [BTN]
+Cluster: [SLB]
+Cluster: [LCA]
+Cluster: [WSM]
+Cluster: [PRT]
+Cluster: [CSS]
+Cluster: [MWI]
+Cluster: [NZL]
+Cluster: [PAN]
+Cluster: [ROM]
+Cluster: [CUB]
+Cluster: [MLT]
+Cluster: [URY]
+Cluster: [CPV]
+Cluster: [CHE]
+Cluster: [FCS]
+Cluster: [NOR]
+Cluster: [UZB]
+Cluster: [BHR]
+Cluster: [GAB, COG]
+Cluster: [STP]
+Cluster: [SDN]
+Cluster: [SAU]
+Cluster: [GHA]
+Cluster: [JAM]
+Cluster: [MLI]
+Cluster: [LBN]
+Cluster: [ARG]
+Cluster: [BMU]
+Cluster: [SLE]
+Cluster: [BWA]
+Cluster: [KHM]
+Cluster: [SGP]
+Cluster: [SLV]
+Cluster: [HIC]
+Cluster: [MOZ]
+Cluster: [SOM]
+Cluster: [LIC]
+Cluster: [MKD]
+Cluster: [LSO]
+Cluster: [ZMB]
+Cluster: [NOC]
+Cluster: [MRT]
+Cluster: [CHN]
+Cluster: [EGY]
+Cluster: [BDI]
+Cluster: [UGA]
+Cluster: [ERI]
+Cluster: [VNM]
+Cluster: [OEC]
+Cluster: [KEN]
+Cluster: [CYP]
+Cluster: [MNA]
+Cluster: [DNK]
+Cluster: [NIC]
+Cluster: [SST]
+Cluster: [NGA]
+Cluster: [JOR]
+Cluster: [BRB]
+Cluster: [PRI]
+Cluster: [TON]
+Cluster: [SEN]
+Cluster: [COL]
+Cluster: [IRN]
+Cluster: [HTI]
+Cluster: [KIR]
+Cluster: [LCN]
+Cluster: [MEX]
+Cluster: [KAZ]
+Cluster: [MHL]
+Cluster: [PER]
+Cluster: [KSV]
+Cluster: [LIE]
+Cluster: [DZA]
+Cluster: [SVN]
+Cluster: [MMR]
+Cluster: [VUT]
+Cluster: [DOM]
+Cluster: [MIC]
+Cluster: [EAP]
+Cluster: [BLZ]
+Cluster: [SSD]
+Cluster: [ZAR]
+Cluster: [SVK]
+Cluster: [SRB]
+Cluster: [NAC]
+Cluster: [BEN]
+Cluster: [GRC]
+Cluster: [ECA]
+Cluster: [HPC]
+Cluster: [ALB]
+Cluster: [ZAF]
+Cluster: [ADO]
+Cluster: [ARE]
+Cluster: [ARM]
+Cluster: [NCL]
+Cluster: [ABW]
+Cluster: [SAS]
+Cluster: [AUS]
+Cluster: [FRA]
+Cluster: [GUY]
+Cluster: [TJK]
+Cluster: [VCT]
+Cluster: [IDN]
+Cluster: [TUR]
+Cluster: [SYC]
+Cluster: [USA]
+Cluster: [PSS]
+Cluster: [TMP]
+Cluster: [CRI]
+Cluster: [GBR]
+Cluster: [MAC]
+Cluster: [VEN]
+Cluster: [MUS]
+Cluster: [EMU]
+Cluster: [THA]
+Cluster: [ISL]
+Cluster: [ARB]
+Cluster: [EAS]
+Cluster: [GIN]
+Cluster: [MAR]
+Cluster: [LTU]
+Cluster: [CMR]
+Cluster: [TUV]
+Cluster: [RWA]
+Cluster: [CUW, ASM, CHI, SXM, GRL, MNP, FRO, GUM, MAF, MCO, TCA, IMY, INX, VIR]
+Cluster: [LMC]
+Cluster: [SWE]
+Cluster: [IND]
+Cluster: [TCD]
+Cluster: [BGD]
+Cluster: [AZE]
+Cluster: [CAN]
+Cluster: [IRL]
+Cluster: [BGR]
+Cluster: [IRQ]
+Cluster: [COM]
+Cluster: [ESP]
+Cluster: [PHL]
+Cluster: [BLR]
+Cluster: [MDA]
+Cluster: [BHS]
+Cluster: [NER]
+Cluster: [MDG]
+Cluster: [WBG]
+Cluster: [ITA]
+Cluster: [EUU]
+Cluster: [MYS]
+Cluster: [GNB]
+Cluster: [CYM]
+Cluster: [DMA]
+Cluster: [FIN]
+Cluster: [NAM]
+Cluster: [OMN]
+Cluster: [EST]
+Cluster: [RUS]
+Cluster: [BFA]
+Cluster: [DJI]
+Cluster: [POL]
+Cluster: [BEL]
+Cluster: [KGZ]
+Cluster: [BRN]
+Cluster: [KWT]
+Cluster: [BOL]
+Cluster: [TTO]
+Cluster: [HUN]
+Cluster: [PAK]
+Cluster: [HKG]
+Cluster: [AGO]
+Cluster: [ETH]
+Cluster: [UKR]
+Cluster: [GTM]
+Cluster: [CHL]
+Cluster: [MNE]
+Cluster: [CAF]
+Cluster: [DEU]
+Cluster: [NPL]
+Cluster: [PNG]
+Cluster: [JPN]
+Cluster: [QAT]
+Cluster: [PLW]
+Cluster: [BIH]
+Cluster: [CIV]
+Cluster: [PRY]
+Cluster: [MEA]
+Cluster: [ECU]
+Cluster: [PRK]
+Cluster: [TUN]
+Cluster: [GRD]
+Cluster: [OED]
+Cluster: [LVA]
+Cluster: [ECS]
+Cluster: [GEO]
+Cluster: [LAO]
+Cluster: [ZWE]
+Cluster: [MDV]
+Cluster: [LBR]
+Cluster: [WLD]
+Cluster: [SYR]
+Cluster: [LKA]
+Cluster: [HRV]
+Cluster: [CEB]
+Cluster: [LDC]

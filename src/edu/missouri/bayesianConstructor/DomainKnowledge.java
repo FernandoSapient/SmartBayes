@@ -865,7 +865,7 @@ public class DomainKnowledge {
 	 * is created with as many variables as the layer name (thus, layer 0 has
 	 * zero variables, layer 1 has one, etc).
 	 * 
-	 * @layers Number of layers to run the test with
+	 * @param layers Number of layers to run the test with
 	 * @throws AssertionError
 	 *             if any of the checks fail
 	 */
@@ -997,7 +997,7 @@ public class DomainKnowledge {
 	/**
 	 * Performs a full correctness test to ensure the class is working correctly
 	 * 
-	 * @param args
+	 * @param args (ignored)
 	 * @throws AssertionError
 	 *             if the correctness test fails
 	 */

@@ -3,7 +3,6 @@
  */
 package edu.missouri.bayesianEvaluator;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -134,7 +133,7 @@ public class Evaluator {
 		assert trainSize>0;
 		assert trainSize<1;
 		
-		Map<Instances, Instances> Trainset = randomSplit(data, trainSize, Math.round(1/(1-trainSize)));
+		Map<Instances, Instances> Trainset = randomSplit(data, trainSize, Math.round(1/(1-trainSize))*2);
 		Iterator<Instances> trains = Trainset.keySet().iterator();
 		while(trains.hasNext()){
 			Instances current = trains.next();
@@ -142,7 +141,9 @@ public class Evaluator {
 			bn.estimateCPTs();
 			Evaluation e = new Evaluation(current);
 			e.evaluateModel(bn, Trainset.get(current));
-			System.out.println("\nRESULTS:\n"+e.toSummaryString());
+			@SuppressWarnings("deprecation")
+			String summary = e.toSummaryString("\nRESULTS\nat "+new java.util.Date().toLocaleString()+"\n-------", true);
+			System.out.println(summary);
 		}
 	}
 
