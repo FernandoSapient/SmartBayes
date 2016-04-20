@@ -19,10 +19,19 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.11</td>
+ * 		<td>2016-04-19</td>
+ * 		<td>Security enhancement: {@link BifUpdate#loadBayesNet(String)} now returns an
+ * 			<em>editable</em> Bayes net to encourage the use of {@code setData}.
+ * 			{@link BifUpdate} is now version 0.03; {@link Trainer} is now version 0.09;
+ * 			{@link Evaluator} is now version 0.02.</td>
+ * 	</tr>
+ * 	<tr>
  * 		<td>0.10</td>
  * 		<td>2016-04-19</td>
  * 		<td>Added {@link Evaluator}</td>
  * 	</tr>
+ * 	<tr>
  * 		<td>0.09</td>
  * 		<td>2016-04-10</td>
  * 		<td>Added {@link Trainer#conformToNetwork(weka.core.Instances, weka.classifiers.bayes.BayesNet, boolean)}.

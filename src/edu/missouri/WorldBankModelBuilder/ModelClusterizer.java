@@ -25,7 +25,7 @@ import edu.ucla.structure.DirectedGraph;
  * Provides a way to generate all the economic models, and group countries by it
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.01 2016-04-19
+ * @version 0.03 2016-04-19
  * @since {@code WorldBankModelBuilder} version 0.01 2016-03-11
  */
 public class ModelClusterizer {
@@ -208,11 +208,14 @@ public class ModelClusterizer {
 			else
 				out = Main.graphToNetwork(variableGraph, values, orderedLayers);
 			
-			boolean result = Main.networkToFile(out, "out\\"+country+".xml");
+			String fileOut = "out/nets/"+country+".xml";
+			//This is bad practice
+			//TODO: use input parameter to determine target directory
+			boolean result = Main.networkToFile(out, fileOut);
 			if (result)
-				System.out.println("File \"" + "out\\"+country+".xml" + "\" created successfully");
+				System.out.println("File \"" + fileOut + "\" created successfully");
 			else
-				System.err.println("Could not write file \"" + "out\\"+country+".xml" + "\".");
+				System.err.println("Could not write file \"" + fileOut + "\".");
 			//but does it change with the years?
 		}
 		

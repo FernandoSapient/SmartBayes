@@ -20,8 +20,8 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.01 2016-04-19
- * @since {@code bayesianEvaluator} version 0.10 2016-04-09
+ * @version 0.02 2016-04-19
+ * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
 // (store the bayesian network you're training as an attribute)
@@ -108,7 +108,7 @@ public class Evaluator {
 																	// practice
 		}
 		Instances data = source.getDataSet();
-		BayesNet bn = BifUpdate.loadBayesNet(args[1]);
+		EditableBayesNet bn = BifUpdate.loadBayesNet(args[1]);
 
 		// filter out by criterion
 		if (args.length >= 4) {
@@ -138,7 +138,7 @@ public class Evaluator {
 		Iterator<Instances> trains = Trainset.keySet().iterator();
 		while(trains.hasNext()){
 			Instances current = trains.next();
-			((EditableBayesNet)bn).setData(current);
+			bn.setData(current);
 			bn.estimateCPTs();
 			Evaluation e = new Evaluation(current);
 			e.evaluateModel(bn, Trainset.get(current));

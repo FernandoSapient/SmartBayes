@@ -10,6 +10,16 @@
  * 		<th>Changes</th>
  * 	</tr>
  * 	<tr>
+ * 		<td>0.03</td>
+ * 		<td>2016-04-19</td>
+ * 		<td>{@link ModelClusterizer} now stores in ./out/nets</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.02</td>
+ * 		<td>2016-04-19</td>
+ * 		<td>Bug fixes</td>
+ * 	</tr>
+ * 	<tr>
  * 		<td>0.01</td>
  * 		<td>2016-04-19</td>
  * 		<td>Package created with {@link ModelClusterizer}</td>

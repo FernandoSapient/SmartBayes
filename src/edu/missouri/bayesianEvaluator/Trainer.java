@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import weka.classifiers.bayes.BayesNet;
+import weka.classifiers.bayes.net.EditableBayesNet;
 import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -25,7 +26,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.08 2016-04-10
+ * @version 0.09 2016-04-19
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 //TODO: create non-static versions of all methods
@@ -373,7 +374,7 @@ public class Trainer {
 																	// practice
 		}
 		Instances data = source.getDataSet();
-		BayesNet bn = BifUpdate.loadBayesNet(args[1]);
+		EditableBayesNet bn = BifUpdate.loadBayesNet(args[1]);
 
 		// filter out by criterion
 		if (args.length >= 4) {
@@ -392,7 +393,7 @@ public class Trainer {
 		System.out.println("Setting " + data.classAttribute().name()
 				+ " as class...");
 
-		bn.m_Instances = data;
+		bn.setData(data);
 		System.out.println("Training network...");
 		bn.estimateCPTs();
 
