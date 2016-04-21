@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.10 2016-04-19
+ * @version	0.12 2016-04-20
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,12 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.12</td>
+ * 		<td>2016-04-20</td>
+ * 		<td>added {@link Trainer#trainToFile} and {@link Evaluator#wekaEvaluation}
+ * 			({@link Trainer} is now version 0.10; {@link Evaluator} is now version 0.03)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.11</td>
