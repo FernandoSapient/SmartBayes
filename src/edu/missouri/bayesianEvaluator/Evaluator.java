@@ -19,11 +19,14 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.02 2016-04-19
+ * @version 0.03 2016-04-20
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
 // (store the bayesian network you're training as an attribute)
+// TODO: have a class of weka-only evaluation and a class of samiam-only evaluation
+// TODO: Define an interface where an evaluation fucntion returns the
+// confusion table and define methods to let the callers deal with it
 public class Evaluator {
 
 	/**
@@ -62,7 +65,7 @@ public class Evaluator {
 		return out;
 	}
 
-	/**
+/**
 	 * Takes a (trained?) Bayesian network (provided in an XML BIF file) and evaluates
 	 * it using the given data. 
 	 * <!--The following is copied from Trainer.main-->
@@ -126,25 +129,57 @@ public class Evaluator {
 		data.setClassIndex(data.numAttributes() - 1);
 		System.out.println("Setting " + data.classAttribute().name()
 				+ " as class...");
-		
-		float trainSize = 0.9f;
 
-		//TODO move to function
-		assert trainSize>0;
-		assert trainSize<1;
-		
-		Map<Instances, Instances> Trainset = randomSplit(data, trainSize, Math.round(1/(1-trainSize))*2);
+		float trainSize = 0.85f;
+
+		// TODO move to function
+		assert trainSize > 0;
+		assert trainSize < 1;
+
+		Map<Instances, Instances> Trainset = randomSplit(data, trainSize,
+				Math.round(1 / (1 - trainSize)) * 2);
 		Iterator<Instances> trains = Trainset.keySet().iterator();
-		while(trains.hasNext()){
+		@SuppressWarnings("deprecation")
+		String date = new java.util.Date().toLocaleString();
+		System.out.println("\nRESULTS\nat " + date + "\n-------");
+		while (trains.hasNext()) {
 			Instances current = trains.next();
-			bn.setData(current);
-			bn.estimateCPTs();
-			Evaluation e = new Evaluation(current);
-			e.evaluateModel(bn, Trainset.get(current));
-			@SuppressWarnings("deprecation")
-			String summary = e.toSummaryString("\nRESULTS\nat "+new java.util.Date().toLocaleString()+"\n-------", true);
+			Trainer.trainToFile(bn, current, args[2]);
+			String summary = wekaEvaluation(bn, current, Trainset.get(current));
 			System.out.println(summary);
 		}
+	}
+
+	/**
+	 * Evaluates the given Bayesian network on the given test data using Weka's
+	 * built-in evaluator. Note that this evaluator does not support belief
+	 * propagation (i.e. if the network is a chain of length 3, and the target
+	 * node is <i>v<sub>3</sub></i> and the value of its immediate parent
+	 * <i>v<sub>2</sub></i> is missing, rather than check <i>v<sub>1</sub></i>
+	 * to predict <i>v<sub>3</sub></i>, the evaluator merely assumes that
+	 * <i>v<sub>2</sub> is its default value&mdash;the value of
+	 * <i>v<sub>2</sub></i> with the highest frequency in the training data
+	 * irrespective of the values of its adjacent nodes)
+	 * 
+	 * @param bn
+	 *            A trained Bayesian network to be tested
+	 * @param trainset
+	 *            The data the Bayesian network was trained with
+	 * @param trainset
+	 *            The data to test the Bayesian network with
+	 * @return A string containing the results of the evaluation (see
+	 *         {@code weka.classifiers.evaluation.Evaluation.toSummaryString})
+	 * @throws Exception
+	 *             if the Bayesian network is corrupted
+	 * @since 0.03 2016-04-20
+	 */
+	//TODO: iterate over all attributes to test the ability predicting all variables.
+	public static String wekaEvaluation(EditableBayesNet bn,
+			Instances trainset, Instances testset)
+			throws Exception {
+		Evaluation e = new Evaluation(trainset);
+		e.evaluateModel(bn, testset);
+		return e.toSummaryString(true);
 	}
 
 }

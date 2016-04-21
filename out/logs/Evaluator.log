@@ -554,3 +554,1059 @@ Coverage of cases (0.95 level)         100      %
 Mean rel. region size (0.95 level)     100      %
 Total Number of Instances                6     
 
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+Setting Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS] as class...
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.1111
+K&B Relative Info Score                 52.5884 %
+K&B Information Score                    0.7153 bits      0.1192 bits/instance
+Class complexity | order 0               9.2015 bits      1.5336 bits/instance
+Class complexity | scheme                8.5663 bits      1.4277 bits/instance
+Complexity improvement     (Sf)          0.6352 bits      0.1059 bits/instance
+Mean absolute error                      0.3933
+Root mean squared error                  0.4442
+Relative absolute error                 96.3799 %
+Root relative squared error             96.0063 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0.2174
+K&B Relative Info Score                 52.8276 %
+K&B Information Score                    0.7186 bits      0.1198 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                8.4018 bits      1.4003 bits/instance
+Complexity improvement     (Sf)          0.6769 bits      0.1128 bits/instance
+Mean absolute error                      0.3881
+Root mean squared error                  0.4379
+Relative absolute error                 96.105  %
+Root relative squared error             95.609  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.3333
+K&B Relative Info Score                -55.1775 %
+K&B Information Score                   -0.7721 bits     -0.1287 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                8.5621 bits      1.427  bits/instance
+Complexity improvement     (Sf)         -1.4927 bits     -0.2488 bits/instance
+Mean absolute error                      0.4105
+Root mean squared error                  0.4558
+Relative absolute error                110.3989 %
+Root relative squared error            109.4164 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                         -0.125 
+K&B Relative Info Score                 18.2322 %
+K&B Information Score                    0.2554 bits      0.0426 bits/instance
+Class complexity | order 0               7.0613 bits      1.1769 bits/instance
+Class complexity | scheme                7.0038 bits      1.1673 bits/instance
+Complexity improvement     (Sf)          0.0574 bits      0.0096 bits/instance
+Mean absolute error                      0.3651
+Root mean squared error                  0.4033
+Relative absolute error                 98.1991 %
+Root relative squared error             96.875  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0     
+K&B Relative Info Score                -17.7964 %
+K&B Information Score                   -0.2484 bits     -0.0414 bits/instance
+Class complexity | order 0               7.3457 bits      1.2243 bits/instance
+Class complexity | scheme                7.6538 bits      1.2756 bits/instance
+Complexity improvement     (Sf)         -0.3081 bits     -0.0513 bits/instance
+Mean absolute error                      0.3909
+Root mean squared error                  0.4297
+Relative absolute error                102.7751 %
+Root relative squared error            100.4958 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0     
+K&B Relative Info Score                 17.2969 %
+K&B Information Score                    0.242  bits      0.0403 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                6.8923 bits      1.1487 bits/instance
+Complexity improvement     (Sf)          0.1772 bits      0.0295 bits/instance
+Mean absolute error                      0.362 
+Root mean squared error                  0.4024
+Relative absolute error                 97.3582 %
+Root relative squared error             96.5967 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0.2174
+K&B Relative Info Score                 52.8276 %
+K&B Information Score                    0.7186 bits      0.1198 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                8.4018 bits      1.4003 bits/instance
+Complexity improvement     (Sf)          0.6769 bits      0.1128 bits/instance
+Mean absolute error                      0.3881
+Root mean squared error                  0.4379
+Relative absolute error                 96.105  %
+Root relative squared error             95.609  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           1               20      %
+Incorrectly Classified Instances         4               80      %
+Kappa statistic                          0     
+K&B Relative Info Score                -21.9242 %
+K&B Information Score                   -0.3061 bits     -0.0612 bits/instance
+Class complexity | order 0               5.9604 bits      1.1921 bits/instance
+Class complexity | scheme                6.4122 bits      1.2824 bits/instance
+Complexity improvement     (Sf)         -0.4518 bits     -0.0904 bits/instance
+Mean absolute error                      0.392 
+Root mean squared error                  0.4368
+Relative absolute error                104.5686 %
+Root relative squared error            103.8462 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                5     
+Ignored Class Unknown Instances                  1     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0     
+K&B Relative Info Score                -30.1678 %
+K&B Information Score                   -0.4225 bits     -0.0704 bits/instance
+Class complexity | order 0               7.0613 bits      1.1769 bits/instance
+Class complexity | scheme                7.6538 bits      1.2756 bits/instance
+Complexity improvement     (Sf)         -0.5925 bits     -0.0987 bits/instance
+Mean absolute error                      0.3909
+Root mean squared error                  0.4297
+Relative absolute error                105.1378 %
+Root relative squared error            103.2226 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.0769
+K&B Relative Info Score                -37.437  %
+K&B Information Score                   -0.5243 bits     -0.0874 bits/instance
+Class complexity | order 0               7.0613 bits      1.1769 bits/instance
+Class complexity | scheme                7.8252 bits      1.3042 bits/instance
+Complexity improvement     (Sf)         -0.7639 bits     -0.1273 bits/instance
+Mean absolute error                      0.3956
+Root mean squared error                  0.4325
+Relative absolute error                106.4142 %
+Root relative squared error            103.8861 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0     
+K&B Relative Info Score                 12.973  %
+K&B Information Score                    0.1765 bits      0.0294 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                8.984  bits      1.4973 bits/instance
+Complexity improvement     (Sf)          0.0946 bits      0.0158 bits/instance
+Mean absolute error                      0.4123
+Root mean squared error                  0.4586
+Relative absolute error                102.0973 %
+Root relative squared error            100.1283 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.1111
+K&B Relative Info Score                 39.7327 %
+K&B Information Score                    0.5405 bits      0.0901 bits/instance
+Class complexity | order 0               9.2015 bits      1.5336 bits/instance
+Class complexity | scheme                8.8451 bits      1.4742 bits/instance
+Complexity improvement     (Sf)          0.3564 bits      0.0594 bits/instance
+Mean absolute error                      0.4006
+Root mean squared error                  0.4486
+Relative absolute error                 98.147  %
+Root relative squared error             96.9517 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0     
+K&B Relative Info Score                 12.973  %
+K&B Information Score                    0.1765 bits      0.0294 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                8.984  bits      1.4973 bits/instance
+Complexity improvement     (Sf)          0.0946 bits      0.0158 bits/instance
+Mean absolute error                      0.4123
+Root mean squared error                  0.4586
+Relative absolute error                102.0973 %
+Root relative squared error            100.1283 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.0769
+K&B Relative Info Score                -37.437  %
+K&B Information Score                   -0.5243 bits     -0.0874 bits/instance
+Class complexity | order 0               7.0613 bits      1.1769 bits/instance
+Class complexity | scheme                7.8252 bits      1.3042 bits/instance
+Complexity improvement     (Sf)         -0.7639 bits     -0.1273 bits/instance
+Mean absolute error                      0.3956
+Root mean squared error                  0.4325
+Relative absolute error                106.4142 %
+Root relative squared error            103.8861 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.04  
+K&B Relative Info Score                 -3.8922 %
+K&B Information Score                   -0.0529 bits     -0.0088 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                9.3347 bits      1.5558 bits/instance
+Complexity improvement     (Sf)         -0.256  bits     -0.0427 bits/instance
+Mean absolute error                      0.4218
+Root mean squared error                  0.4657
+Relative absolute error                104.4424 %
+Root relative squared error            101.6728 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                          0     
+K&B Relative Info Score                 23.521  %
+K&B Information Score                    0.3183 bits      0.053  bits/instance
+Class complexity | order 0               9.611  bits      1.6018 bits/instance
+Class complexity | scheme                9.3278 bits      1.5546 bits/instance
+Complexity improvement     (Sf)          0.2832 bits      0.0472 bits/instance
+Mean absolute error                      0.423 
+Root mean squared error                  0.471 
+Relative absolute error                100.4954 %
+Root relative squared error             98.5554 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                          0     
+K&B Relative Info Score                117.5228 %
+K&B Information Score                    1.4811 bits      0.2468 bits/instance
+Class complexity | order 0              15.5751 bits      2.5958 bits/instance
+Class complexity | scheme               14.1239 bits      2.354  bits/instance
+Complexity improvement     (Sf)          1.4512 bits      0.2419 bits/instance
+Mean absolute error                      0.4873
+Root mean squared error                  0.5442
+Relative absolute error                 99.5844 %
+Root relative squared error             98.5162 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.3333
+K&B Relative Info Score                -52.2494 %
+K&B Information Score                   -0.7293 bits     -0.1215 bits/instance
+Class complexity | order 0               7.3457 bits      1.2243 bits/instance
+Class complexity | scheme                8.8409 bits      1.4735 bits/instance
+Complexity improvement     (Sf)         -1.4952 bits     -0.2492 bits/instance
+Mean absolute error                      0.4184
+Root mean squared error                  0.4619
+Relative absolute error                110.0039 %
+Root relative squared error            108.0214 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                          0     
+K&B Relative Info Score                  3.2084 %
+K&B Information Score                    0.0436 bits      0.0073 bits/instance
+Class complexity | order 0               9.2015 bits      1.5336 bits/instance
+Class complexity | scheme                9.3278 bits      1.5546 bits/instance
+Complexity improvement     (Sf)         -0.1263 bits     -0.0211 bits/instance
+Mean absolute error                      0.423 
+Root mean squared error                  0.471 
+Relative absolute error                103.6523 %
+Root relative squared error            101.7937 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+
+RESULTS
+at Apr 20, 2016 9:02:11 AM
+-------
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                          0     
+K&B Relative Info Score                  3.2084 %
+K&B Information Score                    0.0436 bits      0.0073 bits/instance
+Class complexity | order 0               9.2015 bits      1.5336 bits/instance
+Class complexity | scheme                9.3278 bits      1.5546 bits/instance
+Complexity improvement     (Sf)         -0.1263 bits     -0.0211 bits/instance
+Mean absolute error                      0.423 
+Root mean squared error                  0.471 
+Relative absolute error                103.6523 %
+Root relative squared error            101.7937 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+Setting Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS] as class...
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+Setting Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS] as class...
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+Setting Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS] as class...
+
+RESULTS
+at Apr 20, 2016 7:26:41 PM
+-------
+=== Summary ===
+
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0     
+K&B Relative Info Score                -22.8277 %
+K&B Information Score                   -0.3194 bits     -0.0532 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                7.4745 bits      1.2458 bits/instance
+Complexity improvement     (Sf)         -0.4051 bits     -0.0675 bits/instance
+Mean absolute error                      0.3855
+Root mean squared error                  0.423 
+Relative absolute error                103.6975 %
+Root relative squared error            101.533  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.0769
+K&B Relative Info Score                 17.3854 %
+K&B Information Score                    0.2433 bits      0.0405 bits/instance
+Class complexity | order 0               7.3205 bits      1.2201 bits/instance
+Class complexity | scheme                7.2361 bits      1.206  bits/instance
+Complexity improvement     (Sf)          0.0845 bits      0.0141 bits/instance
+Mean absolute error                      0.3724
+Root mean squared error                  0.416 
+Relative absolute error                 97.9198 %
+Root relative squared error             97.4731 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.2632
+K&B Relative Info Score                -14.9628 %
+K&B Information Score                   -0.2032 bits     -0.0339 bits/instance
+Class complexity | order 0               9.2147 bits      1.5358 bits/instance
+Class complexity | scheme               10.0716 bits      1.6786 bits/instance
+Complexity improvement     (Sf)         -0.8569 bits     -0.1428 bits/instance
+Mean absolute error                      0.4366
+Root mean squared error                  0.4875
+Relative absolute error                106.9787 %
+Root relative squared error            105.2345 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.1429
+K&B Relative Info Score                 94.4046 %
+K&B Information Score                    1.2408 bits      0.2068 bits/instance
+Class complexity | order 0              11.8628 bits      1.9771 bits/instance
+Class complexity | scheme               10.6549 bits      1.7758 bits/instance
+Complexity improvement     (Sf)          1.2079 bits      0.2013 bits/instance
+Mean absolute error                      0.4247
+Root mean squared error                  0.4824
+Relative absolute error                 95.5615 %
+Root relative squared error             95.5093 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.0909
+K&B Relative Info Score                 12.4398 %
+K&B Information Score                    0.1692 bits      0.0282 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                9.582  bits      1.597  bits/instance
+Complexity improvement     (Sf)         -0.5033 bits     -0.0839 bits/instance
+Mean absolute error                      0.4154
+Root mean squared error                  0.4711
+Relative absolute error                102.854  %
+Root relative squared error            102.8573 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                         -0.25  
+K&B Relative Info Score                  2.1044 %
+K&B Information Score                    0.0276 bits      0.0046 bits/instance
+Class complexity | order 0              11.8678 bits      1.978  bits/instance
+Class complexity | scheme               13.4622 bits      2.2437 bits/instance
+Complexity improvement     (Sf)         -1.5944 bits     -0.2657 bits/instance
+Mean absolute error                      0.4853
+Root mean squared error                  0.5517
+Relative absolute error                109.1979 %
+Root relative squared error            109.171  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           0                0      %
+Incorrectly Classified Instances         6              100      %
+Kappa statistic                          0     
+K&B Relative Info Score                 71.3565 %
+K&B Information Score                    0.9304 bits      0.1551 bits/instance
+Class complexity | order 0              12.6334 bits      2.1056 bits/instance
+Class complexity | scheme               11.7328 bits      1.9555 bits/instance
+Complexity improvement     (Sf)          0.9006 bits      0.1501 bits/instance
+Mean absolute error                      0.4659
+Root mean squared error                  0.5201
+Relative absolute error                 99.1019 %
+Root relative squared error             97.7706 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0     
+K&B Relative Info Score                -22.8277 %
+K&B Information Score                   -0.3194 bits     -0.0532 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                7.4745 bits      1.2458 bits/instance
+Complexity improvement     (Sf)         -0.4051 bits     -0.0675 bits/instance
+Mean absolute error                      0.3855
+Root mean squared error                  0.423 
+Relative absolute error                103.6975 %
+Root relative squared error            101.533  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               40      %
+Incorrectly Classified Instances         3               60      %
+Kappa statistic                          0.2105
+K&B Relative Info Score                 50.9811 %
+K&B Information Score                    0.668  bits      0.1336 bits/instance
+Class complexity | order 0              10.7669 bits      2.1534 bits/instance
+Class complexity | scheme               10.1041 bits      2.0208 bits/instance
+Complexity improvement     (Sf)          0.6628 bits      0.1326 bits/instance
+Mean absolute error                      0.4375
+Root mean squared error                  0.5008
+Relative absolute error                 95.0317 %
+Root relative squared error             96.1122 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                5     
+Ignored Class Unknown Instances                  1     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.1429
+K&B Relative Info Score                -36.3807 %
+K&B Information Score                   -0.5091 bits     -0.0848 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                7.8252 bits      1.3042 bits/instance
+Complexity improvement     (Sf)         -0.7557 bits     -0.126  bits/instance
+Mean absolute error                      0.3956
+Root mean squared error                  0.4325
+Relative absolute error                106.4142 %
+Root relative squared error            103.8123 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               40      %
+Incorrectly Classified Instances         3               60      %
+Kappa statistic                          0     
+K&B Relative Info Score                -11.6075 %
+K&B Information Score                   -0.162  bits     -0.0324 bits/instance
+Class complexity | order 0               5.8376 bits      1.1675 bits/instance
+Class complexity | scheme                6.0684 bits      1.2137 bits/instance
+Complexity improvement     (Sf)         -0.2309 bits     -0.0462 bits/instance
+Mean absolute error                      0.3791
+Root mean squared error                  0.4209
+Relative absolute error                102.5162 %
+Root relative squared error            101.5232 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                5     
+Ignored Class Unknown Instances                  1     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.1429
+K&B Relative Info Score                -36.3807 %
+K&B Information Score                   -0.5091 bits     -0.0848 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                7.8252 bits      1.3042 bits/instance
+Complexity improvement     (Sf)         -0.7557 bits     -0.126  bits/instance
+Mean absolute error                      0.3956
+Root mean squared error                  0.4325
+Relative absolute error                106.4142 %
+Root relative squared error            103.8123 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           3               50      %
+Incorrectly Classified Instances         3               50      %
+Kappa statistic                          0.1818
+K&B Relative Info Score                -12.0819 %
+K&B Information Score                   -0.1692 bits     -0.0282 bits/instance
+Class complexity | order 0               7.0613 bits      1.1769 bits/instance
+Class complexity | scheme                7.908  bits      1.318  bits/instance
+Complexity improvement     (Sf)         -0.8467 bits     -0.1411 bits/instance
+Mean absolute error                      0.3847
+Root mean squared error                  0.4339
+Relative absolute error                103.4766 %
+Root relative squared error            104.2223 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               40      %
+Incorrectly Classified Instances         3               60      %
+Kappa statistic                          0.0625
+K&B Relative Info Score                 11.4559 %
+K&B Information Score                    0.1599 bits      0.032  bits/instance
+Class complexity | order 0               5.8376 bits      1.1675 bits/instance
+Class complexity | scheme                5.8616 bits      1.1723 bits/instance
+Complexity improvement     (Sf)         -0.024  bits     -0.0048 bits/instance
+Mean absolute error                      0.3642
+Root mean squared error                  0.4064
+Relative absolute error                 98.4809 %
+Root relative squared error             98.024  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                5     
+Ignored Class Unknown Instances                  1     
+
+=== Summary ===
+
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                         -0.25  
+K&B Relative Info Score                -37.5401 %
+K&B Information Score                   -0.5097 bits     -0.085  bits/instance
+Class complexity | order 0               9.2147 bits      1.5358 bits/instance
+Class complexity | scheme               10.5149 bits      1.7525 bits/instance
+Complexity improvement     (Sf)         -1.3002 bits     -0.2167 bits/instance
+Mean absolute error                      0.449 
+Root mean squared error                  0.4971
+Relative absolute error                110.0271 %
+Root relative squared error            107.3048 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           1               16.6667 %
+Incorrectly Classified Instances         5               83.3333 %
+Kappa statistic                          0     
+K&B Relative Info Score                -15.5428 %
+K&B Information Score                   -0.2103 bits     -0.0351 bits/instance
+Class complexity | order 0               9.611  bits      1.6018 bits/instance
+Class complexity | scheme               11.3737 bits      1.8956 bits/instance
+Complexity improvement     (Sf)         -1.7627 bits     -0.2938 bits/instance
+Mean absolute error                      0.454 
+Root mean squared error                  0.5186
+Relative absolute error                107.8422 %
+Root relative squared error            108.5185 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.3333
+K&B Relative Info Score                -68.3568 %
+K&B Information Score                   -0.9566 bits     -0.1594 bits/instance
+Class complexity | order 0               7.0695 bits      1.1782 bits/instance
+Class complexity | scheme                9.6996 bits      1.6166 bits/instance
+Complexity improvement     (Sf)         -2.6302 bits     -0.4384 bits/instance
+Mean absolute error                      0.4226
+Root mean squared error                  0.4833
+Relative absolute error                113.6591 %
+Root relative squared error            116.0065 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                         -0.0435
+K&B Relative Info Score                 -5.5014 %
+K&B Information Score                   -0.0748 bits     -0.0125 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                9.9559 bits      1.6593 bits/instance
+Complexity improvement     (Sf)         -0.8772 bits     -0.1462 bits/instance
+Mean absolute error                      0.4256
+Root mean squared error                  0.4784
+Relative absolute error                105.384  %
+Root relative squared error            104.4408 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+=== Summary ===
+
+Correctly Classified Instances           2               40      %
+Incorrectly Classified Instances         3               60      %
+Kappa statistic                          0.1176
+K&B Relative Info Score                 28.9943 %
+K&B Information Score                    0.4048 bits      0.081  bits/instance
+Class complexity | order 0               5.9604 bits      1.1921 bits/instance
+Class complexity | scheme                5.6164 bits      1.1233 bits/instance
+Complexity improvement     (Sf)          0.344  bits      0.0688 bits/instance
+Mean absolute error                      0.3559
+Root mean squared error                  0.4012
+Relative absolute error                 94.956  %
+Root relative squared error             95.3765 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                5     
+Ignored Class Unknown Instances                  1     
+
+=== Summary ===
+
+Correctly Classified Instances           2               33.3333 %
+Incorrectly Classified Instances         4               66.6667 %
+Kappa statistic                          0.04  
+K&B Relative Info Score                 13.8361 %
+K&B Information Score                    0.1882 bits      0.0314 bits/instance
+Class complexity | order 0               9.0787 bits      1.5131 bits/instance
+Class complexity | scheme                9.219  bits      1.5365 bits/instance
+Complexity improvement     (Sf)         -0.1403 bits     -0.0234 bits/instance
+Mean absolute error                      0.4108
+Root mean squared error                  0.4562
+Relative absolute error                101.7156 %
+Root relative squared error             99.5959 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                6     
+
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+Setting Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS] as class...
+
+RESULTS
+at Apr 20, 2016 7:32:14 PM
+-------
+=== Summary ===
+
+Correctly Classified Instances           5               62.5    %
+Incorrectly Classified Instances         3               37.5    %
+Kappa statistic                          0.3333
+K&B Relative Info Score                108.588  %
+K&B Information Score                    1.5304 bits      0.1913 bits/instance
+Class complexity | order 0               9.4754 bits      1.1844 bits/instance
+Class complexity | scheme                8.1272 bits      1.0159 bits/instance
+Complexity improvement     (Sf)          1.3482 bits      0.1685 bits/instance
+Mean absolute error                      0.3204
+Root mean squared error                  0.3735
+Relative absolute error                 85.8285 %
+Root relative squared error             89.5661 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                         -0.1034
+K&B Relative Info Score                -16.8133 %
+K&B Information Score                   -0.2361 bits     -0.0295 bits/instance
+Class complexity | order 0               9.7863 bits      1.2233 bits/instance
+Class complexity | scheme               10.3317 bits      1.2915 bits/instance
+Complexity improvement     (Sf)         -0.5454 bits     -0.0682 bits/instance
+Mean absolute error                      0.3931
+Root mean squared error                  0.4286
+Relative absolute error                103.4496 %
+Root relative squared error            100.5826 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                          0.2727
+K&B Relative Info Score                187.0373 %
+K&B Information Score                    2.473  bits      0.3091 bits/instance
+Class complexity | order 0              14.0095 bits      1.7512 bits/instance
+Class complexity | scheme               11.6187 bits      1.4523 bits/instance
+Complexity improvement     (Sf)          2.3908 bits      0.2989 bits/instance
+Mean absolute error                      0.3636
+Root mean squared error                  0.4359
+Relative absolute error                 85.8984 %
+Root relative squared error             90.2644 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           3               37.5    %
+Incorrectly Classified Instances         5               62.5    %
+Kappa statistic                          0.0244
+K&B Relative Info Score                105.7672 %
+K&B Information Score                    1.3971 bits      0.1746 bits/instance
+Class complexity | order 0              14.0177 bits      1.7522 bits/instance
+Class complexity | scheme               12.8656 bits      1.6082 bits/instance
+Complexity improvement     (Sf)          1.152  bits      0.144  bits/instance
+Mean absolute error                      0.4017
+Root mean squared error                  0.4638
+Relative absolute error                 94.892  %
+Root relative squared error             95.9922 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                          0     
+K&B Relative Info Score                 27.0944 %
+K&B Information Score                    0.3701 bits      0.0463 bits/instance
+Class complexity | order 0              11.5048 bits      1.4381 bits/instance
+Class complexity | scheme               11.2951 bits      1.4119 bits/instance
+Complexity improvement     (Sf)          0.2096 bits      0.0262 bits/instance
+Mean absolute error                      0.4026
+Root mean squared error                  0.4461
+Relative absolute error                101.0705 %
+Root relative squared error             98.7745 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           3               37.5    %
+Incorrectly Classified Instances         5               62.5    %
+Kappa statistic                          0     
+K&B Relative Info Score                -48.7157 %
+K&B Information Score                   -0.6866 bits     -0.0858 bits/instance
+Class complexity | order 0               9.4754 bits      1.1844 bits/instance
+Class complexity | scheme               10.7315 bits      1.3414 bits/instance
+Complexity improvement     (Sf)         -1.2561 bits     -0.157  bits/instance
+Mean absolute error                      0.4004
+Root mean squared error                  0.4411
+Relative absolute error                107.2588 %
+Root relative squared error            105.7815 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                          0.1111
+K&B Relative Info Score                  3.8081 %
+K&B Information Score                    0.0536 bits      0.0067 bits/instance
+Class complexity | order 0               9.4873 bits      1.1859 bits/instance
+Class complexity | scheme               10.3059 bits      1.2882 bits/instance
+Complexity improvement     (Sf)         -0.8186 bits     -0.1023 bits/instance
+Mean absolute error                      0.374 
+Root mean squared error                  0.4274
+Relative absolute error                100.1782 %
+Root relative squared error            102.4183 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                          0.1579
+K&B Relative Info Score                131.3712 %
+K&B Information Score                    1.798  bits      0.2248 bits/instance
+Class complexity | order 0              11.3564 bits      1.4195 bits/instance
+Class complexity | scheme               10.3772 bits      1.2971 bits/instance
+Complexity improvement     (Sf)          0.9792 bits      0.1224 bits/instance
+Mean absolute error                      0.3444
+Root mean squared error                  0.4148
+Relative absolute error                 87.2011 %
+Root relative squared error             92.728  %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           4               57.1429 %
+Incorrectly Classified Instances         3               42.8571 %
+Kappa statistic                          0.16  
+K&B Relative Info Score                 85.7994 %
+K&B Information Score                    1.2051 bits      0.1722 bits/instance
+Class complexity | order 0               8.2344 bits      1.1763 bits/instance
+Class complexity | scheme                7.7415 bits      1.1059 bits/instance
+Complexity improvement     (Sf)          0.4929 bits      0.0704 bits/instance
+Mean absolute error                      0.3265
+Root mean squared error                  0.3937
+Relative absolute error                 87.8711 %
+Root relative squared error             94.7324 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                7     
+Ignored Class Unknown Instances                  1     
+
+=== Summary ===
+
+Correctly Classified Instances           4               50      %
+Incorrectly Classified Instances         4               50      %
+Kappa statistic                          0.1111
+K&B Relative Info Score                 32.8735 %
+K&B Information Score                    0.4629 bits      0.0579 bits/instance
+Class complexity | order 0               9.4873 bits      1.1859 bits/instance
+Class complexity | scheme                9.3741 bits      1.1718 bits/instance
+Complexity improvement     (Sf)          0.1132 bits      0.0142 bits/instance
+Mean absolute error                      0.3585
+Root mean squared error                  0.4057
+Relative absolute error                 96.0267 %
+Root relative squared error             97.2248 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           2               25      %
+Incorrectly Classified Instances         6               75      %
+Kappa statistic                          0     
+K&B Relative Info Score                  8.2103 %
+K&B Information Score                    0.1147 bits      0.0143 bits/instance
+Class complexity | order 0              10.3756 bits      1.2969 bits/instance
+Class complexity | scheme               10.3203 bits      1.29   bits/instance
+Complexity improvement     (Sf)          0.0552 bits      0.0069 bits/instance
+Mean absolute error                      0.3939
+Root mean squared error                  0.4305
+Relative absolute error                100.1541 %
+Root relative squared error             97.1818 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           3               37.5    %
+Incorrectly Classified Instances         5               62.5    %
+Kappa statistic                          0     
+K&B Relative Info Score                141.8833 %
+K&B Information Score                    1.7944 bits      0.2243 bits/instance
+Class complexity | order 0              17.73   bits      2.2162 bits/instance
+Class complexity | scheme               15.9951 bits      1.9994 bits/instance
+Complexity improvement     (Sf)          1.7349 bits      0.2169 bits/instance
+Mean absolute error                      0.4524
+Root mean squared error                  0.5099
+Relative absolute error                 98.7013 %
+Root relative squared error             97.3986 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           5               62.5    %
+Incorrectly Classified Instances         3               37.5    %
+Kappa statistic                          0.2727
+K&B Relative Info Score                 93.4943 %
+K&B Information Score                    1.2772 bits      0.1597 bits/instance
+Class complexity | order 0              11.5048 bits      1.4381 bits/instance
+Class complexity | scheme               10.3021 bits      1.2878 bits/instance
+Complexity improvement     (Sf)          1.2026 bits      0.1503 bits/instance
+Mean absolute error                      0.3673
+Root mean squared error                  0.4219
+Relative absolute error                 92.1969 %
+Root relative squared error             93.4361 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+
+=== Summary ===
+
+Correctly Classified Instances           2               25      %
+Incorrectly Classified Instances         6               75      %
+Kappa statistic                         -0.0435
+K&B Relative Info Score                -73.1883 %
+K&B Information Score                   -1.0315 bits     -0.1289 bits/instance
+Class complexity | order 0               9.4754 bits      1.1844 bits/instance
+Class complexity | scheme               11.2063 bits      1.4008 bits/instance
+Complexity improvement     (Sf)         -1.7309 bits     -0.2164 bits/instance
+Mean absolute error                      0.4115
+Root mean squared error                  0.4499
+Relative absolute error                110.2293 %
+Root relative squared error            107.8961 %
+Coverage of cases (0.95 level)         100      %
+Mean rel. region size (0.95 level)     100      %
+Total Number of Instances                8     
+

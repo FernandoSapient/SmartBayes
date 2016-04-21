@@ -1,5 +1,6 @@
 package edu.missouri.bayesianEvaluator;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,11 +27,11 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.09 2016-04-19
+ * @version 0.10 2016-04-20
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
-//TODO: create non-static versions of all methods
-//(store the bayesian network you're training as an attribute)
+// TODO: create non-static versions of all methods
+// (store the bayesian network you're training as an attribute)
 public class Trainer {
 	/**
 	 * Gets the names of all the nodes in the given bayesian network
@@ -330,7 +331,7 @@ public class Trainer {
 		return data;
 	}
 
-/**
+	/**
 	 * Trains a Bayesian network (provided in an XML BIF file) using the given
 	 * data. The data file must be on one of Weka's accepted file formats (ARFF,
 	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
@@ -393,13 +394,43 @@ public class Trainer {
 		System.out.println("Setting " + data.classAttribute().name()
 				+ " as class...");
 
-		bn.setData(data);
 		System.out.println("Training network...");
+		trainToFile(bn, data, args[2]);
+		System.out.println(args[2] + " created successfully");
+	}
+
+	/**
+	 * Trains the given network with the given data and stores the result with
+	 * the given filename. Note that {@code bn} is modified by this function.
+	 * Also note that if the columns in {@code data} are not already in the same
+	 * order as the nodes in {@code bn}, unpredictable behavior may
+	 * result&mdash;use {@link #conformToNetwork(Instances, BayesNet, boolean)}
+	 * or {@link #reorderAttributes(Instances, List)} for this purpose.
+	 * <p/>
+	 * To train the Bayesian network without generating a file, call
+	 * 
+	 * @param bn
+	 *            The Bayesian network to be trained
+	 * @param data
+	 *            The data with which to train the Bayesian network
+	 * @param filename
+	 *            The name of the file to save the Bayesian network in
+	 * @throws Exception
+	 *             If the number of columns in {@code data} does not match the
+	 *             number of nodes in {@code bn} (use
+	 *             {@link #conformToNetwork(Instances, BayesNet, boolean)} or
+	 *             {@code #restrictToAttributeSet(Instances, Collection)} for
+	 *             this purpose)
+	 * @throws FileNotFoundException if {@code filename} could not be created
+	 * @since 0.10 2016-04-20
+	 */
+	public static void trainToFile(EditableBayesNet bn, Instances data,
+			String filename) throws Exception, FileNotFoundException {
+		bn.setData(data);
 		bn.estimateCPTs();
 
-		PrintWriter f = new PrintWriter(args[2]);
+		PrintWriter f = new PrintWriter(filename);
 		f.write(bn.toXMLBIF03());
 		f.close();
-		System.out.println(args[2] + " created successfully");
 	}
 }
