@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.14 2016-04-21
+ * @version	0.15 2016-04-22
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,12 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.15</td>
+ * 		<td>2016-04-22</td>
+ * 		<td>added {@link Evaluator#accuracy(edu.ucla.belief.BeliefNetwork, weka.core.Instances)}
+ * 			({@link Evaluator} is now version 0.06)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.14</td>

@@ -31,7 +31,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05 2016-04-22
+ * @version 0.06 2016-04-22
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -56,6 +56,7 @@ public class Evaluator {
 	 *         is an {@code Instances} object containing {@code ratio} of
 	 *         {@code data}, and {@code get(k) returns the remaining 1 &minus;
 	 *         {@code ratio} of {@code data}
+	 * @since 0.01 2016-04-19
 	 */
 	public static Map<Instances, Instances> randomSplit(Instances data,
 			float ratio, int number) {
@@ -157,10 +158,9 @@ public class Evaluator {
 	    /* Set evidence. */
 		loadEvidenceFromWeka(bn, evidence);
 
-	    /* Calculate Pr(e). */
+	    /* Calculate Pr(e). TODO: do we need this? Check results with and without against manually setting the state in SamIam*/
 	    double pE = engine.probability();
-	    System.out.println( "Pr(e): " + pE );
-	    System.out.println();
+	    //System.out.println( "Pr(e): " + pE + "\n");
 
 		/* Define the set of variables for which we want marginal probabilities, by id. */
 		FiniteVariable varMarginal = (FiniteVariable) bn.forID( evidence.classAttribute().name() );
@@ -285,10 +285,6 @@ public class Evaluator {
 		else
 			data = Trainer.conformToNetwork(data, wekaBayes, false);
 	
-		data.setClassIndex(data.numAttributes() - 1);
-		System.out.println("Setting " + data.classAttribute().name()
-				+ " as class...");
-	
 		float trainSize = 0.85f;
 	
 		// TODO move to function
@@ -307,19 +303,69 @@ public class Evaluator {
 			String filename = args[2];
 			BeliefNetwork bn1 = loadSamiamBayes(filename);
 			
+			System.out.println("For this split:");
+			
 			//find accuracy for all classes
-			//for(int j=0; j<current.numClasses(); j++)
-			//	current.setClassIndex(j);
-			//iterate over instances
-			for(int i=0; i<current.numInstances(); i++){
-				Instance evidence = data.instance(i);
-				Table answer = shenoyShaferMarginals(bn1.deepClone(), evidence);
-			    System.out.println( i+":"+Trainer.getAttributeNames(current).toString() +"\n" + evidence+"\ngives:\n"+answer.tableString() );
+			for(int k=0; k<current.numAttributes(); k++){
+				current.setClassIndex(k);
+				
+				//iterate over instances
+				//TODO move to method
+				double accuracy = accuracy(bn1, current);
+				System.out.println("\t"+current.classAttribute().name()+" predicted with accuracy "+accuracy);
 			}
-			    
+			
 		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
 			//System.out.println(summary);
 		}
+	}
+
+	/**Computes the accuracy the Bayesian network has on the given test data.
+	 * The accuracy returned is in estimating the attribute set as class
+	 * in the test data. The algorithm used is the Shenoy-Shafer belief
+	 * propagation algorithm 
+	 * 
+	 * @param bn The Bayesian network to be evaluated with this data 
+	 * @param testData A set of instances, distinct from the ones used to learn
+	 * the network's conditional probabilities
+	 * @return a number between 0 and 1, specifying what ratio, of the values
+	 * in {@code testData.class
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @see {@link #shenoyShaferMarginals(BeliefNetwork, Instance)}
+	 * @since 0.6 2016-04-22
+	 */
+	public static double accuracy(BeliefNetwork bn, Instances testData)
+			throws StateNotFoundException {
+		double matches = 0;
+		int knownResults=0;
+		for(int i=0; i<testData.numInstances(); i++){
+			Instance evidence = testData.instance(i);
+			Table answer = shenoyShaferMarginals(bn.deepClone(), evidence);
+		    //System.out.println( i+":"+Trainer.getAttributeNames(current).toString() +"\n" + evidence+"\ngives:\n"+answer.tableString() );
+			double[] marginalProbs = answer.dataclone();
+			
+			//Get the prediction and see if it was what was expected
+			//TODO move this to a method
+		    if(evidence.classAttribute().numValues() != marginalProbs.length)
+				throw new IllegalArgumentException("The number of possible values in the evidence does not match the number of values in marginalProbs. Use evidence.classAttribute().enumerateValues() to check what these values are.");
+			int max = -1;
+			for(int j=marginalProbs.length-1; j>=0; j--)
+				if(max == -1 || marginalProbs[j]>marginalProbs[max])
+					max=j;
+				//TODO account for equal (or very close) probabilities
+			
+			if(!evidence.classIsMissing()){
+				knownResults++;
+				if(max == evidence.classValue()){
+					matches++;
+				}
+			}
+		}
+		double accuracy = matches/knownResults;
+		return accuracy;
 	}
 
 }
