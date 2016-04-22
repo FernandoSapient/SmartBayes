@@ -3,14 +3,26 @@
  */
 package edu.missouri.bayesianEvaluator;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import edu.ucla.belief.BeliefNetwork;
+import edu.ucla.belief.EliminationHeuristic;
+import edu.ucla.belief.FiniteVariable;
+import edu.ucla.belief.InferenceEngine;
+import edu.ucla.belief.StateNotFoundException;
+import edu.ucla.belief.Table;
+import edu.ucla.belief.io.NodeLinearTask;
+import edu.ucla.belief.io.PropertySuperintendent;
+import edu.ucla.belief.io.xmlbif.SkimmerEstimator;
+import edu.ucla.belief.io.xmlbif.XmlbifParser;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.net.EditableBayesNet;
 import weka.classifiers.evaluation.Evaluation;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.ConverterUtils.DataSource;
@@ -19,14 +31,12 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.03 2016-04-20
+ * @version 0.04 2016-04-21
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
 // (store the bayesian network you're training as an attribute)
 // TODO: have a class of weka-only evaluation and a class of samiam-only evaluation
-// TODO: Define an interface where an evaluation fucntion returns the
-// confusion table and define methods to let the callers deal with it
 public class Evaluator {
 
 	/**
@@ -64,8 +74,43 @@ public class Evaluator {
 
 		return out;
 	}
-
-/**
+	
+	//TODO: loadEvidenceFrom ...anything else
+	/**
+	 * Creates a copy of the given Bayesian network set to the state specified
+	 * in {@code evidence}. Note that the class value is assumed to be the query
+	 * target, and is therefore omitted.
+	 * 
+	 * @param bn
+	 *            A SamIam Bayesian network, desired to be put into state
+	 * @param evidence
+	 *            The state to put {@code bn} into
+	 * @return A new {@code BeliefNetwork} with each variable node set to the
+	 *         state indicated in the corresponding {@code evidence} attribute
+	 *         (excepting the node corresponding to {@code evidence}'s class
+	 *         attribute)
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @since version 0.04 2016-04-21
+	 */
+	public static BeliefNetwork loadEvidenceFromWeka(BeliefNetwork bn, Instance evidence) throws StateNotFoundException{
+		bn = (BeliefNetwork) bn.clone();
+		Map<FiniteVariable, Object> obs = new HashMap<FiniteVariable, Object>(evidence.numValues()-1);
+		for(int i=evidence.numValues()-1; i>=0; i--){
+			if(i != evidence.classIndex() && evidence.isMissing(i)){
+				FiniteVariable var = (FiniteVariable) bn.forID( evidence.attribute(i).name() );
+				obs.put(var, var.instance(evidence.stringValue(i)));
+			}
+		}
+			
+		bn.getEvidenceController().setObservations( obs );
+		
+		return bn;
+	}
+	
+	/**
 	 * Takes a (trained?) Bayesian network (provided in an XML BIF file) and evaluates
 	 * it using the given data. 
 	 * <!--The following is copied from Trainer.main-->
@@ -110,7 +155,7 @@ public class Evaluator {
 																	// practice
 		}
 		Instances data = source.getDataSet();
-		EditableBayesNet bn = BifUpdate.loadBayesNet(args[1]);
+		EditableBayesNet wekaBayes = BifUpdate.loadBayesNet(args[1]);
 
 		// filter out by criterion
 		if (args.length >= 4) {
@@ -121,10 +166,10 @@ public class Evaluator {
 
 		System.out.println("Conforming data to network...");
 		if (args.length >= 5)
-			data = Trainer.conformToNetwork(data, bn,
+			data = Trainer.conformToNetwork(data, wekaBayes,
 					Boolean.getBoolean(args[4]));
 		else
-			data = Trainer.conformToNetwork(data, bn, false);
+			data = Trainer.conformToNetwork(data, wekaBayes, false);
 
 		data.setClassIndex(data.numAttributes() - 1);
 		System.out.println("Setting " + data.classAttribute().name()
@@ -144,10 +189,82 @@ public class Evaluator {
 		System.out.println("\nRESULTS\nat " + date + "\n-------");
 		while (trains.hasNext()) {
 			Instances current = trains.next();
-			Trainer.trainToFile(bn, current, args[2]);
-			String summary = wekaEvaluation(bn, current, Trainset.get(current));
-			System.out.println(summary);
+			Trainer.trainToFile(wekaBayes, current, args[2]);
+			String filename = args[2];
+			BeliefNetwork bn1 = loadSamiamBayes(filename);
+			
+			//iterate over instances
+			for(int i=0; i<current.numInstances(); i++){
+				Instance evidence = data.instance(i);
+				Table answer = shenoyShaferMarginals(bn1, evidence);
+			    System.out.println( evidence+" gives:\n"+answer.tableString() );
+			}
+			    
+		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
+			//System.out.println(summary);
 		}
+	}
+
+	/**
+	 * Computes the marginal probabilities for the given instance using the
+	 * Shenoy-Shafer belief propagation algorithm.
+	 * <p/>
+	 * This code is heavily based on the sample code by Keith Cascio
+	 * 
+	 * @param bn
+	 *            The bayesian network to use for the estimation
+	 * @param evidence
+	 *            The state the bayesian network should be in when the marginal
+	 *            probability is computed
+	 * @return A {@code edu.ucla.belief.Table} containing the result
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @since version 0.04 2016-04-21
+	 */
+	//TODO: define an interface where the marginal function returns
+	//the probabilities as a map or list
+	public static Table shenoyShaferMarginals(BeliefNetwork bn,
+			Instance evidence) throws StateNotFoundException {
+		bn = loadEvidenceFromWeka(bn, evidence);
+
+		/* Create the Dynamator(edu.ucla.belief.inference.SynchronizedInferenceEngine$SynchronizedPartialDerivativeEngine). */
+		edu.ucla.belief.inference.JEngineGenerator dynamator = new edu.ucla.belief.inference.JEngineGenerator();
+
+		/* Edit settings. */
+		edu.ucla.belief.inference.JoinTreeSettings settings = dynamator.getSettings( (PropertySuperintendent)bn, true );
+		/*
+		  Define the elimination order heuristic used to create the join tree, one of:
+		    MIN_FILL (Min Fill), MIN_SIZE (Min Size)
+		*/
+		settings.setEliminationHeuristic( EliminationHeuristic.MIN_FILL );
+
+		/* Create the InferenceEngine. */
+		InferenceEngine engine = dynamator.manufactureInferenceEngine( bn );
+
+		/* Define the set of variables for which we want marginal probabilities, by id. */
+		FiniteVariable varMarginal = (FiniteVariable) bn.forID( evidence.classAttribute().name() );
+		Table answer = engine.conditional( varMarginal );
+		return answer;
+	}
+
+	/**Loads a Bayesian network from an XML BIF file into a SamIam {@code BeliefNetwork}
+	 * 
+	 * @param filename
+	 *            The path of an XML BIF file to open
+	 * @return a {@code weka.classifiers.bayes.BayesNet} object with the
+	 *         structure in the file
+	 * @throws Exception
+	 *             If the file could not be read correctly
+	 * @since version 0.04 2016-04-21
+	 */
+	//TODO: create new class (Tentatively named BifDowngrade or BiffToSamIam)
+	public static BeliefNetwork loadSamiamBayes(String filename) throws Exception {
+		String[] notes = new String[0];
+		File f = new File(filename);
+		BeliefNetwork bn = new XmlbifParser().beliefNetwork( f, new NodeLinearTask("default", new SkimmerEstimator(f), 1, notes) );
+		return bn;
 	}
 
 	/**
@@ -174,6 +291,8 @@ public class Evaluator {
 	 * @since 0.03 2016-04-20
 	 */
 	//TODO: iterate over all attributes to test the ability predicting all variables.
+	//TODO: Define an interface where an evaluation function returns the
+	//confusion table and define methods to let the callers deal with it
 	public static String wekaEvaluation(EditableBayesNet bn,
 			Instances trainset, Instances testset)
 			throws Exception {

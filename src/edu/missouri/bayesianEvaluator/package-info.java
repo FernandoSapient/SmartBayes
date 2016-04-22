@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.12 2016-04-20
+ * @version	0.13 2016-04-21
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,14 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.13</td>
+ * 		<td>2016-04-21</td>
+ * 		<td>added {@link Evaluator#loadEvidenceFromWeka(edu.ucla.belief.BeliefNetwork, weka.core.Instance)},
+ * 			{@link Evaluator#loadSamiamBayes(String)}, and
+ * 			{@link Evaluator#shenoyShaferMarginals(edu.ucla.belief.BeliefNetwork, weka.core.Instance)}
+ * 			({@link Evaluator} is now version 0.04)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.12</td>
