@@ -84,6 +84,7 @@ public class Trainer {
 		// TODO assert containsOnly(data.attribute(0), criterion)
 		// Possible implementation:
 		// Arrays.asList(criterion).containsAll(data.attributeToList(0))
+		// see also attributeStats
 		return data;
 	}
 

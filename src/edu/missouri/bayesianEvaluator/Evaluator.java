@@ -24,6 +24,7 @@ import weka.classifiers.bayes.net.EditableBayesNet;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.UnassignedClassException;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -31,7 +32,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.06 2016-04-22
+ * @version 0.07 2016-04-22
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -308,11 +309,13 @@ public class Evaluator {
 			//find accuracy for all classes
 			for(int k=0; k<current.numAttributes(); k++){
 				current.setClassIndex(k);
-				
-				//iterate over instances
-				//TODO move to method
-				double accuracy = accuracy(bn1, current);
-				System.out.println("\t"+current.classAttribute().name()+" predicted with accuracy "+accuracy);
+				try{
+					double accuracy = accuracy(bn1, current);
+					System.out.println("\t"+current.classAttribute().name()+" predicted with accuracy "+accuracy);
+				}catch(ArithmeticException e){
+					//Nothing to compare against. Too bad! Maybe the next split will do better
+					//Omit printing
+				}
 			}
 			
 		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
@@ -321,24 +324,40 @@ public class Evaluator {
 	}
 
 	/**Computes the accuracy the Bayesian network has on the given test data.
-	 * The accuracy returned is in estimating the attribute set as class
-	 * in the test data. The algorithm used is the Shenoy-Shafer belief
+	 * That is, it attempts to predict the value of the class attribute,
+	 * given the rest of the data in the instance, and returns how many
+	 * predictions matched the value given in their instance.
+	 * <p/>
+	 * The function uses the the attribute set as class to know what to
+	 * estimate. The class must be set by the caller.
+	 * <p/>
+	 * The algorithm used is the Shenoy-Shafer belief
 	 * propagation algorithm 
 	 * 
 	 * @param bn The Bayesian network to be evaluated with this data 
 	 * @param testData A set of instances, distinct from the ones used to learn
 	 * the network's conditional probabilities
+	 * 
 	 * @return a number between 0 and 1, specifying what ratio, of the values
-	 * in {@code testData.class
+	 * in {@code testData.instance(i).classValue()}, were correctly predicted
+	 * 
 	 * @throws StateNotFoundException
 	 *             If the instances are not compatible with the Bayesian network
 	 *             (they specify states for the nodes that are not among those
 	 *             nodes' possible values)
+	 * @throws ArithmeticException
+	 *             If all the values for the class in {@code testData} are missing
+	 * @throws UnassignedClassException
+	 *             If {@code testData}'s class attribute is not set
 	 * @see {@link #shenoyShaferMarginals(BeliefNetwork, Instance)}
 	 * @since 0.6 2016-04-22
 	 */
 	public static double accuracy(BeliefNetwork bn, Instances testData)
-			throws StateNotFoundException {
+			throws StateNotFoundException, ArithmeticException, UnassignedClassException {
+		//fail fast
+		if(testData.attributeStats(testData.classIndex()).missingCount == testData.numInstances())
+			throw new ArithmeticException("Cannot compute how many of the known values are correctly predicted "
+					+ "if there are no known values (cannot divide by zero)");
 		double matches = 0;
 		int knownResults=0;
 		for(int i=0; i<testData.numInstances(); i++){
@@ -348,7 +367,7 @@ public class Evaluator {
 			double[] marginalProbs = answer.dataclone();
 			
 			//Get the prediction and see if it was what was expected
-			//TODO move this to a method
+			//TODO move this to a method (the check below only makes sense there)
 		    if(evidence.classAttribute().numValues() != marginalProbs.length)
 				throw new IllegalArgumentException("The number of possible values in the evidence does not match the number of values in marginalProbs. Use evidence.classAttribute().enumerateValues() to check what these values are.");
 			int max = -1;
@@ -364,8 +383,8 @@ public class Evaluator {
 				}
 			}
 		}
-		double accuracy = matches/knownResults;
-		return accuracy;
+		assert knownResults>0; //otherwise the fail-fast ArithmeticException above, failed
+		return matches/knownResults;
 	}
 
 }
