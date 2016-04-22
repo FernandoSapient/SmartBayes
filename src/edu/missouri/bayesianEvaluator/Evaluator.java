@@ -31,7 +31,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.04 2016-04-21
+ * @version 0.05 2016-04-22
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -77,9 +77,18 @@ public class Evaluator {
 	
 	//TODO: loadEvidenceFrom ...anything else
 	/**
-	 * Creates a copy of the given Bayesian network set to the state specified
+	 * Sets the specified Bayesian Network to the state specified
 	 * in {@code evidence}. Note that the class value is assumed to be the query
-	 * target, and is therefore omitted.
+	 * target, and is therefore omitted. 
+	 * <p/>
+	 * The Bayesian network provided is modified by this method. It's current
+	 * state is completely removed and replaced with the state given by
+	 * the evidence .
+	 * <p/>
+	 * As of SamIam version 3.0, the removal of the current state may produce a
+	 * {@code NullPointerException}. Use {@code BeliefNetwork.clone()} or
+	 * {@code BeliefNetwork.deepClone()} if this method needs to be called
+	 * more than once on the same method to get around this.
 	 * 
 	 * @param bn
 	 *            A SamIam Bayesian network, desired to be put into state
@@ -95,116 +104,20 @@ public class Evaluator {
 	 *             nodes' possible values)
 	 * @since version 0.04 2016-04-21
 	 */
-	public static BeliefNetwork loadEvidenceFromWeka(BeliefNetwork bn, Instance evidence) throws StateNotFoundException{
-		bn = (BeliefNetwork) bn.clone();
+	public static void loadEvidenceFromWeka(BeliefNetwork bn, Instance evidence) throws StateNotFoundException{
 		Map<FiniteVariable, Object> obs = new HashMap<FiniteVariable, Object>(evidence.numValues()-1);
 		for(int i=evidence.numValues()-1; i>=0; i--){
-			if(i != evidence.classIndex() && evidence.isMissing(i)){
+			if(i != evidence.classIndex() && !evidence.isMissing(i)){
 				FiniteVariable var = (FiniteVariable) bn.forID( evidence.attribute(i).name() );
-				obs.put(var, var.instance(evidence.stringValue(i)));
+				String state = evidence.stringValue(i);
+				obs.put(var, var.instance(state));
 			}
 		}
 			
 		bn.getEvidenceController().setObservations( obs );
 		
-		return bn;
 	}
 	
-	/**
-	 * Takes a (trained?) Bayesian network (provided in an XML BIF file) and evaluates
-	 * it using the given data. 
-	 * <!--The following is copied from Trainer.main-->
-	 * The data file must be on one of Weka's accepted file formats (ARFF,
-	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
-	 * 3.7.12). The program might fail if the Bayesian network is not in Weka
-	 * format (use {@link BifUpdate} for this purpose). A filtering criterion
-	 * can be specified, against which only the elements of the first attribute
-	 * which are equal to it will be selected.
-	 * <p/>
-	 * The method discretizes each attribute to match the number of possible values in
-	 * its corresponding node (see {@link #discretizeToBayes(Instances, BayesNet, boolean)})
-	 * unless the attribute is already discrete.
-	 * <p/>
-	 * If the file is CSV file, the data is assumed to have originated
-	 * from the World Bank, and the missing value placeholder is set to "..",
-	 * but this may change in a future version.
-	 * 
-	 * @param args
-	 *            An array containing, at {@code args[0]}, the pat of the data
-	 *            file to train the Bayesian network with; at {@code args[1]}
-	 *            the path of the file containing the Bayesian network to train;
-	 *            at at {@code args[2]} the path of the output file in which to
-	 *            store the trained network; and optionally, at {@code args[3]}
-	 *            a filtering criterion and at {@code args[4],.
-	 * @throws Exception
-	 *             If any of the files could not be read
-	 * @since {@code bayesianEvaluator} 0.01 2016-04-10
-	 */
-	// TODO improve parameter handling. See JCLAP for potential solution
-	public static void main(String[] args) throws Exception {
-		if (args.length < 3) {
-			System.err
-					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]");
-			return;
-		}
-
-		DataSource source = new DataSource(args[0]);
-		if (source.getLoader() instanceof CSVLoader) {
-			((CSVLoader) source.getLoader()).setMissingValue(".."); // This is
-																	// bad
-																	// practice
-		}
-		Instances data = source.getDataSet();
-		EditableBayesNet wekaBayes = BifUpdate.loadBayesNet(args[1]);
-
-		// filter out by criterion
-		if (args.length >= 4) {
-			System.out.println("Filtering by " + data.attribute(0).name()
-					+ " equal to " + args[3] + "...");
-			data = Trainer.filterByCriterion(args[3], data, 0);
-		}
-
-		System.out.println("Conforming data to network...");
-		if (args.length >= 5)
-			data = Trainer.conformToNetwork(data, wekaBayes,
-					Boolean.getBoolean(args[4]));
-		else
-			data = Trainer.conformToNetwork(data, wekaBayes, false);
-
-		data.setClassIndex(data.numAttributes() - 1);
-		System.out.println("Setting " + data.classAttribute().name()
-				+ " as class...");
-
-		float trainSize = 0.85f;
-
-		// TODO move to function
-		assert trainSize > 0;
-		assert trainSize < 1;
-
-		Map<Instances, Instances> Trainset = randomSplit(data, trainSize,
-				Math.round(1 / (1 - trainSize)) * 2);
-		Iterator<Instances> trains = Trainset.keySet().iterator();
-		@SuppressWarnings("deprecation")
-		String date = new java.util.Date().toLocaleString();
-		System.out.println("\nRESULTS\nat " + date + "\n-------");
-		while (trains.hasNext()) {
-			Instances current = trains.next();
-			Trainer.trainToFile(wekaBayes, current, args[2]);
-			String filename = args[2];
-			BeliefNetwork bn1 = loadSamiamBayes(filename);
-			
-			//iterate over instances
-			for(int i=0; i<current.numInstances(); i++){
-				Instance evidence = data.instance(i);
-				Table answer = shenoyShaferMarginals(bn1, evidence);
-			    System.out.println( evidence+" gives:\n"+answer.tableString() );
-			}
-			    
-		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
-			//System.out.println(summary);
-		}
-	}
-
 	/**
 	 * Computes the marginal probabilities for the given instance using the
 	 * Shenoy-Shafer belief propagation algorithm.
@@ -227,8 +140,6 @@ public class Evaluator {
 	//the probabilities as a map or list
 	public static Table shenoyShaferMarginals(BeliefNetwork bn,
 			Instance evidence) throws StateNotFoundException {
-		bn = loadEvidenceFromWeka(bn, evidence);
-
 		/* Create the Dynamator(edu.ucla.belief.inference.SynchronizedInferenceEngine$SynchronizedPartialDerivativeEngine). */
 		edu.ucla.belief.inference.JEngineGenerator dynamator = new edu.ucla.belief.inference.JEngineGenerator();
 
@@ -243,9 +154,21 @@ public class Evaluator {
 		/* Create the InferenceEngine. */
 		InferenceEngine engine = dynamator.manufactureInferenceEngine( bn );
 
+	    /* Set evidence. */
+		loadEvidenceFromWeka(bn, evidence);
+
+	    /* Calculate Pr(e). */
+	    double pE = engine.probability();
+	    System.out.println( "Pr(e): " + pE );
+	    System.out.println();
+
 		/* Define the set of variables for which we want marginal probabilities, by id. */
 		FiniteVariable varMarginal = (FiniteVariable) bn.forID( evidence.classAttribute().name() );
 		Table answer = engine.conditional( varMarginal );
+		
+	    /* Clean up to avoid memory leaks. */
+	    engine.die();
+	    
 		return answer;
 	}
 
@@ -299,6 +222,104 @@ public class Evaluator {
 		Evaluation e = new Evaluation(trainset);
 		e.evaluateModel(bn, testset);
 		return e.toSummaryString(true);
+	}
+
+	/**
+	 * Takes a (trained?) Bayesian network (provided in an XML BIF file) and evaluates
+	 * it using the given data. 
+	 * <!--The following is copied from Trainer.main-->
+	 * The data file must be on one of Weka's accepted file formats (ARFF,
+	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
+	 * 3.7.12). The program might fail if the Bayesian network is not in Weka
+	 * format (use {@link BifUpdate} for this purpose). A filtering criterion
+	 * can be specified, against which only the elements of the first attribute
+	 * which are equal to it will be selected.
+	 * <p/>
+	 * The method discretizes each attribute to match the number of possible values in
+	 * its corresponding node (see {@link #discretizeToBayes(Instances, BayesNet, boolean)})
+	 * unless the attribute is already discrete.
+	 * <p/>
+	 * If the file is CSV file, the data is assumed to have originated
+	 * from the World Bank, and the missing value placeholder is set to "..",
+	 * but this may change in a future version.
+	 * 
+	 * @param args
+	 *            An array containing, at {@code args[0]}, the pat of the data
+	 *            file to train the Bayesian network with; at {@code args[1]}
+	 *            the path of the file containing the Bayesian network to train;
+	 *            at at {@code args[2]} the path of the output file in which to
+	 *            store the trained network; and optionally, at {@code args[3]}
+	 *            a filtering criterion and at {@code args[4],.
+	 * @throws Exception
+	 *             If any of the files could not be read
+	 * @since {@code bayesianEvaluator} 0.01 2016-04-10
+	 */
+	// TODO improve parameter handling. See JCLAP for potential solution
+	public static void main(String[] args) throws Exception {
+		if (args.length < 3) {
+			System.err
+					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]");
+			return;
+		}
+	
+		DataSource source = new DataSource(args[0]);
+		if (source.getLoader() instanceof CSVLoader) {
+			((CSVLoader) source.getLoader()).setMissingValue(".."); // This is
+																	// bad
+																	// practice
+		}
+		Instances data = source.getDataSet();
+		EditableBayesNet wekaBayes = BifUpdate.loadBayesNet(args[1]);
+	
+		// filter out by criterion
+		if (args.length >= 4) {
+			System.out.println("Filtering by " + data.attribute(0).name()
+					+ " equal to " + args[3] + "...");
+			data = Trainer.filterByCriterion(args[3], data, 0);
+		}
+	
+		System.out.println("Conforming data to network...");
+		if (args.length >= 5)
+			data = Trainer.conformToNetwork(data, wekaBayes,
+					Boolean.getBoolean(args[4]));
+		else
+			data = Trainer.conformToNetwork(data, wekaBayes, false);
+	
+		data.setClassIndex(data.numAttributes() - 1);
+		System.out.println("Setting " + data.classAttribute().name()
+				+ " as class...");
+	
+		float trainSize = 0.85f;
+	
+		// TODO move to function
+		assert trainSize > 0;
+		assert trainSize < 1;
+	
+		Map<Instances, Instances> Trainset = randomSplit(data, trainSize,
+				Math.round(1 / (1 - trainSize)) * 2);
+		Iterator<Instances> trains = Trainset.keySet().iterator();
+		@SuppressWarnings("deprecation")
+		String date = new java.util.Date().toLocaleString();
+		System.out.println("\nRESULTS\nat " + date + "\n-------");
+		while (trains.hasNext()) {
+			Instances current = trains.next();
+			Trainer.trainToFile(wekaBayes, current, args[2]);
+			String filename = args[2];
+			BeliefNetwork bn1 = loadSamiamBayes(filename);
+			
+			//find accuracy for all classes
+			//for(int j=0; j<current.numClasses(); j++)
+			//	current.setClassIndex(j);
+			//iterate over instances
+			for(int i=0; i<current.numInstances(); i++){
+				Instance evidence = data.instance(i);
+				Table answer = shenoyShaferMarginals(bn1.deepClone(), evidence);
+			    System.out.println( i+":"+Trainer.getAttributeNames(current).toString() +"\n" + evidence+"\ngives:\n"+answer.tableString() );
+			}
+			    
+		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
+			//System.out.println(summary);
+		}
 	}
 
 }
