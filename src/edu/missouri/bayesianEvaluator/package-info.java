@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.16 2016-04-22
+ * @version	0.17 2016-04-23
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,13 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.17</td>
+ * 		<td>2016-04-23</td>
+ * 		<td>{@link Evaluator#main}
+ * 			now prints summarized statistics, rather than one for each split
+ * 			({@link Evaluator} is now version 0.08)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.16</td>

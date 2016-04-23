@@ -4,10 +4,12 @@
 package edu.missouri.bayesianEvaluator;
 
 import java.io.File;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import edu.ucla.belief.BeliefNetwork;
 import edu.ucla.belief.EliminationHeuristic;
@@ -32,7 +34,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.07 2016-04-22
+ * @version 0.08 2016-04-23
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -291,35 +293,51 @@ public class Evaluator {
 		// TODO move to function
 		assert trainSize > 0;
 		assert trainSize < 1;
-	
-		Map<Instances, Instances> Trainset = randomSplit(data, trainSize,
-				Math.round(1 / (1 - trainSize)) * 2);
-		Iterator<Instances> trains = Trainset.keySet().iterator();
+		
+		Map<String, DoubleSummaryStatistics> results = new HashMap<String, DoubleSummaryStatistics>(data.numAttributes());
+		int folds = Math.round(1 / (1 - trainSize)) * data.attribute(0).numValues(); //assuming all attributes have the same number of values
+		Map<Instances, Instances> Trainset = randomSplit(data, trainSize, folds);
+		Iterator<Map.Entry<Instances,Instances>> trains = Trainset.entrySet().iterator();
 		@SuppressWarnings("deprecation")
 		String date = new java.util.Date().toLocaleString();
 		System.out.println("\nRESULTS\nat " + date + "\n-------");
 		while (trains.hasNext()) {
-			Instances current = trains.next();
-			Trainer.trainToFile(wekaBayes, current, args[2]);
+			long t = System.nanoTime();
+			Map.Entry<Instances,Instances> current = trains.next();
+			Instances training = current.getKey();
+			Trainer.trainToFile(wekaBayes, training, args[2]);
 			String filename = args[2];
 			BeliefNetwork bn1 = loadSamiamBayes(filename);
 			
-			System.out.println("For this split:");
-			
 			//find accuracy for all classes
-			for(int k=0; k<current.numAttributes(); k++){
-				current.setClassIndex(k);
+			Instances testing = current.getValue();
+			for(int k=0; k<testing.numAttributes(); k++){
+				testing.setClassIndex(k);
 				try{
-					double accuracy = accuracy(bn1, current);
-					System.out.println("\t"+current.classAttribute().name()+" predicted with accuracy "+accuracy);
+					double accuracy = accuracy(bn1, testing);
+					DoubleSummaryStatistics subtotal;
+					if(results.containsKey(testing.attribute(k).name()))
+						subtotal = results.get(testing.attribute(k).name());
+					else{
+						subtotal = new DoubleSummaryStatistics();
+					}
+					subtotal.accept(accuracy);
+					results.put(testing.attribute(k).name(), subtotal);
 				}catch(ArithmeticException e){
 					//Nothing to compare against. Too bad! Maybe the next split will do better
-					//Omit printing
+					//Omit adding
 				}
 			}
 			
 		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
 			//System.out.println(summary);
+			folds--;
+			System.out.println("Processed split in "+(double)(System.nanoTime()-t)/TimeUnit.SECONDS.toNanos(1)+" seconds; "+folds+" folds remain");
+		}
+		Iterator<Map.Entry<String, DoubleSummaryStatistics>> I = results.entrySet().iterator();
+		while(I.hasNext()){
+			Map.Entry<String, DoubleSummaryStatistics> e = I.next();
+			System.out.println(e.getKey()+": min "+e.getValue().getMin()+"; max "+e.getValue().getMax()+"; average "+e.getValue().getAverage());
 		}
 	}
 
