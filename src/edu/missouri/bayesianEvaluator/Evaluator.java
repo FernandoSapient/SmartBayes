@@ -35,7 +35,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.09 2016-04-23
+ * @version 0.10 2016-04-23
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -294,6 +294,60 @@ public class Evaluator {
 	}
 
 	/**
+	 * Finds the accuracy of the given Bayesian network in estimating all of its
+	 * attributes, using the given test set.
+	 * <p/>
+	 * The resulting accuracy is stored in a {@code Map} indexed by the name of
+	 * the attribute. Accuracies are stored as {@code DoubleSummaryStatistics} to
+	 * ease obtaining minimums, maximums, and averages (which are the accuracy
+	 * numbers you should care about if you're doing cross-validation testing).
+	 * Note that if any attribute has missing values in all of test set
+	 * instances, it is not included in the result.
+	 * 
+	 * @param bn
+	 *            A trained (conditional probabilities already computed)
+	 *            Bayesian network to be evaluated
+	 * @param testData
+	 *            The data {@code bn} is to be tested with
+	 * @param previousAccuracies
+	 *            Any data existing from previous calls to this function. The
+	 *            accuracy computed will be added on the the corresponding
+	 *            summary statistical. An empty map may be freely be passed
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @throws UnassignedClassException
+	 *             If {@code testData}'s class attribute is not set
+	 * @since 0.10 2016-04-23
+	 */
+	//TODO: Create overload methods that do not require the map to be received, and that can return a map of just Doubles 
+	public static void allAttributesAccuracies(
+			BeliefNetwork bn,
+			Instances testData, Map<String, DoubleSummaryStatistics> previousAccuracies)
+			throws StateNotFoundException, UnassignedClassException {
+		for(int k=0; k<testData.numAttributes(); k++){
+			testData.setClassIndex(k);
+			try{
+				//TODO: make this generalizable so we can use wekaEvaluation if we want to
+				//possibly by having this method in an interface or abstract class
+				double accuracy = accuracy(bn, testData); 
+				DoubleSummaryStatistics subtotal;
+				if(previousAccuracies.containsKey(testData.attribute(k).name()))
+					subtotal = previousAccuracies.get(testData.attribute(k).name());
+				else{
+					subtotal = new DoubleSummaryStatistics();
+				}
+				subtotal.accept(accuracy);
+				previousAccuracies.put(testData.attribute(k).name(), subtotal);
+			}catch(ArithmeticException e){
+				//Nothing to compare against. Too bad! Maybe the next call will do better
+				//Omit adding
+			}
+		}
+	}
+
+	/**
 	 * Evaluates the bayesian network on each split. Specifically, the bayesian
 	 * network's conditional probabilities are trained with the data in the
 	 * map's keys, and each trained network is then tested for cross-validation
@@ -360,28 +414,7 @@ public class Evaluator {
 			//TODO make file temporary by using createTempFile ... or create SamIam-Weka conversion methods
 			Trainer.trainToFile(bn, training, filename);
 			BeliefNetwork bn1 = loadSamiamBayes(filename);
-			
-			//find accuracy for all classes
-			Instances testing = current.getValue();
-			for(int k=0; k<testing.numAttributes(); k++){
-				testing.setClassIndex(k);
-				try{
-					//TODO: make this generalizable so we can use wekaEvaluation if we want to
-					//possibly by having this method in an interface or abstract class
-					double accuracy = accuracy(bn1, testing); 
-					DoubleSummaryStatistics subtotal;
-					if(results.containsKey(testing.attribute(k).name()))
-						subtotal = results.get(testing.attribute(k).name());
-					else{
-						subtotal = new DoubleSummaryStatistics();
-					}
-					subtotal.accept(accuracy);
-					results.put(testing.attribute(k).name(), subtotal);
-				}catch(ArithmeticException e){
-					//Nothing to compare against. Too bad! Maybe the next split will do better
-					//Omit adding
-				}
-			}
+			allAttributesAccuracies(bn1, current.getValue(), results);
 			
 		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
 			//System.out.println(summary);
@@ -418,7 +451,8 @@ public class Evaluator {
 	 *            the path of the file containing the Bayesian network to train;
 	 *            at at {@code args[2]} the path of the output file in which to
 	 *            store the trained network; and optionally, at {@code args[3]}
-	 *            a filtering criterion and at {@code args[4],.
+	 *            a filtering criterion and, at {@code args[4]}, "true" 
+	 *            if frequency discrtization is desired.
 	 * @throws Exception
 	 *             If any of the files could not be read
 	 * @since {@code bayesianEvaluator} 0.01 2016-04-10

@@ -355,7 +355,8 @@ public class Trainer {
 	 *            the path of the file containing the Bayesian network to train;
 	 *            at at {@code args[2]} the path of the output file in which to
 	 *            store the trained network; and optionally, at {@code args[3]}
-	 *            a filtering criterion and at {@code args[4],.
+	 *            a filtering criterion and, at {@code args[4]}, "true" 
+	 *            if frequency discrtization is desired.
 	 * @throws Exception
 	 *             If any of the files could not be read
 	 * @since 0.01 2016-04-02
