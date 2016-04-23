@@ -4844,3 +4844,27 @@ Scientific and technical journal articles [IP.JRN.ARTC.SC]: min 0.0; max 0.8; av
 Industry, value added (% of GDP) [NV.IND.TOTL.ZS]: min 0.25; max 0.875; average 0.6428571428571429
 Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]: min 0.25; max 1.0; average 0.5739795918367347
 GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]: min 0.5; max 1.0; average 0.7950680272108844
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+
+RESULTS
+at Apr 23, 2016 11:57:04 AM
+-------
+__time__: min 0.454575663; max 1.830245503; average 0.8968392476666667
+Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]: min 0.42857142857142855; max 0.875; average 0.7125850340136054
+GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]: min 0.2; max 1.0; average 0.5175
+Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]: min 0.375; max 0.75; average 0.5918367346938775
+Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]: min 0.0; max 0.7142857142857143; average 0.43027210884353745
+Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]: min 0.5; max 1.0; average 0.8666666666666666
+Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]: min 0.0; max 1.0; average 0.44416666666666665
+Trademark applications, total [IP.TMK.TOTL]: min 0.5; max 1.0; average 0.7032879818594104
+Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]: min 0.0; max 1.0; average 0.6608333333333334
+General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]: min 0.125; max 0.75; average 0.44472789115646255
+Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]: min 0.2; max 1.0; average 0.5641666666666667
+Scientific and technical journal articles [IP.JRN.ARTC.SC]: min 0.0; max 0.6666666666666666; average 0.31360544217687075
+Industry, value added (% of GDP) [NV.IND.TOTL.ZS]: min 0.375; max 0.875; average 0.6819727891156463
+Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]: min 0.25; max 0.875; average 0.5365646258503401
+GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]: min 0.625; max 1.0; average 0.8222789115646258

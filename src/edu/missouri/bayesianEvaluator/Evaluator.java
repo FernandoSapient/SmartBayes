@@ -4,6 +4,7 @@
 package edu.missouri.bayesianEvaluator;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,7 +35,7 @@ import weka.core.converters.ConverterUtils.DataSource;
  * Allows evaluating a bayesian network with a dataset
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.08 2016-04-23
+ * @version 0.09 2016-04-23
  * @since {@code bayesianEvaluator} version 0.10 2016-04-19
  */
 // TODO: create non-static versions of all methods
@@ -186,6 +187,7 @@ public class Evaluator {
 	 * @since version 0.04 2016-04-21
 	 */
 	//TODO: create new class (Tentatively named BifDowngrade or BiffToSamIam)
+	//TODO: Create overload method that receives a file
 	public static BeliefNetwork loadSamiamBayes(String filename) throws Exception {
 		String[] notes = new String[0];
 		File f = new File(filename);
@@ -225,6 +227,170 @@ public class Evaluator {
 		Evaluation e = new Evaluation(trainset);
 		e.evaluateModel(bn, testset);
 		return e.toSummaryString(true);
+	}
+
+	/**Computes the accuracy the Bayesian network has on the given test data.
+	 * That is, it attempts to predict the value of the class attribute,
+	 * given the rest of the data in the instance, and returns how many
+	 * predictions matched the value given in their instance.
+	 * <p/>
+	 * The function uses the the attribute set as class to know what to
+	 * estimate. The class must be set by the caller.
+	 * <p/>
+	 * The algorithm used is the Shenoy-Shafer belief
+	 * propagation algorithm 
+	 * 
+	 * @param bn The Bayesian network to be evaluated with this data 
+	 * @param testData A set of instances, distinct from the ones used to learn
+	 * the network's conditional probabilities
+	 * 
+	 * @return a number between 0 and 1, specifying what ratio, of the values
+	 * in {@code testData.instance(i).classValue()}, were correctly predicted
+	 * 
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @throws ArithmeticException
+	 *             If all the values for the class in {@code testData} are missing
+	 * @throws UnassignedClassException
+	 *             If {@code testData}'s class attribute is not set
+	 * @see {@link #shenoyShaferMarginals(BeliefNetwork, Instance)}
+	 * @since 0.6 2016-04-22
+	 */
+	public static double accuracy(BeliefNetwork bn, Instances testData)
+			throws StateNotFoundException, ArithmeticException, UnassignedClassException {
+		//fail fast
+		if(testData.attributeStats(testData.classIndex()).missingCount == testData.numInstances())
+			throw new ArithmeticException("Cannot compute how many of the known values are correctly predicted "
+					+ "if there are no known values (cannot divide by zero)");
+		double matches = 0;
+		int knownResults=0;
+		for(int i=0; i<testData.numInstances(); i++){
+			Instance evidence = testData.instance(i);
+			Table answer = shenoyShaferMarginals(bn.deepClone(), evidence);
+		    //System.out.println( i+":"+Trainer.getAttributeNames(current).toString() +"\n" + evidence+"\ngives:\n"+answer.tableString() );
+			double[] marginalProbs = answer.dataclone();
+			
+			//Get the prediction and see if it was what was expected
+			//TODO move this to a method (the check below only makes sense there)
+		    if(evidence.classAttribute().numValues() != marginalProbs.length)
+				throw new IllegalArgumentException("The number of possible values in the evidence does not match the number of values in marginalProbs. Use evidence.classAttribute().enumerateValues() to check what these values are.");
+			int max = -1;
+			for(int j=marginalProbs.length-1; j>=0; j--)
+				if(max == -1 || marginalProbs[j]>marginalProbs[max])
+					max=j;
+				//TODO account for equal (or very close) probabilities
+			
+			if(!evidence.classIsMissing()){
+				knownResults++;
+				if(max == evidence.classValue()){
+					matches++;
+				}
+			}
+		}
+		assert knownResults>0; //otherwise the fail-fast ArithmeticException above, failed
+		return matches/knownResults;
+	}
+
+	/**
+	 * Evaluates the bayesian network on each split. Specifically, the bayesian
+	 * network's conditional probabilities are trained with the data in the
+	 * map's keys, and each trained network is then tested for cross-validation
+	 * with the corresponding value mapped to. The accuracy in predicting each
+	 * variable is tested.
+	 * <p/>
+	 * The resulting accuracy is stored in a {@code Map} indexed by the name of
+	 * the attribute. Accuracies are stored as {@code DoubleSummaryStatistics} to
+	 * ease obtaining minimums, maximums, and averages (which are the accuracy
+	 * numbers you should care about if you're doing cross-validation testing).
+	 * Note that if any attribute has missing values in all of test set
+	 * instances, it is not included in the result.
+	 * <p/>
+	 * The function adds an additional entry to the map keyed
+	 * "__ProcessingTime__", for benchmarking purposes, which stores the number
+	 * of seconds (in a {@code double} with nanosecond precision) it took to
+	 * process each split. Note that if there is an attribute with this name,
+	 * unpredictable results may be returned.
+	 * 
+	 * @param bn
+	 *            The bayesian network to be evaluated
+	 * @param splits
+	 *            A {@code Map} where each key <i>k</i> is an {@code Instances}
+	 *            object containing {@code ratio} of {@code data}, and {@code
+	 *            get(k) returns the remaining 1 &minus; {@code ratio} of
+	 *            {@code data}
+	 * @param filename
+	 *            The name of a file to write intermediate networks to
+	 * @return A {@code Map} where each key is an attribute name (or
+	 *         "__ProcessingTime__"
+	 * @throws Exception
+	 *             If the number of columns in data does not match the number of
+	 *             nodes in {@code bn} (use
+	 *             {@link Trainer#conformToNetwork(Instances, BayesNet, boolean)}
+	 *             or
+	 *             {@link Trainer#restrictToAttributeSet(Instances, Collection)}
+	 *             for this purpose). An undocumented exception is also thrown
+	 *             if the file was written correctly but could not be read
+	 * @throws FileNotfoundException
+	 *             If {@code filename} could not be written
+	 * @throws StateNotFoundException
+	 *             If the instances are not compatible with the Bayesian network
+	 *             (they specify states for the nodes that are not among those
+	 *             nodes' possible values)
+	 * @throws UnassignedClassException
+	 *             If {@code testData}'s class attribute is not set
+	 * @see #randomSplit(Instances, float, int)
+	 * @since 0.09 2016-04-23
+	 */
+	//TODO: make a function that makes "processing time" optional
+	public static Map<String, DoubleSummaryStatistics> crossValidationAccuracies(
+			EditableBayesNet bn, Map<Instances, Instances> splits,
+			String filename) throws Exception, FileNotFoundException,
+			StateNotFoundException, UnassignedClassException {
+		int folds;
+		folds = splits.size();
+		Iterator<Map.Entry<Instances,Instances>> trains = splits.entrySet().iterator();
+		Map<String, DoubleSummaryStatistics> results = new HashMap<String, DoubleSummaryStatistics>();
+		results.put("__ProcessingTime__", new DoubleSummaryStatistics());
+		while (trains.hasNext()) {
+			long t = System.nanoTime();
+			Map.Entry<Instances,Instances> current = trains.next();
+			Instances training = current.getKey();
+			//TODO make file temporary by using createTempFile ... or create SamIam-Weka conversion methods
+			Trainer.trainToFile(bn, training, filename);
+			BeliefNetwork bn1 = loadSamiamBayes(filename);
+			
+			//find accuracy for all classes
+			Instances testing = current.getValue();
+			for(int k=0; k<testing.numAttributes(); k++){
+				testing.setClassIndex(k);
+				try{
+					//TODO: make this generalizable so we can use wekaEvaluation if we want to
+					//possibly by having this method in an interface or abstract class
+					double accuracy = accuracy(bn1, testing); 
+					DoubleSummaryStatistics subtotal;
+					if(results.containsKey(testing.attribute(k).name()))
+						subtotal = results.get(testing.attribute(k).name());
+					else{
+						subtotal = new DoubleSummaryStatistics();
+					}
+					subtotal.accept(accuracy);
+					results.put(testing.attribute(k).name(), subtotal);
+				}catch(ArithmeticException e){
+					//Nothing to compare against. Too bad! Maybe the next split will do better
+					//Omit adding
+				}
+			}
+			
+		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
+			//System.out.println(summary);
+			double time = (double)(System.nanoTime()-t)/TimeUnit.SECONDS.toNanos(1);
+			results.get("__ProcessingTime__").accept(time);
+			folds--;
+			System.out.println("Processed split in "+time+" seconds; "+folds+" folds remain");
+		}
+		return results;
 	}
 
 	/**
@@ -290,119 +456,21 @@ public class Evaluator {
 	
 		float trainSize = 0.85f;
 	
-		// TODO move to function
+		// TODO move to function and receive trainSize as parameter
 		assert trainSize > 0;
 		assert trainSize < 1;
 		
-		Map<String, DoubleSummaryStatistics> results = new HashMap<String, DoubleSummaryStatistics>(data.numAttributes());
-		int folds = Math.round(1 / (1 - trainSize)) * data.attribute(0).numValues(); //assuming all attributes have the same number of values
-		Map<Instances, Instances> Trainset = randomSplit(data, trainSize, folds);
-		Iterator<Map.Entry<Instances,Instances>> trains = Trainset.entrySet().iterator();
 		@SuppressWarnings("deprecation")
 		String date = new java.util.Date().toLocaleString();
 		System.out.println("\nRESULTS\nat " + date + "\n-------");
-		while (trains.hasNext()) {
-			long t = System.nanoTime();
-			Map.Entry<Instances,Instances> current = trains.next();
-			Instances training = current.getKey();
-			Trainer.trainToFile(wekaBayes, training, args[2]);
-			String filename = args[2];
-			BeliefNetwork bn1 = loadSamiamBayes(filename);
-			
-			//find accuracy for all classes
-			Instances testing = current.getValue();
-			for(int k=0; k<testing.numAttributes(); k++){
-				testing.setClassIndex(k);
-				try{
-					double accuracy = accuracy(bn1, testing);
-					DoubleSummaryStatistics subtotal;
-					if(results.containsKey(testing.attribute(k).name()))
-						subtotal = results.get(testing.attribute(k).name());
-					else{
-						subtotal = new DoubleSummaryStatistics();
-					}
-					subtotal.accept(accuracy);
-					results.put(testing.attribute(k).name(), subtotal);
-				}catch(ArithmeticException e){
-					//Nothing to compare against. Too bad! Maybe the next split will do better
-					//Omit adding
-				}
-			}
-			
-		    //String summary = wekaEvaluation(bn, current, Trainset.get(current));
-			//System.out.println(summary);
-			folds--;
-			System.out.println("Processed split in "+(double)(System.nanoTime()-t)/TimeUnit.SECONDS.toNanos(1)+" seconds; "+folds+" folds remain");
-		}
+		int folds = Math.round(1 / (1 - trainSize)) * data.attribute(0).numValues(); //assuming all attributes have the same number of values
+		Map<String, DoubleSummaryStatistics> results = crossValidationAccuracies(
+				wekaBayes, randomSplit(data, trainSize, folds), args[2]);
 		Iterator<Map.Entry<String, DoubleSummaryStatistics>> I = results.entrySet().iterator();
 		while(I.hasNext()){
 			Map.Entry<String, DoubleSummaryStatistics> e = I.next();
 			System.out.println(e.getKey()+": min "+e.getValue().getMin()+"; max "+e.getValue().getMax()+"; average "+e.getValue().getAverage());
 		}
-	}
-
-	/**Computes the accuracy the Bayesian network has on the given test data.
-	 * That is, it attempts to predict the value of the class attribute,
-	 * given the rest of the data in the instance, and returns how many
-	 * predictions matched the value given in their instance.
-	 * <p/>
-	 * The function uses the the attribute set as class to know what to
-	 * estimate. The class must be set by the caller.
-	 * <p/>
-	 * The algorithm used is the Shenoy-Shafer belief
-	 * propagation algorithm 
-	 * 
-	 * @param bn The Bayesian network to be evaluated with this data 
-	 * @param testData A set of instances, distinct from the ones used to learn
-	 * the network's conditional probabilities
-	 * 
-	 * @return a number between 0 and 1, specifying what ratio, of the values
-	 * in {@code testData.instance(i).classValue()}, were correctly predicted
-	 * 
-	 * @throws StateNotFoundException
-	 *             If the instances are not compatible with the Bayesian network
-	 *             (they specify states for the nodes that are not among those
-	 *             nodes' possible values)
-	 * @throws ArithmeticException
-	 *             If all the values for the class in {@code testData} are missing
-	 * @throws UnassignedClassException
-	 *             If {@code testData}'s class attribute is not set
-	 * @see {@link #shenoyShaferMarginals(BeliefNetwork, Instance)}
-	 * @since 0.6 2016-04-22
-	 */
-	public static double accuracy(BeliefNetwork bn, Instances testData)
-			throws StateNotFoundException, ArithmeticException, UnassignedClassException {
-		//fail fast
-		if(testData.attributeStats(testData.classIndex()).missingCount == testData.numInstances())
-			throw new ArithmeticException("Cannot compute how many of the known values are correctly predicted "
-					+ "if there are no known values (cannot divide by zero)");
-		double matches = 0;
-		int knownResults=0;
-		for(int i=0; i<testData.numInstances(); i++){
-			Instance evidence = testData.instance(i);
-			Table answer = shenoyShaferMarginals(bn.deepClone(), evidence);
-		    //System.out.println( i+":"+Trainer.getAttributeNames(current).toString() +"\n" + evidence+"\ngives:\n"+answer.tableString() );
-			double[] marginalProbs = answer.dataclone();
-			
-			//Get the prediction and see if it was what was expected
-			//TODO move this to a method (the check below only makes sense there)
-		    if(evidence.classAttribute().numValues() != marginalProbs.length)
-				throw new IllegalArgumentException("The number of possible values in the evidence does not match the number of values in marginalProbs. Use evidence.classAttribute().enumerateValues() to check what these values are.");
-			int max = -1;
-			for(int j=marginalProbs.length-1; j>=0; j--)
-				if(max == -1 || marginalProbs[j]>marginalProbs[max])
-					max=j;
-				//TODO account for equal (or very close) probabilities
-			
-			if(!evidence.classIsMissing()){
-				knownResults++;
-				if(max == evidence.classValue()){
-					matches++;
-				}
-			}
-		}
-		assert knownResults>0; //otherwise the fail-fast ArithmeticException above, failed
-		return matches/knownResults;
 	}
 
 }

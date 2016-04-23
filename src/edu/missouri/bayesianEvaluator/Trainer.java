@@ -425,6 +425,7 @@ public class Trainer {
 	 * @throws FileNotFoundException if {@code filename} could not be created
 	 * @since 0.10 2016-04-20
 	 */
+	//TODO: create overload method that receives a file
 	public static void trainToFile(EditableBayesNet bn, Instances data,
 			String filename) throws Exception, FileNotFoundException {
 		bn.setData(data);

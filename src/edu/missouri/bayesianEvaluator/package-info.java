@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.17 2016-04-23
+ * @version	0.18 2016-04-23
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,12 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.18</td>
+ * 		<td>2016-04-23</td>
+ * 		<td>Added {@link Evaluator#crossValidationAccuracies(weka.classifiers.bayes.net.EditableBayesNet, java.util.Map, String)}
+ * 			({@link Evaluator} is now version 0.09)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.17</td>
