@@ -12,6 +12,12 @@
  * 	<tr>
  * 		<td>0.03</td>
  * 		<td>2016-04-19</td>
+ * 		<td>Added {@link ModelClusterizer#buildUnescoModel(java.util.Map)}
+ * 			{@link ModelClusterizer} now allows specifying the output directory</td>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.03</td>
+ * 		<td>2016-04-19</td>
  * 		<td>{@link ModelClusterizer} now stores in ./out/nets</td>
  * 	</tr>
  * 	<tr>

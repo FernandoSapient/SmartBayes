@@ -25,8 +25,8 @@ import edu.ucla.structure.DirectedGraph;
  * Provides a way to generate all the economic models, and group countries by it
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.03 2016-04-19
- * @since {@code WorldBankModelBuilder} version 0.01 2016-03-11
+ * @version 0.04 2016-04-23
+ * @since {@code WorldBankModelBuilder} version 0.01 2016-04-19
  */
 public class ModelClusterizer {
 
@@ -43,6 +43,7 @@ public class ModelClusterizer {
 	 *             to be a valid index
 	 * @throws IOException
 	 *             if at any point it cannot read the next line of the file
+	 * @since 0.01 2016-04-19
 	 */
 	public static Set<String> getCountries(String filename, int column)
 			throws ArrayIndexOutOfBoundsException, IOException {
@@ -51,10 +52,10 @@ public class ModelClusterizer {
 		Set<String> out = new HashSet<String>();
 
 		String[] nextLine;
-		reader.readNext(); //discard header row
+		reader.readNext(); // discard header row
 		while ((nextLine = reader.readNext()) != null) {
 			String country = nextLine[column];
-			if(country != null && country.length() > 0)
+			if (country != null && country.length() > 0)
 				out.add(country);
 		}
 
@@ -79,40 +80,134 @@ public class ModelClusterizer {
 	 * argument.
 	 * 
 	 * @param args
-	 *            An array of length 1-3, where the first position contains the
-	 *            name of the file containing the input data, and the second
-	 *            position optionally contains the index with the values to
-	 *            group the results by (zero by default), and the third position
-	 *            (in the case of length 3) contains one of the
+	 *            An array of length 3 or 4, where the first position contains
+	 *            the name of the file containing the input data, the second
+	 *            contains a directory to save the resulting networks in, the
+	 *            third position optionally contains the index with the values
+	 *            to group the results by (zero by default), and the fourth
+	 *            position (in the case of length 4) contains one of the
 	 *            {@link NodePlacer} configuration codes.
 	 * @throws IOException
 	 *             if the input file could not be read
 	 * @throws FileNotFoundException
 	 *             if the output file could not be created
 	 * @throws NumberFormatException
-	 *             if {@code args[1]} is not a valid index because it is not a
+	 *             if {@code args[2]} is not a valid index because it is not a
 	 *             number
 	 * @throws ArrayIndexOutOfBounds
-	 *             if {@code args[1]} is not a valid index because it does not
+	 *             if {@code args[2]} is not a valid index because it does not
 	 *             fall within the dataset
 	 */
 	// improve parameter handling. See JCLAP for potential solution
 	public static void main(String[] args) throws IOException,
 			FileNotFoundException, NumberFormatException {
 		if (args.length < 2) {
-			System.err.println("Usage: java Main <input data file> <group-by column> [plot mode]");
+			System.err
+					.println("Usage: java Main <input data file> <output directory> <group-by column> [plot mode]");
 			return;
 		}
 		String filename = args[0];
-		int groupByIndex = Integer.parseInt(args[1]);
-		
+		int groupByIndex = Integer.parseInt(args[2]);
+
 		Set<String> countries = getCountries(filename, groupByIndex);
 		Iterator<String> C = countries.iterator();
-		Map<DirectedGraph, List<String>> clustering = new HashMap<DirectedGraph,List<String>>();  
-		
-		
+		Map<DirectedGraph, List<String>> clustering = new HashMap<DirectedGraph, List<String>>();
+
+		// TODO: read from file
+		// TODO: perform in a method to allow others to call it and get their
+		// clusterings
+		while (C.hasNext()) {
+			String country = C.next().trim();
+			Map<String, List<Double>> data = Main.loadCSVwithFiltering(
+					new FileReader(filename), country, groupByIndex);
+
+			DomainKnowledge m = buildUnescoModel(data);
+
+			DirectedGraph variableGraph = m.variableDependency(.03);
+			if (!clustering.containsKey(variableGraph))
+				clustering.put(variableGraph, new Vector<String>());
+			clustering.get(variableGraph).add(country);
+
+			// define values
+			String[] values = { "low", "med", "high" };
+
+			// convert to bayesian network
+			char config = args.length >= 4 ? args[3].charAt(0)
+					: NodePlacer.LAYERED;
+			Map<String, List<String>> orderedLayers = new LinkedHashMap<String, List<String>>(
+					m.layerSet().size());
+			if (args.length >= 3 && config == NodePlacer.STAR) {
+				// "satellite dish" display
+				orderedLayers.put("spacer1", new Vector<String>());
+				orderedLayers.put("spacer2", new Vector<String>());
+				orderedLayers.put("Economic", m.getLayer("Economic"));
+				orderedLayers.put("spacer3", new Vector<String>());
+				orderedLayers.put("spacer4", new Vector<String>());
+			}
+			orderedLayers.put("Previous Economy",
+					m.getLayer("Previous Economy"));
+			orderedLayers.put("Education", m.getLayer("Education"));
+			orderedLayers.put("Innovation", m.getLayer("Innovation"));
+			orderedLayers.put("Production", m.getLayer("Production"));
+			if (args.length < 3 || config != NodePlacer.STAR) {
+				orderedLayers.put("Economic", m.getLayer("Economic"));
+			}
+
+			BeliefNetwork out;
+			if (args.length >= 4)
+				out = Main.graphToNetwork(variableGraph, values, orderedLayers,
+						config, 0);
+			else
+				out = Main.graphToNetwork(variableGraph, values, orderedLayers);
+
+			String fileOut = args[1] + "/" + country + ".xml";
+			// This is bad practice
+			// TODO: use input parameter to determine target directory
+			boolean result = Main.networkToFile(out, fileOut);
+			if (result)
+				System.out.println("File \"" + fileOut
+						+ "\" created successfully");
+			else
+				System.err.println("Could not write file \"" + fileOut + "\".");
+			// but does it change with the years?
+		}
+
+		System.out
+				.println(clustering.size() + " distinct networks were built:");
+		Iterator<DirectedGraph> I = clustering.keySet().iterator();
+		while (I.hasNext())
+			System.out.println("Cluster: " + clustering.get(I.next()));
+		// TODO: Print only those clusters that have more than one element
+		// TODO: can we cluster hierarchically? (score by average inter-layer
+		// degree?)
+		// TODO: check if this is more efficient if we iterate over the
+		// entrysets
+
+	}
+
+	/**
+	 * Builds a full {@link DomainKnowledge} model following the structure
+	 * proposed in the UNESCO world engineering report. This method is included
+	 * as sample code and will be deprecated as soon as file-reading support is
+	 * added
+	 * <p/>
+	 * Note: this method is not a clone of {@link edu
+	 * /missouri/BayesianConstructor#buildUnescoModel(Map)}; this method adds a
+	 * variable: previous year
+	 * 
+	 * @param data
+	 *            A {@code Map} representing a column-majoral table, where each
+	 *            key is the table's header and the list mapped to is the
+	 *            contents of the column with that name.
+	 * @return A {@link DomainKnowledge} model with dependency tables reflecting
+	 *         the relations in the given data
+	 * @throws IllegalArgumentException
+	 *             If the lists in {@code data} are not all the same size
+	 * @since 0.04 2016-04-23
+	 */
+	public static DomainKnowledge buildUnescoModel(
+			Map<String, List<Double>> data) throws IllegalArgumentException {
 		// expected names
-		//TODO: read from file
 		String primary = "Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]";
 		String secondary = "Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]";
 		String tertiary = "Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]";
@@ -127,103 +222,52 @@ public class ModelClusterizer {
 		String unemployed = "Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]";
 		String growth = "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]";
 		String PPP = "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]";
-		
-		//TODO: perform in a method to allow others to call it and get their clusterings
-		while(C.hasNext()){
-			String country = C.next().trim();
-			Map<String, List<Double>> data = Main.loadCSVwithFiltering(new FileReader(filename),
-					country, groupByIndex);
-			
-			//Create previous year category
-			//TODO: offer this as an option for when it's read from a file
-			data.put("Previous "+PPP, shiftBy(data.get(PPP),1));
-			data.put("Previous "+growth, shiftBy(data.get(growth),1));
-			
-			// set categories
-			List<List<Double>> education = Arrays.asList(data.get(primary),
-					data.get(secondary), data.get(tertiary));
-			List<List<Double>> innovation = Arrays
-					.asList(data.get(journal), data.get(trademark),
-							data.get(government), data.get(foreignAid));
-			List<List<Double>> production = Arrays.asList(data.get(agriculture),
-					data.get(industry), data.get(manufacture), data.get(services),
-					data.get(unemployed));
-			List<List<Double>> economic = Arrays.asList(data.get(growth),
-					data.get(PPP));
-			List<List<Double>> prevEcon = Arrays.asList(data.get(growth),
-					data.get(PPP));
 
-			// Hardwire 3-layer structure
-			// TODO: read domain knowledge structure from file
-			DomainKnowledge m = new DomainKnowledge();
-			m.addLayer("Economic", Arrays.asList(growth, PPP));
-			m.addLayer("Previous Economy", Arrays.asList("Previous "+growth, "Previous "+PPP));
-			m.addLayer("Education", Arrays.asList(primary, secondary, tertiary));
-			m.addLayer("Innovation",
-					Arrays.asList(journal, trademark, government, foreignAid));
-			m.addLayer("Production", Arrays.asList(agriculture, industry,
-					manufacture, services, unemployed));
-			m.addDependency("Previous Economy", "Production", Main.getDependency(prevEcon, production));
-			m.addDependency("Previous Economy", "Education", Main.getDependency(prevEcon, education));
-			m.addDependency("Education", "Innovation",
-					Main.getDependency(education, innovation));
-			m.addDependency("Education", "Production",
-					Main.getDependency(education, production));
-			m.addDependency("Innovation", "Production", Main.getDependency(innovation, production));
-			m.addDependency("Innovation", "Economic", Main.getDependency(innovation, economic));
-			m.addDependency("Production", "Economic",
-					Main.getDependency(production, economic));
-			
-			DirectedGraph variableGraph = m.variableDependency(.03);
-			if(!clustering.containsKey(variableGraph))
-				clustering.put(variableGraph, new Vector<String>());
-			clustering.get(variableGraph).add(country);
-				
-			// define values
-			String[] values = { "low", "med", "high" };
+		// Create previous year category
+		// TODO: offer this as an option for when it's read from a file
+		data.put("Previous " + PPP, shiftBy(data.get(PPP), 1));
+		data.put("Previous " + growth, shiftBy(data.get(growth), 1));
 
-			// convert to bayesian network
-			Map<String, List<String>> orderedLayers = new LinkedHashMap<String, List<String>>(m.layerSet().size());
-			if(args.length >= 3 && args[2].charAt(0)=='S'){
-				//"satellite dish" display 
-				orderedLayers.put("spacer", new Vector<String>());
-				orderedLayers.put("spacer", new Vector<String>());
-				orderedLayers.put("Economic", m.getLayer("Economic"));
-				orderedLayers.put("spacer", new Vector<String>());
-				orderedLayers.put("spacer", new Vector<String>());
-			}
-			orderedLayers.put("Previous Economy", m.getLayer("Previous Economy"));
-			orderedLayers.put("Education", m.getLayer("Education"));
-			orderedLayers.put("Innovation", m.getLayer("Innovation"));
-			orderedLayers.put("Production", m.getLayer("Production"));
-			if(args.length < 3 || args[2].charAt(0)!='S'){
-				orderedLayers.put("Economic", m.getLayer("Economic"));
-			}
+		// set categories
+		List<List<Double>> education = Arrays.asList(data.get(primary),
+				data.get(secondary), data.get(tertiary));
+		List<List<Double>> innovation = Arrays
+				.asList(data.get(journal), data.get(trademark),
+						data.get(government), data.get(foreignAid));
+		List<List<Double>> production = Arrays.asList(data.get(agriculture),
+				data.get(industry), data.get(manufacture), data.get(services),
+				data.get(unemployed));
+		List<List<Double>> economic = Arrays.asList(data.get(growth),
+				data.get(PPP));
+		List<List<Double>> prevEcon = Arrays.asList(data.get(growth),
+				data.get(PPP));
 
-			
-			BeliefNetwork out;
-			if (args.length >= 3)
-				out = Main.graphToNetwork(variableGraph, values, orderedLayers,
-						args[2].charAt(0), 0);
-			else
-				out = Main.graphToNetwork(variableGraph, values, orderedLayers);
-			
-			String fileOut = "out/nets/"+country+".xml";
-			//This is bad practice
-			//TODO: use input parameter to determine target directory
-			boolean result = Main.networkToFile(out, fileOut);
-			if (result)
-				System.out.println("File \"" + fileOut + "\" created successfully");
-			else
-				System.err.println("Could not write file \"" + fileOut + "\".");
-			//but does it change with the years?
-		}
-		
-		System.out.println(clustering.size()+" distinct networks were built:");
-		Iterator<DirectedGraph> I = clustering.keySet().iterator();
-		while(I.hasNext())
-			System.out.println("Cluster: "+clustering.get(I.next()));
-			
+		// Hardwire 3-layer structure
+		// TODO: read domain knowledge structure from file
+		DomainKnowledge m = new DomainKnowledge();
+		m.addLayer("Economic", Arrays.asList(growth, PPP));
+		m.addLayer("Previous Economy",
+				Arrays.asList("Previous " + growth, "Previous " + PPP));
+		m.addLayer("Education", Arrays.asList(primary, secondary, tertiary));
+		m.addLayer("Innovation",
+				Arrays.asList(journal, trademark, government, foreignAid));
+		m.addLayer("Production", Arrays.asList(agriculture, industry,
+				manufacture, services, unemployed));
+		m.addDependency("Previous Economy", "Production",
+				Main.getDependency(prevEcon, production));
+		m.addDependency("Previous Economy", "Education",
+				Main.getDependency(prevEcon, education));
+		m.addDependency("Education", "Innovation",
+				Main.getDependency(education, innovation));
+		m.addDependency("Education", "Production",
+				Main.getDependency(education, production));
+		m.addDependency("Innovation", "Production",
+				Main.getDependency(innovation, production));
+		m.addDependency("Innovation", "Economic",
+				Main.getDependency(innovation, economic));
+		m.addDependency("Production", "Economic",
+				Main.getDependency(production, economic));
+		return m;
 	}
 
 	/**
@@ -242,6 +286,7 @@ public class ModelClusterizer {
 	 * @return A {@code List} where the first {@code i} positions are
 	 *         {@code null} and, excepting the last {@code i} positions of
 	 *         {@code list}, all the elements from {@code list} are in it
+	 * @since 0.01 2016-04-19
 	 */
 	public static <T> List<T> shiftBy(List<T> list, int i) {
 		List<T> out = new Vector<T>(list);

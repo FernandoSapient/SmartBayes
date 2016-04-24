@@ -522,11 +522,11 @@ public class Main {
 			return;
 		}
 
-		String filterExp;
+		String filterExpression;
 		if (args.length < 3)
-			filterExp = null;
+			filterExpression = null;
 		else
-			filterExp = args[2];
+			filterExpression = args[2];
 
 		int filterIndex;
 		if (args.length < 4)
@@ -536,7 +536,7 @@ public class Main {
 
 		// Read data
 		Map<String, List<Double>> data = loadCSVwithFiltering(new FileReader(
-				args[0]), filterExp, filterIndex);
+				args[0]), filterExpression, filterIndex);
 
 		// TODO: read domain knowledge structure from file
 		// this will herald in a new major version
@@ -573,7 +573,7 @@ public class Main {
 	 *            A {@code Map} representing a column-majoral table, where each
 	 *            key is the table's header and the list mapped to is the
 	 *            contents of the column with that name.
-	 * @return A {@link DomainKnowledge} model with dependnecy tables reflecting
+	 * @return A {@link DomainKnowledge} model with dependency tables reflecting
 	 *         the relations in the given data
 	 * @throws IllegalArgumentException
 	 *             If the lists in {@code data} are not all the same size
