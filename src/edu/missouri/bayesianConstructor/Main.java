@@ -33,7 +33,7 @@ import com.opencsv.CSVReader;
  * classes.
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.13 2016-04-19
+ * @version 0.14 2016-04-25
  * @since {@code bayesianConstructor} version 0.03 2016-03-18
  */
 public class Main {
@@ -52,7 +52,7 @@ public class Main {
 	 * in the (0, <i>Y</i>&#x305;) interval where <i>Y</i>&#x305; is the
 	 * arithmetic sample means of <i>Y</i>.
 	 * <p/>
-	 * If a value is {@code null}; it, and the corresponding value in the other
+	 * If a value is {@code null} or {@code NaN}; it, and the corresponding value in the other
 	 * list, are ignored.
 	 * 
 	 * @param X
@@ -69,17 +69,17 @@ public class Main {
 	// )
 	public static double dependency(List<Double> X, List<Double> Y)
 			throws IllegalArgumentException {
-		if (X.size() != Y.size())
+		int n = X.size();
+		if (n != Y.size())
 			throw new IllegalArgumentException(
 					"Both lists must have the same number of elements");
-		int n = X.size();
 
 		// total
 		double sumX = 0;
 		double sumY = 0;
 		int nx = 0;
 		for (int i = 0; i < n; i++) {
-			if (X.get(i) != null && Y.get(i) != null) {
+			if (X.get(i) != null && !X.get(i).isNaN() && Y.get(i) != null && !Y.get(i).isNaN() ) {
 				sumX += X.get(i).doubleValue();
 				sumY += Y.get(i).doubleValue();
 				nx++;
@@ -91,7 +91,7 @@ public class Main {
 		double covNum = 0;// covariance numerator ((x-avg(x))(y-avg(y))^2)
 		int processed = 0;
 		for (int i = 0; i < n; i++) {
-			if (X.get(i) != null && Y.get(i) != null) {
+			if (X.get(i) != null && !X.get(i).isNaN() && Y.get(i) != null && !Y.get(i).isNaN() ) {
 				double xi = X.get(i).doubleValue();
 				double yi = Y.get(i).doubleValue();
 				stdNumX += Math.pow(xi - sumX / nx, 2);
@@ -105,7 +105,7 @@ public class Main {
 		double STE = Math.sqrt((stdNumY - Math.pow(covNum, 2) / stdNumX)
 				/ (nx - 2));
 		double out = 1 - STE / (sumY / nx);
-		assert (out >= 0 && out <= 1);
+		//assert (out >= 0 && out <= 1);
 		return out;
 	}
 
@@ -158,7 +158,7 @@ public class Main {
 					double y_to_x = dependency(dependent.get(j),
 							independent.get(i));
 					out[i][j] = new Double(x_to_y - y_to_x);
-					assert (out[i][j].doubleValue() > -1 && out[i][j] < 1);
+					//assert (out[i][j].doubleValue() > -1 && out[i][j] < 1);
 				} else {
 					out[i][j] = Double.NEGATIVE_INFINITY;
 				}
@@ -544,23 +544,34 @@ public class Main {
 
 		DirectedGraph variableGraph = m.variableDependency(.03);
 
-		// define values
-		String[] values = { "low", "med", "high" };
-
 		// convert to bayesian network
 		BeliefNetwork out;
 		// out=newBeliefNetworkImpl(graphToNodeGraph(variableGraph, values));
+		//TODO: let number of values be a parameter
 		if (args.length >= 5)
-			out = graphToNetwork(variableGraph, values, m.layerMap(),
+			out = graphToNetwork(variableGraph, genValues(3), m.layerMap(),
 					args[4].charAt(0), 0);
 		else
-			out = graphToNetwork(variableGraph, values, m.layerMap());
+			out = graphToNetwork(variableGraph, genValues(3), m.layerMap());
 
 		boolean result = networkToFile(out, args[1]);
 		if (result)
 			System.out.println("File \"" + args[1] + "\" created successfully");
 		else
 			System.err.println("Could not write file \"" + args[1] + "\".");
+	}
+	
+	/**Generates {@code n} names to be the possible values of a variable.
+	 * The names generated take the form Q1, Q2, etc.
+	 * @param n number of values to generate
+	 * @return an array of length {@code n} where each entry has a generated name.
+	 * @since 0.14 2016-04-26
+	 */
+	public static String[] genValues(int n) {
+		String[] out = new String[n];
+		for(n--; n>=0; n--)
+			out[n] = "Q"+(n+1);
+		return out;
 	}
 
 	/**

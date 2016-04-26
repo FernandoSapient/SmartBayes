@@ -25,7 +25,7 @@ import edu.ucla.structure.DirectedGraph;
  * Provides a way to generate all the economic models, and group countries by it
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.04 2016-04-23
+ * @version 0.05 2016-04-25
  * @since {@code WorldBankModelBuilder} version 0.01 2016-04-19
  */
 public class ModelClusterizer {
@@ -113,7 +113,6 @@ public class ModelClusterizer {
 		Iterator<String> C = countries.iterator();
 		Map<DirectedGraph, List<String>> clustering = new HashMap<DirectedGraph, List<String>>();
 
-		// TODO: read from file
 		// TODO: perform in a method to allow others to call it and get their
 		// clusterings
 		while (C.hasNext()) {
@@ -273,7 +272,7 @@ public class ModelClusterizer {
 	/**
 	 * Creates a copy of the list where all element indices are shifted ahead by
 	 * the amount indicated. The size of the list is preserved: Elements near
-	 * the end are dropped off, and {@code null} is used as a filler element
+	 * the end are dropped off, and {@code NaN} is used as a filler element
 	 * <p/>
 	 * Note that, for now, {@code i} should be positive; support for negative
 	 * shifts may be added at a later date
@@ -288,12 +287,12 @@ public class ModelClusterizer {
 	 *         {@code list}, all the elements from {@code list} are in it
 	 * @since 0.01 2016-04-19
 	 */
-	public static <T> List<T> shiftBy(List<T> list, int i) {
-		List<T> out = new Vector<T>(list);
+	public static List<Double> shiftBy(List<Double> list, int i) {
+		List<Double> out = new Vector<Double>(list);
 		out.remove(list.size() - 1);
 		if (i > 0) {
 			for (; i > 0; i--)
-				out.add(0, null);
+				out.add(0, new Double(Double.NaN));
 			return out;
 		} else {
 			throw new UnsupportedOperationException(

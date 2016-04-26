@@ -3,10 +3,12 @@ package edu.missouri.bayesianEvaluator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
+import edu.missouri.bayesianConstructor.Main;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.net.EditableBayesNet;
 import weka.core.Attribute;
@@ -27,7 +29,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.11 2016-04-24
+ * @version 0.12 2016-04-25
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 // TODO: create non-static versions of all methods
@@ -190,7 +192,8 @@ public class Trainer {
 				assert data.instance(j).value(index) == values[j];
 			}
 		}
-		assert values.equals(data.attributeToDoubleArray(index));
+		
+		assert Arrays.equals(values, data.attributeToDoubleArray(index));
 	}
 
 	/**
@@ -289,14 +292,21 @@ public class Trainer {
 				throw new IllegalArgumentException("The Bayesian network "
 						+ " contains attribute " + bn.getNodeName(i)
 						+ " but no such attribute exists in the data set");
-			Discretize d = new Discretize();
-			d.setIgnoreClass(true);
-			d.setAttributeIndices(Integer.toString(j + 1));
-			d.setBins(bn.getCardinality(i));
-			d.setUseEqualFrequency(useEqualFrequency);
-			d.setInputFormat(data);
-			data = Filter.useFilter(data, d);
+			if(data.attributeStats(j).missingCount == data.numInstances()){
+				Attribute a = new Attribute(data.attribute(j).name(), Arrays.asList(Main.genValues(bn.getCardinality(i))));
+				data.deleteAttributeAt(j);
+				data.insertAttributeAt(a, j);;
+			}else{
+				Discretize d = new Discretize();
+				d.setIgnoreClass(true);
+				d.setAttributeIndices(Integer.toString(j + 1));
+				d.setBins(bn.getCardinality(i));
+				d.setUseEqualFrequency(useEqualFrequency);
+				d.setInputFormat(data);
+				data = Filter.useFilter(data, d);
+			}
 			assert bn.getNodeName(i).equals(data.attribute(j).name());
+			assert data.attribute(j).isNominal();
 			assert data.numDistinctValues(j) == bn.getCardinality(i);
 		}
 		return data;

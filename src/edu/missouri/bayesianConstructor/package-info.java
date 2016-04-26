@@ -11,7 +11,7 @@
  *  
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.21 2016-04-19
+ * @version	0.22 2016-04-25
  * 
  * <h2>Version history</h2>
  * <table>
@@ -19,6 +19,14 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.22</td>
+ * 		<td>2016-04-25</td>
+ * 		<td>Made Main more generalizable by adding support for {@code NaN}s to
+ * 			{@link Main#dependency(java.util.List, java.util.List)} and adding 
+ * 			{@link Main#genValues(int)}.
+ * 			({@link Main} is now version 0.14)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.21</td>

@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.20 2016-04-24
+ * @version	0.21 2016-04-25
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,13 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.21</td>
+ * 		<td>2016-04-25</td>
+ * 		<td>{@link Trainer#discretizeToBayes(weka.core.Instances, weka.classifiers.bayes.BayesNet, boolean)}
+ * 			now accounts for attributes with all values missing (usually due to filtering)
+ * 			({@link Trainer} is now version 0.12)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.20</td>
