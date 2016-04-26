@@ -29,7 +29,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.12 2016-04-25
+ * @version 0.13 2016-04-25
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 // TODO: create non-static versions of all methods
@@ -270,13 +270,16 @@ public class Trainer {
 	 * @throws IllegalArgumentException
 	 *             If the bayesian network names an attribute not present in the
 	 *             data
+	 * @throws ArithmeticException
+	 *             If any one of the attributes does not have enough data to be
+	 *             discretized into the number of bins in the corresponding node
+	 *             in {@code bn} (e.g.: attempting to put 2 data points into 3
+	 *             bins)
 	 * @throws AssertionError
 	 *             If any one of the attributes of {@code data} is not
 	 *             discretizable by
 	 *             {@code weka.filters.unsupervised.attribute.Discretize} (i.e.
-	 *             is already discrete or is a text attribute) and the number of
-	 *             values in the attribute does not match the number of values
-	 *             in the corresponding node in {@code bn}
+	 *             is already discrete or is a text attribute)
 	 * @throws Exception
 	 *             if {@code data} is not suitable for a
 	 *             {@code weka.filters.filter}
@@ -284,7 +287,7 @@ public class Trainer {
 	 */
 	public static Instances discretizeToBayes(Instances data, BayesNet bn,
 			boolean useEqualFrequency) throws IllegalArgumentException,
-			Exception {
+			ArithmeticException, AssertionError, Exception {
 		List<String> attributeNames = getAttributeNames(data);
 		for (int i = 0; i < bn.getNrOfNodes(); i++) {
 			int j = attributeNames.indexOf(bn.getNodeName(i));
@@ -296,6 +299,10 @@ public class Trainer {
 				Attribute a = new Attribute(data.attribute(j).name(), Arrays.asList(Main.genValues(bn.getCardinality(i))));
 				data.deleteAttributeAt(j);
 				data.insertAttributeAt(a, j);;
+			}else if(data.numDistinctValues(j) < bn.getCardinality(i)){
+				throw new ArithmeticException(bn.getNodeName(i)+" requires discretizing into "
+						+bn.getCardinality(i)+" values, but only "+data.numDistinctValues(j)
+						+" distinct values were found in the data");
 			}else{
 				Discretize d = new Discretize();
 				d.setIgnoreClass(true);
@@ -336,9 +343,7 @@ public class Trainer {
 	 *             If any one of the attributes of {@code data} is not
 	 *             discretizable by
 	 *             {@code weka.filters.unsupervised.attribute.Discretize} (i.e.
-	 *             is already discrete or is a text attribute) and the number of
-	 *             values in the attribute does not match the number of values
-	 *             in the corresponding node in {@code bn}
+	 *             is already discrete or is a text attribute) 
 	 * @throws Exception
 	 *             if {@code data} is not suitable for a
 	 *             {@code weka.filters.filter}
@@ -346,7 +351,7 @@ public class Trainer {
 	 */
 	public static Instances conformToNetwork(Instances data, BayesNet bn,
 			boolean useEqualFrequency) throws Exception,
-			IllegalArgumentException {
+			AssertionError, ArithmeticException, IllegalArgumentException {
 		List<String> nodes = getNodeNames(bn);
 
 		// remove attributes not in the bayesian network

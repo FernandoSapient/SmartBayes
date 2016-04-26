@@ -27,7 +27,7 @@ import edu.ucla.belief.BeliefNetwork;
 import edu.ucla.belief.StateNotFoundException;
 
 /**@author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.02 2016-04-25
+ * @version	0.03 2016-04-25
  * @since {@code WorldBankModelBuilder} version 0.04 2016-04-24
  */
 public class ReconstructionTest {
@@ -270,35 +270,40 @@ public class ReconstructionTest {
 			EditableBayesNet wekaBayes = BifUpdate.loadBayesNet(BN_File);
 			
 			//TODO: discretize AFTER making the training nets
-			if (args.length >= 5)
-				countryData = Trainer.conformToNetwork(countryData, wekaBayes,
-						Boolean.getBoolean(args[4]));
-			else
-				countryData = Trainer.conformToNetwork(countryData, wekaBayes, false);
-		
-			float trainSize = 0.85f;
-		
-			// TODO move to function and receive trainSize as parameter
-			assert trainSize > 0;
-			assert trainSize < 1;
+			try{
+				if (args.length >= 5)
+					countryData = Trainer.conformToNetwork(countryData, wekaBayes,
+							Boolean.getBoolean(args[4]));
+				else
+					countryData = Trainer.conformToNetwork(countryData, wekaBayes, false);
 			
-			@SuppressWarnings("deprecation")
-			String date = new java.util.Date().toLocaleString();
-			System.out.println("\nRESULTS\nat " + date + "\n-------");
-			int folds = 20;//Math.round(1 / (1 - trainSize)) * data.attribute(0).numValues(); //assuming all attributes have the same number of values
-			Map<Instances, Instances> crossVal = Evaluator.randomSplit(countryData, trainSize, folds);
-			Map<String, DoubleSummaryStatistics> results = crossValidationAccuracies(
-					crossVal, BN_File, values);
-			double time = secondsElapsed(t);
-			Iterator<Map.Entry<String, DoubleSummaryStatistics>> I = results.entrySet().iterator();
-			//System.out.println(country+":");
-			while(I.hasNext()){
-				Map.Entry<String, DoubleSummaryStatistics> e = I.next();
-				System.out.println("\t"+e.getKey()+": min "+e.getValue().getMin()+"; max "+e.getValue().getMax()+"; average "+e.getValue().getAverage());
+				float trainSize = 0.85f;
+			
+				// TODO move to function and receive trainSize as parameter
+				assert trainSize > 0;
+				assert trainSize < 1;
+				
+				@SuppressWarnings("deprecation")
+				String date = new java.util.Date().toLocaleString();
+				System.out.println("\nRESULTS\nat " + date + "\n-------");
+				int folds = 20;//Math.round(1 / (1 - trainSize)) * data.attribute(0).numValues(); //assuming all attributes have the same number of values
+				Map<Instances, Instances> crossVal = Evaluator.randomSplit(countryData, trainSize, folds);
+				Map<String, DoubleSummaryStatistics> results = crossValidationAccuracies(
+						crossVal, BN_File, values);
+				double time = secondsElapsed(t);
+				Iterator<Map.Entry<String, DoubleSummaryStatistics>> I = results.entrySet().iterator();
+				//System.out.println(country+":");
+				while(I.hasNext()){
+					Map.Entry<String, DoubleSummaryStatistics> e = I.next();
+					System.out.println("\t"+e.getKey()+": min "+e.getValue().getMin()+"; max "+e.getValue().getMax()+"; average "+e.getValue().getAverage());
+				}
+				System.out.println("Processed "+country+" in "+time+" seconds");
+			}catch(ArithmeticException e){
+				System.out.println("Skipping "+country+": Insufficient data: "+e);
 			}
 			//results.put("__TotalTime__", new DoubleSummaryStatistics(time) );
 			totalCountries--;
-			System.out.println("Processed "+country+" in "+time+" seconds; "+totalCountries+" folds remain");
+			System.out.println(totalCountries+" countries remain");
 		}
 	}
 

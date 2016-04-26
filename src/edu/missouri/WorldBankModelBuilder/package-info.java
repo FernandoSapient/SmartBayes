@@ -1,6 +1,6 @@
 /**Contains classes to build economic models using World Bank data
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.05 2016-04-25
+ * @version	0.07 2016-04-25
  * 
  * <h2>Version history</h2>
  * <table>
@@ -8,6 +8,14 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.07</td>
+ * 		<td>2016-04-25</td>
+ * 		<td>{@link ReconstructionTest#main(String[])} now skips countries
+ * 			with insufficient data to discretize (Previously, a compatibility
+ * 			error was thrown) 
+ * 			({@link ReconstructionTest} is now version 0.3)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.06</td>

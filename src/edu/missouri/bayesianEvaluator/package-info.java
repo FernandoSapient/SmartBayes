@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.21 2016-04-25
+ * @version	0.22 2016-04-25
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,14 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.22</td>
+ * 		<td>2016-04-25</td>
+ * 		<td>{@link Trainer#discretizeToBayes(weka.core.Instances, weka.classifiers.bayes.BayesNet, boolean)}
+ * 			now throws an {@code ArithmeticException} if there's not enough data to discretize
+ * 			(previously an assertion error was thrown)
+ * 			({@link Trainer} is now version 0.13)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.21</td>
