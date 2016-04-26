@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.19 2016-04-23
+ * @version	0.20 2016-04-24
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,12 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.20</td>
+ * 		<td>2016-04-23</td>
+ * 		<td>Added {@link Trainer#addAttributeAt(weka.core.Instances, weka.core.Attribute, int, double[])}
+ * 			({@link Trainer} is now version 0.11)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.19</td>

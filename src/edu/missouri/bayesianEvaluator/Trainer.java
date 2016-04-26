@@ -27,7 +27,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.10 2016-04-20
+ * @version 0.11 2016-04-24
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 // TODO: create non-static versions of all methods
@@ -162,6 +162,37 @@ public class Trainer {
 		return data;
 	}
 
+	/**Adds an attribute {@code a} at {@code index} to {@code data},
+	 * with the given {@code values}
+	 * 
+	 * @param data The data to add the new attribute to
+	 * @param a The description of the new attribute
+	 * @param index Where to insert the new attribute
+	 * @param values A list of values to insert the attribute at
+	 * 
+	 * @throws IllegalArgumentException If {@code values.length} does not
+	 * match the number of instances in {@code data}
+	 * @since 0.11 2016-04-24
+	 */
+	public static void addAttributeAt(Instances data, Attribute a, int index,
+			double[] values) throws IllegalArgumentException{
+		if(data.numInstances() != values.length)
+			throw new IllegalArgumentException("A value must be provided "
+					+"for every instance ("+values.length+" values found, "
+					+data.numInstances()+" values needed)");
+		data.insertAttributeAt(a, index);
+		assert data.attribute(index).equals(a);
+		for (int j = 0; j < values.length; j++) {
+			if (Double.isNaN(values[j])) {
+				assert data.instance(j).isMissing(index);
+			} else {
+				data.instance(j).setValue(index, values[j]);
+				assert data.instance(j).value(index) == values[j];
+			}
+		}
+		assert values.equals(data.attributeToDoubleArray(index));
+	}
+
 	/**
 	 * Reorders the attributes in the given dataset to be in the order specified
 	 * </P> Note: {@code data} <em>will be modified</em> by this function
@@ -194,8 +225,6 @@ public class Trainer {
 			throw new IllegalArgumentException("There are attributes in the"
 					+ " proposed ordering not present in the dataset");
 
-		int m = data.numInstances();
-
 		// convert each attribute to column vectors and reinsert
 		for (int i = 0; i < n; i++) {
 			attributeNames = getAttributeNames(data); // the order of the
@@ -208,22 +237,11 @@ public class Trainer {
 			assert a.name().equals(attributeOrder.get(i));
 
 			double[] values = data.attributeToDoubleArray(source);
-			assert values.length == m;
+			assert data.numInstances() == values.length;
 
 			// reinsert at end
 			data.deleteAttributeAt(source);
-			data.insertAttributeAt(a, n - 1);
-			assert data.attribute(n - 1).equals(a);
-			for (int j = 0; j < m; j++) {
-				if (Double.isNaN(values[j])) {
-					assert data.instance(j).isMissing(n - 1);
-				} else {
-					data.instance(j).setValue(n - 1, values[j]);
-					assert data.instance(j).value(n - 1) == values[j];
-				}
-			}
-			// TODO: assert missingValues(values) ==
-			// missingValues(data.attributeToDoubleArray(n-1));
+			addAttributeAt(data, a, n-1, values);
 		}
 		assert attributeOrder.equals(getAttributeNames(data));
 
@@ -333,6 +351,42 @@ public class Trainer {
 	}
 
 	/**
+	 * Trains the given network with the given data and stores the result with
+	 * the given filename. Note that {@code bn} is modified by this function.
+	 * Also note that if the columns in {@code data} are not already in the same
+	 * order as the nodes in {@code bn}, unpredictable behavior may
+	 * result&mdash;use {@link #conformToNetwork(Instances, BayesNet, boolean)}
+	 * or {@link #reorderAttributes(Instances, List)} for this purpose.
+	 * <p/>
+	 * To train the Bayesian network without generating a file, call
+	 * 
+	 * @param bn
+	 *            The Bayesian network to be trained
+	 * @param data
+	 *            The data with which to train the Bayesian network
+	 * @param filename
+	 *            The name of the file to save the Bayesian network in
+	 * @throws Exception
+	 *             If the number of columns in {@code data} does not match the
+	 *             number of nodes in {@code bn} (use
+	 *             {@link #conformToNetwork(Instances, BayesNet, boolean)} or
+	 *             {@code #restrictToAttributeSet(Instances, Collection)} for
+	 *             this purpose)
+	 * @throws FileNotFoundException if {@code filename} could not be created
+	 * @since 0.10 2016-04-20
+	 */
+	//TODO: create overload method that receives a file
+	public static void trainToFile(EditableBayesNet bn, Instances data,
+			String filename) throws Exception, FileNotFoundException {
+		bn.setData(data);
+		bn.estimateCPTs();
+
+		PrintWriter f = new PrintWriter(filename);
+		f.write(bn.toXMLBIF03());
+		f.close();
+	}
+
+	/**
 	 * Trains a Bayesian network (provided in an XML BIF file) using the given
 	 * data. The data file must be on one of Weka's accepted file formats (ARFF,
 	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
@@ -369,7 +423,7 @@ public class Trainer {
 					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]");
 			return;
 		}
-
+	
 		DataSource source = new DataSource(args[0]);
 		if (source.getLoader() instanceof CSVLoader) {
 			((CSVLoader) source.getLoader()).setMissingValue(".."); // This is
@@ -378,62 +432,26 @@ public class Trainer {
 		}
 		Instances data = source.getDataSet();
 		EditableBayesNet bn = BifUpdate.loadBayesNet(args[1]);
-
+	
 		// filter out by criterion
 		if (args.length >= 4) {
 			System.out.println("Filtering by " + data.attribute(0).name()
 					+ " equal to " + args[3] + "...");
 			data = filterByCriterion(args[3], data, 0);
 		}
-
+	
 		System.out.println("Conforming data to network...");
 		if (args.length >= 5)
 			data = conformToNetwork(data, bn, Boolean.getBoolean(args[4]));
 		else
 			data = conformToNetwork(data, bn, false);
-
+	
 		data.setClassIndex(data.numAttributes() - 1);
 		System.out.println("Setting " + data.classAttribute().name()
 				+ " as class...");
-
+	
 		System.out.println("Training network...");
 		trainToFile(bn, data, args[2]);
 		System.out.println(args[2] + " created successfully");
-	}
-
-	/**
-	 * Trains the given network with the given data and stores the result with
-	 * the given filename. Note that {@code bn} is modified by this function.
-	 * Also note that if the columns in {@code data} are not already in the same
-	 * order as the nodes in {@code bn}, unpredictable behavior may
-	 * result&mdash;use {@link #conformToNetwork(Instances, BayesNet, boolean)}
-	 * or {@link #reorderAttributes(Instances, List)} for this purpose.
-	 * <p/>
-	 * To train the Bayesian network without generating a file, call
-	 * 
-	 * @param bn
-	 *            The Bayesian network to be trained
-	 * @param data
-	 *            The data with which to train the Bayesian network
-	 * @param filename
-	 *            The name of the file to save the Bayesian network in
-	 * @throws Exception
-	 *             If the number of columns in {@code data} does not match the
-	 *             number of nodes in {@code bn} (use
-	 *             {@link #conformToNetwork(Instances, BayesNet, boolean)} or
-	 *             {@code #restrictToAttributeSet(Instances, Collection)} for
-	 *             this purpose)
-	 * @throws FileNotFoundException if {@code filename} could not be created
-	 * @since 0.10 2016-04-20
-	 */
-	//TODO: create overload method that receives a file
-	public static void trainToFile(EditableBayesNet bn, Instances data,
-			String filename) throws Exception, FileNotFoundException {
-		bn.setData(data);
-		bn.estimateCPTs();
-
-		PrintWriter f = new PrintWriter(filename);
-		f.write(bn.toXMLBIF03());
-		f.close();
 	}
 }
