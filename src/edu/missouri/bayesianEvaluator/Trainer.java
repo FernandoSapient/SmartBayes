@@ -29,7 +29,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.13 2016-04-25
+ * @version 0.14 2016-04-25
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 // TODO: create non-static versions of all methods
@@ -295,15 +295,17 @@ public class Trainer {
 				throw new IllegalArgumentException("The Bayesian network "
 						+ " contains attribute " + bn.getNodeName(i)
 						+ " but no such attribute exists in the data set");
-			if(data.attributeStats(j).missingCount == data.numInstances()){
+			if(data.attributeStats(j).missingCount == data.numInstances() || data.numDistinctValues(j) < bn.getCardinality(i)){
 				Attribute a = new Attribute(data.attribute(j).name(), Arrays.asList(Main.genValues(bn.getCardinality(i))));
 				data.deleteAttributeAt(j);
 				data.insertAttributeAt(a, j);;
-			}else if(data.numDistinctValues(j) < bn.getCardinality(i)){
+			}/*else if(data.numDistinctValues(j) < bn.getCardinality(i)){
+				//TODO: add a handling case here (if there's 2 values, the ranges should be (-inf val1](val1 val2)[val2 +inf])
 				throw new ArithmeticException(bn.getNodeName(i)+" requires discretizing into "
 						+bn.getCardinality(i)+" values, but only "+data.numDistinctValues(j)
 						+" distinct values were found in the data");
-			}else{
+				
+			}*/else{
 				Discretize d = new Discretize();
 				d.setIgnoreClass(true);
 				d.setAttributeIndices(Integer.toString(j + 1));

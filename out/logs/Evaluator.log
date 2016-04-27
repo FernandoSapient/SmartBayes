@@ -4868,3 +4868,48 @@ Scientific and technical journal articles [IP.JRN.ARTC.SC]: min 0.0; max 0.66666
 Industry, value added (% of GDP) [NV.IND.TOTL.ZS]: min 0.375; max 0.875; average 0.6819727891156463
 Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]: min 0.25; max 0.875; average 0.5365646258503401
 GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]: min 0.625; max 1.0; average 0.8222789115646258
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Indonesia.xml Line=9: Document is invalid: no grammar found.
+Filtering by ﻿Country Name equal to Indonesia...
+Conforming data to network...
+
+RESULTS
+at Apr 23, 2016 3:22:15 PM
+-------
+Processed split in 2.58369858 seconds; 20 folds remain
+Processed split in 0.932185518 seconds; 19 folds remain
+Processed split in 1.309691186 seconds; 18 folds remain
+Processed split in 1.129390227 seconds; 17 folds remain
+Processed split in 0.743505639 seconds; 16 folds remain
+Processed split in 0.811096128 seconds; 15 folds remain
+Processed split in 1.622804958 seconds; 14 folds remain
+Processed split in 1.072930975 seconds; 13 folds remain
+Processed split in 1.114380441 seconds; 12 folds remain
+Processed split in 1.363127963 seconds; 11 folds remain
+Processed split in 1.1071705 seconds; 10 folds remain
+Processed split in 0.673264855 seconds; 9 folds remain
+Processed split in 0.620559901 seconds; 8 folds remain
+Processed split in 1.099743976 seconds; 7 folds remain
+Processed split in 0.625031205 seconds; 6 folds remain
+Processed split in 0.500425187 seconds; 5 folds remain
+Processed split in 0.538229785 seconds; 4 folds remain
+Processed split in 0.507823783 seconds; 3 folds remain
+Processed split in 0.559427582 seconds; 2 folds remain
+Processed split in 0.531605759 seconds; 1 folds remain
+Processed split in 0.485866235 seconds; 0 folds remain
+Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]: min 0.42857142857142855; max 1.0; average 0.6581632653061225
+__ProcessingTime__: min 0.485866235; max 2.58369858; average 0.9491409706190476
+GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]: min 0.0; max 1.0; average 0.6087301587301587
+Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]: min 0.5; max 1.0; average 0.6845238095238095
+Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]: min 0.125; max 0.75; average 0.4991496598639456
+Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]: min 0.0; max 1.0; average 0.8849206349206349
+Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]: min 0.0; max 1.0; average 0.5547619047619048
+Trademark applications, total [IP.TMK.TOTL]: min 0.2857142857142857; max 1.0; average 0.6875283446712018
+Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]: min 0.5; max 1.0; average 0.7984126984126984
+General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]: min 0.14285714285714285; max 0.625; average 0.3775510204081633
+Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]: min 0.0; max 1.0; average 0.4753968253968254
+Scientific and technical journal articles [IP.JRN.ARTC.SC]: min 0.0; max 1.0; average 0.43027210884353745
+Industry, value added (% of GDP) [NV.IND.TOTL.ZS]: min 0.42857142857142855; max 1.0; average 0.6284013605442177
+Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]: min 0.125; max 0.875; average 0.4974489795918367
+GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]: min 0.5714285714285714; max 1.0; average 0.8183106575963719
