@@ -23,5 +23,6 @@
 			<attribute name="javadoc_location" value="http://www.snaq.net/java/JCLAP/1.4/apidocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="commons-lang3-3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
