@@ -58,7 +58,7 @@ public class Evaluator {
 	 *            The number of splits to perform
 	 * @return A {@code Map} with {@code number} entries where each key <i>k</i>
 	 *         is an {@code Instances} object containing {@code ratio} of
-	 *         {@code data}, and {@code get(k) returns the remaining 1 &minus;
+	 *         {@code data}, and {@code get(k)} returns the remaining 1 &minus;
 	 *         {@code ratio} of {@code data}
 	 * @since 0.01 2016-04-19
 	 */
@@ -99,10 +99,6 @@ public class Evaluator {
 	 *            A SamIam Bayesian network, desired to be put into state
 	 * @param evidence
 	 *            The state to put {@code bn} into
-	 * @return A new {@code BeliefNetwork} with each variable node set to the
-	 *         state indicated in the corresponding {@code evidence} attribute
-	 *         (excepting the node corresponding to {@code evidence}'s class
-	 *         attribute)
 	 * @throws StateNotFoundException
 	 *             If the instances are not compatible with the Bayesian network
 	 *             (they specify states for the nodes that are not among those
@@ -199,11 +195,11 @@ public class Evaluator {
 	 * Evaluates the given Bayesian network on the given test data using Weka's
 	 * built-in evaluator. Note that this evaluator does not support belief
 	 * propagation (i.e. if the network is a chain of length 3, and the target
-	 * node is <i>v<sub>3</sub></i> and the value of its immediate parent
-	 * <i>v<sub>2</sub></i> is missing, rather than check <i>v<sub>1</sub></i>
-	 * to predict <i>v<sub>3</sub></i>, the evaluator merely assumes that
-	 * <i>v<sub>2</sub> is its default value&mdash;the value of
-	 * <i>v<sub>2</sub></i> with the highest frequency in the training data
+	 * node is <i>v</i><sub>3</sub> and the value of its immediate parent
+	 * <i>v</i><sub>2</sub> is missing, rather than check <i>v</i><sub>1</sub>
+	 * to predict <i>v</i><sub>3</sub>, the evaluator merely assumes that
+	 * <i>v</i><sub>2</sub> is its default value&mdash;the value of
+	 * <i>v</i><sub>2</sub> with the highest frequency in the training data
 	 * irrespective of the values of its adjacent nodes)
 	 * 
 	 * @param bn
@@ -255,7 +251,7 @@ public class Evaluator {
 	 *             If all the values for the class in {@code testData} are missing
 	 * @throws UnassignedClassException
 	 *             If {@code testData}'s class attribute is not set
-	 * @see {@link #shenoyShaferMarginals(BeliefNetwork, Instance)}
+	 * @see #shenoyShaferMarginals(BeliefNetwork, Instance)
 	 * @since 0.6 2016-04-22
 	 */
 	public static double accuracy(BeliefNetwork bn, Instances testData)
@@ -372,7 +368,7 @@ public class Evaluator {
 	 * @param splits
 	 *            A {@code Map} where each key <i>k</i> is an {@code Instances}
 	 *            object containing {@code ratio} of {@code data}, and {@code
-	 *            get(k) returns the remaining 1 &minus; {@code ratio} of
+	 *            get(k)} returns the remaining 1 &minus; {@code ratio} of
 	 *            {@code data}
 	 * @param filename
 	 *            The name of a file to write intermediate networks to
@@ -386,7 +382,7 @@ public class Evaluator {
 	 *             {@link Trainer#restrictToAttributeSet(Instances, Collection)}
 	 *             for this purpose). An undocumented exception is also thrown
 	 *             if the file was written correctly but could not be read
-	 * @throws FileNotfoundException
+	 * @throws FileNotFoundException
 	 *             If {@code filename} could not be written
 	 * @throws StateNotFoundException
 	 *             If the instances are not compatible with the Bayesian network
@@ -438,7 +434,7 @@ public class Evaluator {
 	 * which are equal to it will be selected.
 	 * <p/>
 	 * The method discretizes each attribute to match the number of possible values in
-	 * its corresponding node (see {@link #discretizeToBayes(Instances, BayesNet, boolean)})
+	 * its corresponding node (see {@link Trainer#discretizeToBayes(Instances, BayesNet, boolean)})
 	 * unless the attribute is already discrete.
 	 * <p/>
 	 * If the file is CSV file, the data is assumed to have originated

@@ -350,7 +350,7 @@ public class Trainer {
 	 * @throws Exception
 	 *             if {@code data} is not suitable for a
 	 *             {@code weka.filters.filter}
-	 * @throws 0.08 2016-04-10
+	 * @since 0.08 2016-04-10
 	 */
 	public static Instances conformToNetwork(Instances data, BayesNet bn,
 			boolean useEqualFrequency) throws Exception,

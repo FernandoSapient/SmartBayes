@@ -62,7 +62,6 @@ public class ReconstructionTest {
 
 	/**
 	 * @param d
-	 * @param n
 	 * @return
 	 */
 	public static Vector<Double> arrayToList(double[] d) {
@@ -132,18 +131,23 @@ public class ReconstructionTest {
 	 * of seconds (in a {@code double} with nanosecond precision) it took to
 	 * process each split. Note that if there is an attribute with this name,
 	 * unpredictable results may be returned.
+	 * <p/>
+	 * Note: this method is not a clone of {@link Evaluator#crossValidationAccuracies(EditableBayesNet, Map, String)};
+	 * This method constructs a new Bayesian network using the training data
 	 * 
 	 * @param splits
 	 *            A {@code Map} where each key <i>k</i> is an {@code Instances}
 	 *            object containing {@code ratio} of {@code data}, and {@code
-	 *            get(k) returns the remaining 1 &minus; {@code ratio} of
+	 *            get(k)} returns the remaining 1 &minus; {@code ratio} of
 	 *            {@code data}
 	 * @param filename
 	 *            The name of a file to write intermediate networks to
 	 * @param values
 	 *            TODO
-	 * @param bn
-	 *            The bayesian network to be evaluated
+	 * @param useUnesco
+	 *            Specifies whether to use the Unesco structure for the
+	 *            domain knowledge. If {@code false}, the Smets-Woulters
+	 *            structure will be used instead.
 	 * 
 	 * @return A {@code Map} where each key is an attribute name (or
 	 *         "__ProcessingTime__"
@@ -155,7 +159,7 @@ public class ReconstructionTest {
 	 *             {@link Trainer#restrictToAttributeSet(Instances, Collection)}
 	 *             for this purpose). An undocumented exception is also thrown
 	 *             if the file was written correctly but could not be read
-	 * @throws FileNotfoundException
+	 * @throws FileNotFoundException
 	 *             If {@code filename} could not be written
 	 * @throws StateNotFoundException
 	 *             If the instances are not compatible with the Bayesian network
@@ -163,7 +167,7 @@ public class ReconstructionTest {
 	 *             nodes' possible values)
 	 * @throws UnassignedClassException
 	 *             If {@code testData}'s class attribute is not set
-	 * @see #randomSplit(Instances, float, int)
+	 * @see Evaluator#randomSplit(Instances, float, int)
 	 * @since 0.01 2016-04-24
 	 */
 	// this is a near-perfect copy of Evaluator.crossValidationAccuracies
@@ -230,7 +234,7 @@ public class ReconstructionTest {
 	 * <p/>
 	 * The method discretizes each attribute to match the number of possible
 	 * values in its corresponding node (see
-	 * {@link #discretizeToBayes(Instances, BayesNet, boolean)}) unless the
+	 * {@link Trainer#discretizeToBayes(Instances, BayesNet, boolean)}) unless the
 	 * attribute is already discrete.
 	 * <p/>
 	 * If the file is CSV file, the data is assumed to have originated from the

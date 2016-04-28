@@ -96,13 +96,13 @@ public class ModelClusterizer {
 	 * @throws NumberFormatException
 	 *             if {@code args[2]} is not a valid index because it is not a
 	 *             number
-	 * @throws ArrayIndexOutOfBounds
+	 * @throws ArrayIndexOutOfBoundsException
 	 *             if {@code args[2]} is not a valid index because it does not
 	 *             fall within the dataset
 	 */
 	// improve parameter handling. See JCLAP for potential solution
 	public static void main(String[] args) throws IOException,
-			FileNotFoundException, NumberFormatException {
+			FileNotFoundException, NumberFormatException, ArrayIndexOutOfBoundsException {
 		if (args.length < 2) {
 			System.err
 					.println("Usage: java Main <input data file> <output directory> <Use Unesco Model> <group-by column> [plot mode]");

@@ -1,0 +1,580 @@
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:460: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:548: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:600: error: unterminated inline tag
+	 * @return {@code true if a relationship exists where {@code dependent}
+	           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:792: warning: no @param for threshold
+	public DirectedGraph variableDependency(Double threshold)
+	                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:864: warning: no @param for layers
+	private void tddTest(int layers) throws AssertionError {
+	             ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:993: warning: no description for @param
+	 * @param args
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:20: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:32: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:41: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:60: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:74: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:83: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:88: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:96: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\DomainKnowledge.java:103: error: reference not found
+ * @since {@link bayesianConstructor} version 0.01
+                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:48: error: semicolon missing
+	 * &radic;((&sum;(<i>Y</i>&minus;<i>Y</i>&#x305) &minus;
+	                                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:49: error: semicolon missing
+	 * (&sum;(<i>X</i>&minus
+	                  ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:50: error: semicolon missing
+	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305))&sup2; /
+	            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:50: error: semicolon missing
+	 * ;<i>X</i>&#x305)(<i>Y</i>&minus;<i>Y</i>&#x305))&sup2; /
+	                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:51: error: semicolon missing
+	 * &sum;((<i>X</i>&minus;<i>X</i>&#x305)&sup2;)) / (n-2)) STE returns values
+	                                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:52: error: semicolon missing
+	 * in the (0, <i>Y</i>&#x305) interval where <i>Y</i>&#x305 is the
+	                      ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:52: error: semicolon missing
+	 * in the (0, <i>Y</i>&#x305) interval where <i>Y</i>&#x305 is the
+	                                                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:54: error: malformed HTML
+	 * <p?>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:54: error: bad use of '>'
+	 * <p?>
+	      ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:62: error: semicolon missing
+	 * @return the dependency score, a number between 0 and <i>Y</i>&#x305
+	                                                                ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:63: warning: no description for @throws
+	 * @throws IllegalArgumentException
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:121: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:129: warning: no @param for independent
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:129: warning: no @param for dependent
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:129: warning: no @param for minimum
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:129: warning: no @return
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:160: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:168: warning: no @param for independent
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:168: warning: no @param for dependent
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:168: warning: no @return
+	public static Double[][] getDependency(List<List<Double>> independent,
+	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:192: error: reference not found
+	 *             Use {@link #graphToNetwork(DirectedGraph, String[]) for this
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:192: error: unterminated inline tag
+	 *             Use {@link #graphToNetwork(DirectedGraph, String[]) for this
+	                                                                   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:213: warning: no @param for <T>
+	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:213: warning: no @param for <U>
+	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:213: warning: no @param for x
+	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:213: warning: no @return
+	private static <T, U> int biggestLayer(Map<T, List<U>> x) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:222: warning: no @param for <T>
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:222: warning: no @param for <U>
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:222: warning: no @param for structure
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:222: warning: no @param for d
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:222: warning: no @return
+	private static <T, U> int findLayer(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:239: warning: no @param for <T>
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:239: warning: no @param for <U>
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:239: warning: no @param for structure
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:239: warning: no @param for d
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:239: warning: no @return
+	private static <T, U> int findIndex(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:254: warning: no @param for <T>
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:254: warning: no @param for <U>
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:254: warning: no @param for structure
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:254: warning: no @param for d
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:254: warning: no @return
+	private static <T, U> int findSize(Map<T, List<U>> structure, U d) {
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:409: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:410: error: malformed HTML
+	 * This function is shorthand for <a href=#graphToNetwork(DirectedGraph,
+	                                  ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:411: error: bad use of '>'
+	 * String[], Map, char, double)>{@code graphToNetwork}</a>(
+	                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:411: error: unexpected end tag: </a>
+	 * String[], Map, char, double)>{@code graphToNetwork}</a>(
+	                                                      ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:441: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:446: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:458: warning: no @throws for java.lang.Exception
+	public static void main(String[] args) throws Exception {
+	                   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\Main.java:37: error: reference not found
+ * @since {@link bayesianConstructor} version 0.03 2016-03-18
+                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:147: warning: no @param for c
+	private void validConfiguration(char c){
+	             ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:391: warning: no @param for radius
+	private static Point geometricCorner(int i, int n, double theta, float radius){
+	                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:391: warning: no @return
+	private static Point geometricCorner(int i, int n, double theta, float radius){
+	                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:523: warning: no description for @param
+	 * @param args
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:16: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:59: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:65: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:72: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:78: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:84: error: reference not found
+ * @since {@link bayesianConstructor} version 0.10 2016-03-29
+                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:315: error: @param name not found
+	 * @param leeway
+	          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:320: warning: no @param for angle
+	public NodePlacer(int components, int maxSize, double angle, char configuration){
+	       ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:291: error: @param name not found
+	 * @param componentSize
+	          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:298: warning: no @param for maxSize
+	public NodePlacer(int components, int maxSize, int leeway, double angle, char configuration){
+	       ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianConstruct
+or\NodePlacer.java:298: warning: no @param for angle
+	public NodePlacer(int components, int maxSize, int leeway, double angle, char configuration){
+	       ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\BifUpdate.java:18: error: reference not found
+ * @version {@link bayesianEvaluator} version 0.02 2016-04-02
+                   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\BifUpdate.java:19: error: reference not found
+ * @since {@link bayesianEvaluator} version 0.01 2016-04-01
+                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Evaluator.java:27: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Evaluator.java:29: error: reference not found
+	 * its corresponding node (see {@link #discretizeToBayes(Instances, BayesNet, boolean)})
+	                                      ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Evaluator.java:31: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Evaluator.java:42: error: unterminated inline tag
+	 *            a filtering criterion and at {@code args[4],.
+	                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Evaluator.java:48: warning - Tag @link: can't find discretizeToBayes(Instances, BayesNet, boolean) in edu.missouri.baye
+sianEvaluator.Evaluator
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:162: error: unexpected end tag: </P>
+	 * </P> Note: {@code data} <em>will be modified</em> by this function
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:312: error: unexpected text
+	 * @throws 0.08 2016-04-10
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:338: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:342: error: self-closing element not allowed
+	 * <p/>
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:353: error: unterminated inline tag
+	 *            a filtering criterion and at {@code args[4],.
+	                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:22: error: self-closing element not allowed
+ * <p/>
+   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\edu\missouri\bayesianEvaluator
+\Trainer.java:29: error: reference not found
+ * @since {@link bayesianEvaluator} version 0.02 2016-04-02
+                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:104: warning: no @return
+	public static Map<String, Callable> baseMap(){
+	                                    ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:206: warning: no description for @param
+	 * @param found
+	   ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:215: error: reference not found
+	/**splits a comma-separated list into its individual components. Each component's whitespace is {@link java.lang.String
+.trim}med
+	                                                                                                       ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:217: warning: no @param for s
+	protected static String[] divideIntoArgs(String s){
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:217: warning: no @return
+	protected static String[] divideIntoArgs(String s){
+	                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:251: warning: no @return
+	public static SortedSet<String> baseHelp(){
+	                                ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:296: warning: no @return
+	private static String buildFunction(String functionName, String[] functionArgs){
+	                      ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:33: error: self-closing element not allowed
+ * 	class A{<br/>
+   	        ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:34: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; private int value;<br/>
+   	                                ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:35: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; <br/>
+   	              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:36: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; public A(){<br/>
+   	                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:37: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; this.value = 0;<br/>
+   	                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:38: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; }<br/>
+   	               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:39: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; <br/>
+   	              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:40: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; public static void main(String[] args){<br/>
+   	                                                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:41: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<br/>
+   	                                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:42: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "* * * * * * * * * * * * * *\n" +<br/>
+   	                                                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:43: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "* 'A' class test program &nbsp;*\n" +<br/>
+   	                                                                                ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:44: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "* * * * * * * * * * * * * *\n" +<br/>
+   	                                                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:45: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "This program lets you test the A class by creating an\n" +<br/>
+   	                                                                                                     ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:46: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "instance of A and allowing you to perform any of the\n" +<br/>
+   	                                                                                                    ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:47: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "operations of the class on it.");<br/>
+   	                                                                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:48: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:49: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; A a = new A();<br/>
+   	                                          ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:50: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:51: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; Map&lt;String, Callable&gt; m = TestProgram.baseMap();<br/>
+   	                                                                                  ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:52: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; SortedSet&lt;String&gt; help &nbsp;= TestProgram.baseHelp();<br/>
+   	                                                                                        ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:53: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:54: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; String[] subtractArgs = new String[1];<br/>
+   	                                                                  ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:55: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; subtractArgs[0] = "&lt;int&gt;";<br/>
+   	                                                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:56: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; TestProgram.put(m, help, "subtract", new subtractCall(a), subtractArgs);<br/>
+   	                                                                                                    ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:57: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:58: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; TestProgram.put(m, help, "help", new TestProgram.defaultHelp(help), new String[0]);<br/>
+   	                                                                                                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:59: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:60: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; TestProgram p = new TestProgram(m);<br/>
+   	                                                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:61: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; <br/>
+   	                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:62: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));<br/>
+   	                                                                                                        ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:63: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; while(true){<br/>
+   	                                        ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:64: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try{<br/>
+   	                                              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:65: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.print("~:");<br/>
+   	                                                                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:66: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println( p.parseInput( stdIn.readLine() ) );<br/>
+   	                                                                                                               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:67: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }catch(Exception e){<br/>
+   	                                                              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:68: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.printStackTrace();<br/>
+   	                                                                            ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:69: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.err.flush();<br/>
+   	                                                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:70: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+   	                                           ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:71: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; }<br/>
+   	                             ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:72: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; }<br/>
+   	               ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:73: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; <br/>
+   	              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:74: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; public int subtract(int amount){<br/>
+   	                                              ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:75: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; this.value -= amount;<br/>
+   	                                                 ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:76: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; &nbsp; &nbsp; return value;<br/>
+   	                                         ^
+C:\Users\Fernando\OneDrive\Documents\University of Missouri\Thesis\Program\SmartBayes\src\ve\usb\testMain\TestProgram.ja
+va:77: error: self-closing element not allowed
+ * 	&nbsp; &nbsp; }<br/>
+   	    
