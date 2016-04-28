@@ -295,6 +295,7 @@ public class Trainer {
 				throw new IllegalArgumentException("The Bayesian network "
 						+ " contains attribute " + bn.getNodeName(i)
 						+ " but no such attribute exists in the data set");
+			assert(data.attribute(j).isNumeric());
 			if(data.attributeStats(j).missingCount == data.numInstances() || data.numDistinctValues(j) < bn.getCardinality(i)){
 				Attribute a = new Attribute(data.attribute(j).name(), Arrays.asList(Main.genValues(bn.getCardinality(i))));
 				data.deleteAttributeAt(j);

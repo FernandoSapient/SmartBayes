@@ -25,7 +25,7 @@ import edu.ucla.structure.DirectedGraph;
  * Provides a way to generate all the economic models, and group countries by it
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05 2016-04-25
+ * @version 0.06 2016-04-27
  * @since {@code WorldBankModelBuilder} version 0.01 2016-04-19
  */
 public class ModelClusterizer {
@@ -80,12 +80,14 @@ public class ModelClusterizer {
 	 * argument.
 	 * 
 	 * @param args
-	 *            An array of length 3 or 4, where the first position contains
+	 *            An array of length 4 or 5, where the first position contains
 	 *            the name of the file containing the input data, the second
 	 *            contains a directory to save the resulting networks in, the
-	 *            third position optionally contains the index with the values
-	 *            to group the results by (zero by default), and the fourth
-	 *            position (in the case of length 4) contains one of the
+	 *            third position indicates whether to use the Unesco model
+	 *            ({@code true}) or the Smets-Woulters model ({@code false}), the
+	 *            fourth position optionally contains the index with the values
+	 *            to group the results by (zero by default), and the fifth
+	 *            position (in the case of length 5) contains one of the
 	 *            {@link NodePlacer} configuration codes.
 	 * @throws IOException
 	 *             if the input file could not be read
@@ -103,11 +105,12 @@ public class ModelClusterizer {
 			FileNotFoundException, NumberFormatException {
 		if (args.length < 2) {
 			System.err
-					.println("Usage: java Main <input data file> <output directory> <group-by column> [plot mode]");
+					.println("Usage: java Main <input data file> <output directory> <Use Unesco Model> <group-by column> [plot mode]");
 			return;
 		}
 		String filename = args[0];
-		int groupByIndex = Integer.parseInt(args[2]);
+		boolean useUnesco = Boolean.parseBoolean(args[2]);
+		int groupByIndex = Integer.parseInt(args[3]);
 
 		Set<String> countries = getCountries(filename, groupByIndex);
 		Iterator<String> C = countries.iterator();
@@ -120,7 +123,11 @@ public class ModelClusterizer {
 			Map<String, List<Double>> data = Main.loadCSVwithFiltering(
 					new FileReader(filename), country, groupByIndex);
 
-			DomainKnowledge m = buildUnescoModel(data);
+			DomainKnowledge m;
+			if(useUnesco)
+				m = buildUnescoModel(data);
+			else
+				m = buildSWModel(data);
 
 			DirectedGraph variableGraph = m.variableDependency(.03);
 			if (!clustering.containsKey(variableGraph))
@@ -131,11 +138,11 @@ public class ModelClusterizer {
 			String[] values = { "low", "med", "high" };
 
 			// convert to bayesian network
-			char config = args.length >= 4 ? args[3].charAt(0)
+			char config = args.length > 4 ? args[4].charAt(0)
 					: NodePlacer.LAYERED;
 			Map<String, List<String>> orderedLayers = new LinkedHashMap<String, List<String>>(
 					m.layerSet().size());
-			if (args.length >= 3 && config == NodePlacer.STAR) {
+			if (args.length > 4 && config == NodePlacer.STAR) {
 				// "satellite dish" display
 				orderedLayers.put("spacer1", new Vector<String>());
 				orderedLayers.put("spacer2", new Vector<String>());
@@ -143,17 +150,24 @@ public class ModelClusterizer {
 				orderedLayers.put("spacer3", new Vector<String>());
 				orderedLayers.put("spacer4", new Vector<String>());
 			}
-			orderedLayers.put("Previous Economy",
-					m.getLayer("Previous Economy"));
-			orderedLayers.put("Education", m.getLayer("Education"));
-			orderedLayers.put("Innovation", m.getLayer("Innovation"));
-			orderedLayers.put("Production", m.getLayer("Production"));
-			if (args.length < 3 || config != NodePlacer.STAR) {
+			if(useUnesco){
+				orderedLayers.put("Previous Economy",
+						m.getLayer("Previous Economy"));
+				orderedLayers.put("Education", m.getLayer("Education"));
+				orderedLayers.put("Innovation", m.getLayer("Innovation"));
+				orderedLayers.put("Production", m.getLayer("Production"));
+			}else{
+				orderedLayers.put("PrevResource", m.getLayer("PrevResource"));
+				orderedLayers.put("PrevEstimation", m.getLayer("PrevEstimation"));
+				orderedLayers.put("Resource", m.getLayer("Resource"));
+				orderedLayers.put("Estimation", m.getLayer("Estimation"));
+			}
+			if (args.length <= 4 || config != NodePlacer.STAR) {
 				orderedLayers.put("Economic", m.getLayer("Economic"));
 			}
 
 			BeliefNetwork out;
-			if (args.length >= 4)
+			if (args.length > 4)
 				out = Main.graphToNetwork(variableGraph, values, orderedLayers,
 						config, 0);
 			else
@@ -266,6 +280,82 @@ public class ModelClusterizer {
 				Main.getDependency(innovation, economic));
 		m.addDependency("Production", "Economic",
 				Main.getDependency(production, economic));
+		return m;
+	}
+	
+	/**
+	 * Builds a full {@link DomainKnowledge} model following the Smets-Woulters
+	 * standard economic model. This method is included
+	 * as sample code and will be deprecated as soon as file-reading support is
+	 * added
+	 * 
+	 * @param data
+	 *            A {@code Map} representing a column-majoral table, where each
+	 *            key is the table's header and the list mapped to is the
+	 *            contents of the column with that name.
+	 * @return A {@link DomainKnowledge} model with dependency tables reflecting
+	 *         the relations in the given data
+	 * @throws IllegalArgumentException
+	 *             If the lists in {@code data} are not all the same size
+	 * @since 0.06 2016-04-27
+	 */
+	public static DomainKnowledge buildSWModel(
+			Map<String, List<Double>> data) throws IllegalArgumentException {
+		// expected names
+		String consump = "Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]";
+		String worker = "Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]";
+		String interest = "Lending interest rate (%) [FR.INR.LEND]";
+		String invest = "Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]";
+		String capital = "Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]";
+		String form = "Gross capital formation (current LCU) [NE.GDI.TOTL.CN]";
+		String GDP = "GDP (constant LCU) [NY.GDP.MKTP.KN]";
+		String exog = "Exogenous spending";
+		String wages = "Compensation of employees (current LCU) [GC.XPN.COMP.CN]";
+		String inflation = "Inflation, consumer prices (annual %) [FP.CPI.TOTL.ZG]";
+		String ratio = "Capital-labour ratio";
+		String prevConsump = "Previous " + consump;
+		String prevInvest = "Previous " + invest;
+		String prevCapital = "Previous " + capital;
+		String prevWages = "Previous " + wages;
+		String prevForm = "Previous " + form;
+
+		// Create previous year category
+		// TODO: offer this as an option for when it's read from a file
+		data.put(prevConsump, shiftBy(data.get(consump), 1));
+		data.put(prevInvest, shiftBy(data.get(invest), 1));
+		data.put(prevCapital, shiftBy(data.get(capital), 1));
+		data.put(prevWages, shiftBy(data.get(wages), 1));
+		data.put(prevForm, shiftBy(data.get(form), 1));
+
+		// Hardwire 3-layer structure
+		// TODO: read domain knowledge structure from file
+		DomainKnowledge m = new DomainKnowledge();
+		m.addLayer("Resource", Arrays.asList(wages, interest, form, ratio));
+		m.addLayer("Estimation", Arrays.asList(consump, invest, worker, capital, exog));
+		m.addLayer("Economic", Arrays.asList(GDP));
+		m.addLayer("PrevEstimation", Arrays.asList(prevConsump, prevInvest, prevCapital));
+		m.addLayer("PrevResource", Arrays.asList(inflation, prevWages, prevForm));
+		// set categories
+		List<List<Double>> resource = Arrays.asList(data.get(wages),
+				data.get(interest), data.get(form), data.get(ratio));
+		List<List<Double>> estimation = Arrays
+				.asList(data.get(consump), data.get(invest),
+						data.get(worker), data.get(capital), data.get(exog));
+		List<List<Double>> economy = Arrays.asList(data.get(GDP));
+		List<List<Double>> prevEstimation = Arrays.asList(data.get(prevConsump),
+				data.get(prevInvest), data.get(prevCapital));
+		List<List<Double>> prevResource = Arrays.asList(data.get(inflation),
+				data.get(prevWages), data.get(prevForm));
+
+		// Hardwire 3-layer structure
+		m.addDependency("PrevResource", "Resource",
+				Main.getDependency(prevResource, resource));
+		m.addDependency("Resource", "Estimation",
+				Main.getDependency(resource, estimation));
+		m.addDependency("PrevEstimation", "Estimation",
+				Main.getDependency(prevEstimation, estimation));
+		m.addDependency("Estimation", "Economic",
+				Main.getDependency(estimation, economy));
 		return m;
 	}
 
