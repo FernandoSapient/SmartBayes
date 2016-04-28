@@ -1,6 +1,6 @@
 /**Contains classes to build economic models using World Bank data
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.09 2016-04-27
+ * @version	0.10 2016-04-27
  * 
  * <h2>Version history</h2>
  * <table>
@@ -8,6 +8,15 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.10</td>
+ * 		<td>2016-04-28</td>
+ * 		<td>Moved {@link ModelClusterizer#shiftBy(java.util.List, int)}
+ * 			and {@link ReconstructionTest#addPrevious(weka.core.Instances, String)}
+ * 			to {@link edu/missouri/Trainer}
+ * 			({@link ModelClusterizer} is now version 0.07;
+ * 			{@link Evaluator} is now version 0.06)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.09</td>
@@ -45,7 +54,7 @@
  * 	<tr>
  * 		<td>0.06</td>
  * 		<td>2016-04-25</td>
- * 		<td>Bugfixes; {@link ModelClusterizer#shiftBy(java.util.List, int)} now
+ * 		<td>Bugfixes; {@link Trainer#shiftBy(java.util.List, int)} now
  * 			uses {@code NaN} instead of {@code null} as the filter element
  * 			for compatibility with Weka.
  * 			({@link ModelClusterizer} is now version 0.05;
@@ -80,3 +89,4 @@
  * </table>
  */
 package edu.missouri.WorldBankModelBuilder;
+import edu.missouri.bayesianEvaluator.Trainer;

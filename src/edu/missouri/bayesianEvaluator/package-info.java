@@ -9,7 +9,7 @@
  * need to have been computed) 
  * 
  * @author	<a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a> 
- * @version	0.23 2016-04-25
+ * @version	0.24 2016-04-28
  * 
  * <h2>Version history</h2>
  * <table>
@@ -17,6 +17,13 @@
  * 		<th>Ver#</th>
  * 		<th>date</th>
  * 		<th>Changes</th>
+ * 	</tr>
+ * 	<tr>
+ * 		<td>0.24</td>
+ * 		<td>2016-04-28</td>
+ * 		<td>Moved {@link Trainer#shiftBy(java.util.List, int)} from {@link edu/missouri/WorldBankModelBuilder/ModelClusterizer};
+ * 			added options to {@link Trainer#main(String[]) and {@link Evaluator#main(String[]) to specify when to use it.
+ * 			({@link Trainer} is now version 0.15)</td>
  * 	</tr>
  * 	<tr>
  * 		<td>0.23</td>

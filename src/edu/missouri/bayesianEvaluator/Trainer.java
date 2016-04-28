@@ -5,9 +5,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import edu.missouri.WorldBankModelBuilder.ReconstructionTest;
 import edu.missouri.bayesianConstructor.Main;
 import weka.classifiers.bayes.BayesNet;
 import weka.classifiers.bayes.net.EditableBayesNet;
@@ -29,7 +31,7 @@ import weka.filters.unsupervised.attribute.Discretize;
  * {@code java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]}
  * 
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.14 2016-04-25
+ * @version 0.15 2016-04-28
  * @since {@code bayesianEvaluator} version 0.02 2016-04-02
  */
 // TODO: create non-static versions of all methods
@@ -164,24 +166,31 @@ public class Trainer {
 		return data;
 	}
 
-	/**Adds an attribute {@code a} at {@code index} to {@code data},
-	 * with the given {@code values}
+	/**
+	 * Adds an attribute {@code a} at {@code index} to {@code data}, with the
+	 * given {@code values}
 	 * 
-	 * @param data The data to add the new attribute to
-	 * @param a The description of the new attribute
-	 * @param index Where to insert the new attribute
-	 * @param values A list of values to insert the attribute at
+	 * @param data
+	 *            The data to add the new attribute to
+	 * @param a
+	 *            The description of the new attribute
+	 * @param index
+	 *            Where to insert the new attribute
+	 * @param values
+	 *            A list of values to insert the attribute at
 	 * 
-	 * @throws IllegalArgumentException If {@code values.length} does not
-	 * match the number of instances in {@code data}
+	 * @throws IllegalArgumentException
+	 *             If {@code values.length} does not match the number of
+	 *             instances in {@code data}
 	 * @since 0.11 2016-04-24
 	 */
 	public static void addAttributeAt(Instances data, Attribute a, int index,
-			double[] values) throws IllegalArgumentException{
-		if(data.numInstances() != values.length)
+			double[] values) throws IllegalArgumentException {
+		if (data.numInstances() != values.length)
 			throw new IllegalArgumentException("A value must be provided "
-					+"for every instance ("+values.length+" values found, "
-					+data.numInstances()+" values needed)");
+					+ "for every instance (" + values.length
+					+ " values found, " + data.numInstances()
+					+ " values needed)");
 		data.insertAttributeAt(a, index);
 		assert data.attribute(index).equals(a);
 		for (int j = 0; j < values.length; j++) {
@@ -192,7 +201,7 @@ public class Trainer {
 				assert data.instance(j).value(index) == values[j];
 			}
 		}
-		
+
 		assert Arrays.equals(values, data.attributeToDoubleArray(index));
 	}
 
@@ -244,7 +253,7 @@ public class Trainer {
 
 			// reinsert at end
 			data.deleteAttributeAt(source);
-			addAttributeAt(data, a, n-1, values);
+			addAttributeAt(data, a, n - 1, values);
 		}
 		assert attributeOrder.equals(getAttributeNames(data));
 
@@ -295,18 +304,26 @@ public class Trainer {
 				throw new IllegalArgumentException("The Bayesian network "
 						+ " contains attribute " + bn.getNodeName(i)
 						+ " but no such attribute exists in the data set");
-			assert(data.attribute(j).isNumeric());
-			if(data.attributeStats(j).missingCount == data.numInstances() || data.numDistinctValues(j) < bn.getCardinality(i)){
-				Attribute a = new Attribute(data.attribute(j).name(), Arrays.asList(Main.genValues(bn.getCardinality(i))));
+			assert (data.attribute(j).isNumeric());
+			if (data.attributeStats(j).missingCount == data.numInstances()
+					|| data.numDistinctValues(j) < bn.getCardinality(i)) {
+				Attribute a = new Attribute(data.attribute(j).name(),
+						Arrays.asList(Main.genValues(bn.getCardinality(i))));
 				data.deleteAttributeAt(j);
-				data.insertAttributeAt(a, j);;
-			}/*else if(data.numDistinctValues(j) < bn.getCardinality(i)){
-				//TODO: add a handling case here (if there's 2 values, the ranges should be (-inf val1](val1 val2)[val2 +inf])
-				throw new ArithmeticException(bn.getNodeName(i)+" requires discretizing into "
-						+bn.getCardinality(i)+" values, but only "+data.numDistinctValues(j)
-						+" distinct values were found in the data");
-				
-			}*/else{
+				data.insertAttributeAt(a, j);
+				;
+			}/*
+			 * else if(data.numDistinctValues(j) < bn.getCardinality(i)){
+			 * //TODO: add a handling case here (if there's 2 values, the ranges
+			 * should be (-inf val1](val1 val2)[val2 +inf]) throw new
+			 * ArithmeticException
+			 * (bn.getNodeName(i)+" requires discretizing into "
+			 * +bn.getCardinality
+			 * (i)+" values, but only "+data.numDistinctValues(j)
+			 * +" distinct values were found in the data");
+			 * 
+			 * }
+			 */else {
 				Discretize d = new Discretize();
 				d.setIgnoreClass(true);
 				d.setAttributeIndices(Integer.toString(j + 1));
@@ -346,15 +363,15 @@ public class Trainer {
 	 *             If any one of the attributes of {@code data} is not
 	 *             discretizable by
 	 *             {@code weka.filters.unsupervised.attribute.Discretize} (i.e.
-	 *             is already discrete or is a text attribute) 
+	 *             is already discrete or is a text attribute)
 	 * @throws Exception
 	 *             if {@code data} is not suitable for a
 	 *             {@code weka.filters.filter}
 	 * @since 0.08 2016-04-10
 	 */
 	public static Instances conformToNetwork(Instances data, BayesNet bn,
-			boolean useEqualFrequency) throws Exception,
-			AssertionError, ArithmeticException, IllegalArgumentException {
+			boolean useEqualFrequency) throws Exception, AssertionError,
+			ArithmeticException, IllegalArgumentException {
 		List<String> nodes = getNodeNames(bn);
 
 		// remove attributes not in the bayesian network
@@ -390,10 +407,11 @@ public class Trainer {
 	 *             {@link #conformToNetwork(Instances, BayesNet, boolean)} or
 	 *             {@code #restrictToAttributeSet(Instances, Collection)} for
 	 *             this purpose)
-	 * @throws FileNotFoundException if {@code filename} could not be created
+	 * @throws FileNotFoundException
+	 *             if {@code filename} could not be created
 	 * @since 0.10 2016-04-20
 	 */
-	//TODO: create overload method that receives a file
+	// TODO: create overload method that receives a file
 	public static void trainToFile(EditableBayesNet bn, Instances data,
 			String filename) throws Exception, FileNotFoundException {
 		bn.setData(data);
@@ -405,6 +423,69 @@ public class Trainer {
 	}
 
 	/**
+	 * Makes a copy of the attribute {@code name} shifting all its values by
+	 * {@code amount}
+	 * 
+	 * @param data
+	 *            {@code Instances} set where attribute {@code name} lives, and
+	 *            to which the new attribute will be added
+	 * @param prefix
+	 *            Prefix to add to the name of the attribute to distinguish it
+	 *            from {@code name}
+	 * @param name
+	 *            The name of the attribute to be copied and shifted
+	 * @param amount
+	 *            number of instance positions by which to shift the values by.
+	 * @see #shiftBy(List, int)
+	 */
+	public static void addShifted(Instances data, String prefix, String name,
+			int amount) {
+		Attribute a = data.attribute(name).copy(prefix + name);
+		List<String> atts = getAttributeNames(data);
+		int index = atts.indexOf(name);
+		List<Double> values = ReconstructionTest.arrayToList(data
+				.attributeToDoubleArray(index));
+		ReconstructionTest.addAttributeAt(data, a, data.numAttributes() - 1,
+				shiftBy(values, amount));
+	}
+
+	/**
+	 * Creates a copy of the list where all element indices are shifted ahead by
+	 * the amount indicated. Specifically, the value at each position
+	 * {@code list.get(j)} will be found in position {@code j+i} in the returned
+	 * list.
+	 * <p/>
+	 * The size of the list is preserved: Elements near the end are dropped off,
+	 * and {@code NaN} is used as a filler element
+	 * <p/>
+	 * Note that, for now, {@code i} should be positive; support for negative
+	 * shifts may be added at a later date
+	 * 
+	 * @param list
+	 *            The list to be shifted
+	 * @param i
+	 *            The number of positions to shift the contents of {@code list}
+	 *            by
+	 * @return A {@code List} where the first {@code i} positions are
+	 *         {@code null} and, excepting the last {@code i} positions of
+	 *         {@code list}, all the elements from {@code list} are in it
+	 * @since 0.15 2016-04-28
+	 */
+	public static List<Double> shiftBy(List<Double> list, int i) {
+		List<Double> out = new Vector<Double>(list);
+		out.remove(list.size() - 1);
+		if (i > 0) {
+			for (; i > 0; i--)
+				out.add(0, new Double(Double.NaN));
+			return out;
+		} else {
+			throw new UnsupportedOperationException(
+					"No support yet for negative i");
+			// TODO (but is it worth it?)
+		}
+	}
+
+	/**
 	 * Trains a Bayesian network (provided in an XML BIF file) using the given
 	 * data. The data file must be on one of Weka's accepted file formats (ARFF,
 	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
@@ -413,13 +494,14 @@ public class Trainer {
 	 * can be specified, against which only the elements of the first attribute
 	 * which are equal to it will be selected.
 	 * <p/>
-	 * The method discretizes each attribute to match the number of possible values in
-	 * its corresponding node (see {@link #discretizeToBayes(Instances, BayesNet, boolean)})
-	 * unless the attribute is already discrete.
+	 * The method discretizes each attribute to match the number of possible
+	 * values in its corresponding node (see
+	 * {@link #discretizeToBayes(Instances, BayesNet, boolean)}) unless the
+	 * attribute is already discrete.
 	 * <p/>
-	 * If the file is CSV file, the data is assumed to have originated
-	 * from the World Bank, and the missing value placeholder is set to "..",
-	 * but this may change in a future version.
+	 * If the file is CSV file, the data is assumed to have originated from the
+	 * World Bank, and the missing value placeholder is set to "..", but this
+	 * may change in a future version.
 	 * 
 	 * @param args
 	 *            An array containing, at {@code args[0]}, the pat of the data
@@ -427,8 +509,10 @@ public class Trainer {
 	 *            the path of the file containing the Bayesian network to train;
 	 *            at at {@code args[2]} the path of the output file in which to
 	 *            store the trained network; and optionally, at {@code args[3]}
-	 *            a filtering criterion and, at {@code args[4]}, "true" 
-	 *            if frequency discrtization is desired.
+	 *            a filtering criterion, at {@code args[4]}, "true" if frequency
+	 *            discretization is desired, at {@code args[5]} a prefix to
+	 *            identify attributes that require shifting to create, and at
+	 *            {@code args[6]} the ammount by which this shift should be.
 	 * @throws Exception
 	 *             If any of the files could not be read
 	 * @since 0.01 2016-04-02
@@ -438,10 +522,10 @@ public class Trainer {
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
 			System.err
-					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]");
+					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization] [Shift Prefix] [Shift ammount]");
 			return;
 		}
-	
+
 		DataSource source = new DataSource(args[0]);
 		if (source.getLoader() instanceof CSVLoader) {
 			((CSVLoader) source.getLoader()).setMissingValue(".."); // This is
@@ -450,24 +534,44 @@ public class Trainer {
 		}
 		Instances data = source.getDataSet();
 		EditableBayesNet bn = BifUpdate.loadBayesNet(args[1]);
-	
+
 		// filter out by criterion
-		if (args.length >= 4) {
+		if (args.length > 3) {
 			System.out.println("Filtering by " + data.attribute(0).name()
 					+ " equal to " + args[3] + "...");
 			data = filterByCriterion(args[3], data, 0);
 		}
-	
+
+		// Add shifted attributes
+		if (args.length > 5) {
+			List<String> names = getNodeNames(bn);
+			for (int i = names.size() - 1; i >= 0; i--) {
+				if (names.get(i).startsWith(args[5])) {
+					String originalName = names.get(i).substring(
+							args[5].length());
+					int amount;
+					if (args.length > 6)
+						amount = Integer.parseInt(args[6]);
+					else
+						amount = 1;
+					// If we ever use column vectors again:
+					// data.put(names.get(i), Trainer.shiftBy(data.get(i),
+					// amount));
+					addShifted(data, args[5], originalName, amount);
+				}
+			}
+		}
+
 		System.out.println("Conforming data to network...");
-		if (args.length >= 5)
+		if (args.length > 4)
 			data = conformToNetwork(data, bn, Boolean.getBoolean(args[4]));
 		else
 			data = conformToNetwork(data, bn, false);
-	
+
 		data.setClassIndex(data.numAttributes() - 1);
 		System.out.println("Setting " + data.classAttribute().name()
 				+ " as class...");
-	
+
 		System.out.println("Training network...");
 		trainToFile(bn, data, args[2]);
 		System.out.println(args[2] + " created successfully");

@@ -31,7 +31,7 @@ import edu.ucla.belief.StateNotFoundException;
 
 /**
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.05 2016-04-27
+ * @version 0.06 2016-04-28
  * @since {@code WorldBankModelBuilder} version 0.04 2016-04-24
  */
 public class ReconstructionTest {
@@ -323,21 +323,21 @@ public class ReconstructionTest {
 			Instances countryData = Trainer.filterByCriterion(country, data,
 					groupByIndex);
 			if(useUnesco){
-				addPrevious(countryData,
-						"GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]");
-				addPrevious(countryData,
-						"GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]");
+				Trainer.addShifted(countryData,
+						"Previous ", "GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]", 1);
+				Trainer.addShifted(countryData,
+						"Previous ", "GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]", 1);
 			}else{
-				addPrevious(countryData,
-						"Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]");
-				addPrevious(countryData,
-						"Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]");
-				addPrevious(countryData,
-						"Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]");
-				addPrevious(countryData,
-						"Compensation of employees (current LCU) [GC.XPN.COMP.CN]");
-				addPrevious(countryData,
-						"Gross capital formation (current LCU) [NE.GDI.TOTL.CN]");
+				Trainer.addShifted(countryData,
+						"Previous ", "Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]", 1);
+				Trainer.addShifted(countryData,
+						"Previous ", "Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]", 1);
+				Trainer.addShifted(countryData,
+						"Previous ", "Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]", 1);
+				Trainer.addShifted(countryData,
+						"Previous ", "Compensation of employees (current LCU) [GC.XPN.COMP.CN]", 1);
+				Trainer.addShifted(countryData,
+						"Previous ", "Gross capital formation (current LCU) [NE.GDI.TOTL.CN]", 1);
 			}
 			
 			// build a referential network
@@ -417,19 +417,24 @@ public class ReconstructionTest {
 	}
 
 	/**
+	 * Makes a copy of the attribute {@code name}, preceeded by "Previous ",
+	 * where all valeus are shifted to the next instance. This is useful
+	 * for time series data when indicating what the value was at the
+	 * previous point in time might help.
+	 * 
 	 * @param data
+	 *            {@code Instances} set where attribute {@code name} lives, and
+	 *            to which the new attribute will be added
 	 * @param name
-	 * @throws IllegalArgumentException
+	 *            The name of the attribute to be copied and shifted
+	 * @deprecated since 0.06 2016-04-28 (all methods in main programs are
+	 *             subject to be moved!) Use
+	 *             <a href="../Trainer#addShifted(Instances,String,String, int)">{@code Trainer.addShifted}</a>{@code (data, "Previous ", name, 1}
+	 *             instead
 	 */
-	public static void addPrevious(Instances data, String name)
-			throws IllegalArgumentException {
-		Attribute a = data.attribute(name).copy("Previous " + name);
-		List<String> atts = Trainer.getAttributeNames(data);
-		int index = atts.indexOf(name);
-		List<Double> PPPval = arrayToList(data.attributeToDoubleArray(index));
-		addAttributeAt(data, a, data.numAttributes() - 1,
-				ModelClusterizer.shiftBy(PPPval, 1));
-	}
+	public static void addPrevious(Instances data, String name){
+				Trainer.addShifted(data, "Previous ", name, 1);
+			}
 
 	/**
 	 * Builds a full {@link DomainKnowledge} model following the structure

@@ -18,6 +18,7 @@ import com.opencsv.CSVReader;
 import edu.missouri.bayesianConstructor.DomainKnowledge;
 import edu.missouri.bayesianConstructor.NodePlacer;
 import edu.missouri.bayesianConstructor.Main;
+import edu.missouri.bayesianEvaluator.Trainer;
 import edu.ucla.belief.BeliefNetwork;
 import edu.ucla.structure.DirectedGraph;
 
@@ -25,7 +26,7 @@ import edu.ucla.structure.DirectedGraph;
  * Provides a way to generate all the economic models, and group countries by it
  *
  * @author <a href="mailto:fthc8@missouri.edu">Fernando J. Torre-Mora</a>
- * @version 0.06 2016-04-27
+ * @version 0.07 2016-04-27
  * @since {@code WorldBankModelBuilder} version 0.01 2016-04-19
  */
 public class ModelClusterizer {
@@ -83,8 +84,8 @@ public class ModelClusterizer {
 	 *            An array of length 4 or 5, where the first position contains
 	 *            the name of the file containing the input data, the second
 	 *            contains a directory to save the resulting networks in, the
-	 *            third position indicates whether to use the Unesco model
-	 *            ({@code true}) or the Smets-Woulters model ({@code false}), the
+	 *            third position indicates whether to use the Unesco model (
+	 *            {@code true}) or the Smets-Woulters model ({@code false}), the
 	 *            fourth position optionally contains the index with the values
 	 *            to group the results by (zero by default), and the fifth
 	 *            position (in the case of length 5) contains one of the
@@ -102,7 +103,8 @@ public class ModelClusterizer {
 	 */
 	// improve parameter handling. See JCLAP for potential solution
 	public static void main(String[] args) throws IOException,
-			FileNotFoundException, NumberFormatException, ArrayIndexOutOfBoundsException {
+			FileNotFoundException, NumberFormatException,
+			ArrayIndexOutOfBoundsException {
 		if (args.length < 2) {
 			System.err
 					.println("Usage: java Main <input data file> <output directory> <Use Unesco Model> <group-by column> [plot mode]");
@@ -124,7 +126,7 @@ public class ModelClusterizer {
 					new FileReader(filename), country, groupByIndex);
 
 			DomainKnowledge m;
-			if(useUnesco)
+			if (useUnesco)
 				m = buildUnescoModel(data);
 			else
 				m = buildSWModel(data);
@@ -150,15 +152,16 @@ public class ModelClusterizer {
 				orderedLayers.put("spacer3", new Vector<String>());
 				orderedLayers.put("spacer4", new Vector<String>());
 			}
-			if(useUnesco){
+			if (useUnesco) {
 				orderedLayers.put("Previous Economy",
 						m.getLayer("Previous Economy"));
 				orderedLayers.put("Education", m.getLayer("Education"));
 				orderedLayers.put("Innovation", m.getLayer("Innovation"));
 				orderedLayers.put("Production", m.getLayer("Production"));
-			}else{
+			} else {
 				orderedLayers.put("PrevResource", m.getLayer("PrevResource"));
-				orderedLayers.put("PrevEstimation", m.getLayer("PrevEstimation"));
+				orderedLayers.put("PrevEstimation",
+						m.getLayer("PrevEstimation"));
 				orderedLayers.put("Resource", m.getLayer("Resource"));
 				orderedLayers.put("Estimation", m.getLayer("Estimation"));
 			}
@@ -238,8 +241,8 @@ public class ModelClusterizer {
 
 		// Create previous year category
 		// TODO: offer this as an option for when it's read from a file
-		data.put("Previous " + PPP, shiftBy(data.get(PPP), 1));
-		data.put("Previous " + growth, shiftBy(data.get(growth), 1));
+		data.put("Previous " + PPP, Trainer.shiftBy(data.get(PPP), 1));
+		data.put("Previous " + growth, Trainer.shiftBy(data.get(growth), 1));
 
 		// set categories
 		List<List<Double>> education = Arrays.asList(data.get(primary),
@@ -282,12 +285,11 @@ public class ModelClusterizer {
 				Main.getDependency(production, economic));
 		return m;
 	}
-	
+
 	/**
 	 * Builds a full {@link DomainKnowledge} model following the Smets-Woulters
-	 * standard economic model. This method is included
-	 * as sample code and will be deprecated as soon as file-reading support is
-	 * added
+	 * standard economic model. This method is included as sample code and will
+	 * be deprecated as soon as file-reading support is added
 	 * 
 	 * @param data
 	 *            A {@code Map} representing a column-majoral table, where each
@@ -299,8 +301,8 @@ public class ModelClusterizer {
 	 *             If the lists in {@code data} are not all the same size
 	 * @since 0.06 2016-04-27
 	 */
-	public static DomainKnowledge buildSWModel(
-			Map<String, List<Double>> data) throws IllegalArgumentException {
+	public static DomainKnowledge buildSWModel(Map<String, List<Double>> data)
+			throws IllegalArgumentException {
 		// expected names
 		String consump = "Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]";
 		String worker = "Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]";
@@ -321,29 +323,33 @@ public class ModelClusterizer {
 
 		// Create previous year category
 		// TODO: offer this as an option for when it's read from a file
-		data.put(prevConsump, shiftBy(data.get(consump), 1));
-		data.put(prevInvest, shiftBy(data.get(invest), 1));
-		data.put(prevCapital, shiftBy(data.get(capital), 1));
-		data.put(prevWages, shiftBy(data.get(wages), 1));
-		data.put(prevForm, shiftBy(data.get(form), 1));
+		data.put(prevConsump, Trainer.shiftBy(data.get(consump), 1));
+		data.put(prevInvest, Trainer.shiftBy(data.get(invest), 1));
+		data.put(prevCapital, Trainer.shiftBy(data.get(capital), 1));
+		data.put(prevWages, Trainer.shiftBy(data.get(wages), 1));
+		data.put(prevForm, Trainer.shiftBy(data.get(form), 1));
 
 		// Hardwire 3-layer structure
 		// TODO: read domain knowledge structure from file
 		DomainKnowledge m = new DomainKnowledge();
 		m.addLayer("Resource", Arrays.asList(wages, interest, form, ratio));
-		m.addLayer("Estimation", Arrays.asList(consump, invest, worker, capital, exog));
+		m.addLayer("Estimation",
+				Arrays.asList(consump, invest, worker, capital, exog));
 		m.addLayer("Economic", Arrays.asList(GDP));
-		m.addLayer("PrevEstimation", Arrays.asList(prevConsump, prevInvest, prevCapital));
-		m.addLayer("PrevResource", Arrays.asList(inflation, prevWages, prevForm));
+		m.addLayer("PrevEstimation",
+				Arrays.asList(prevConsump, prevInvest, prevCapital));
+		m.addLayer("PrevResource",
+				Arrays.asList(inflation, prevWages, prevForm));
 		// set categories
 		List<List<Double>> resource = Arrays.asList(data.get(wages),
 				data.get(interest), data.get(form), data.get(ratio));
-		List<List<Double>> estimation = Arrays
-				.asList(data.get(consump), data.get(invest),
-						data.get(worker), data.get(capital), data.get(exog));
+		List<List<Double>> estimation = Arrays.asList(data.get(consump),
+				data.get(invest), data.get(worker), data.get(capital),
+				data.get(exog));
 		List<List<Double>> economy = Arrays.asList(data.get(GDP));
-		List<List<Double>> prevEstimation = Arrays.asList(data.get(prevConsump),
-				data.get(prevInvest), data.get(prevCapital));
+		List<List<Double>> prevEstimation = Arrays.asList(
+				data.get(prevConsump), data.get(prevInvest),
+				data.get(prevCapital));
 		List<List<Double>> prevResource = Arrays.asList(data.get(inflation),
 				data.get(prevWages), data.get(prevForm));
 
@@ -376,18 +382,11 @@ public class ModelClusterizer {
 	 *         {@code null} and, excepting the last {@code i} positions of
 	 *         {@code list}, all the elements from {@code list} are in it
 	 * @since 0.01 2016-04-19
+	 * @deprecated since 0.07 2016-04-28 (all methods in main programs are
+	 *             subject to be moved!) Use {@link
+	 *             Trainer#shiftBy(List<Double>,int)} instead
 	 */
 	public static List<Double> shiftBy(List<Double> list, int i) {
-		List<Double> out = new Vector<Double>(list);
-		out.remove(list.size() - 1);
-		if (i > 0) {
-			for (; i > 0; i--)
-				out.add(0, new Double(Double.NaN));
-			return out;
-		} else {
-			throw new UnsupportedOperationException(
-					"No support yet for negative i");
-			// TODO (but is it worth it?)
-		}
+		return Trainer.shiftBy(list, i);
 	}
 }
