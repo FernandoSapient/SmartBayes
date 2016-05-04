@@ -150,7 +150,10 @@ public class ReconstructionTest {
 	 *            structure will be used instead.
 	 * 
 	 * @return A {@code Map} where each key is an attribute name (or
-	 *         "__ProcessingTime__"
+	 *         "__ProcessingTime__",
+				"__Arcs__",
+				"__ConstructionTime__",
+				"__TrainingTime__")
 	 * @throws Exception
 	 *             If the number of columns in data does not match the number of
 	 *             nodes in {@code bn} (use
@@ -184,10 +187,14 @@ public class ReconstructionTest {
 				.iterator();
 		Map<String, DoubleSummaryStatistics> results = new HashMap<String, DoubleSummaryStatistics>();
 		results.put("__ProcessingTime__", new DoubleSummaryStatistics());
+		results.put("__ConstructionTime__", new DoubleSummaryStatistics());
+		results.put("__TrainingTime__", new DoubleSummaryStatistics());
+		results.put("__Arcs__", new DoubleSummaryStatistics());
 		while (trains.hasNext()) {
 			long t = System.nanoTime();
 			Map.Entry<Instances, Instances> current = trains.next();
 			Instances training = current.getKey();
+			long tt = System.nanoTime();
 			boolean fileCreated;
 			if(useUnesco)
 				fileCreated = constructUnescoToFile(training, filename,
@@ -196,9 +203,13 @@ public class ReconstructionTest {
 				fileCreated = constructSWToFile(training, filename,
 						values);
 			assert fileCreated;
+			results.get("__ConstructionTime__").accept(secondsElapsed(t));
 			EditableBayesNet bn = BifUpdate.loadBayesNet(filename);
+			tt = System.nanoTime();
 			Trainer.trainToFile(bn, training, filename);
+			results.get("__TrainingTime__").accept(secondsElapsed(tt));
 			BeliefNetwork bn1 = Evaluator.loadSamiamBayes(filename);
+			results.get("__Arcs__").accept(bn1.numEdges());
 			Evaluator.allAttributesAccuracies(bn1, current.getValue(), results);
 
 			// String summary = wekaEvaluation(bn, current,
@@ -269,7 +280,7 @@ public class ReconstructionTest {
 		String filename = args[0];
 		String outFile = args[1];
 		String dir = args[2];
-		boolean useUnesco = Boolean.getBoolean(args[3]);
+		boolean useUnesco = Boolean.parseBoolean(args[3]);
 		int groupByIndex = Integer.parseInt(args[4]);
 		int values;
 		if (args.length > 5)
@@ -278,7 +289,8 @@ public class ReconstructionTest {
 			values = 3;
 		boolean useEqualFrequency;
 		if (args.length > 6)
-			useEqualFrequency = Boolean.getBoolean(args[6]);
+			useEqualFrequency = Boolean.parseBoolean
+			(args[6]);
 		else
 			useEqualFrequency = false;
 		float trainSize = 0.85f;
@@ -738,7 +750,10 @@ public class ReconstructionTest {
 				"GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]",
 				"Previous GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]",
 				"Previous GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]",
-				"__ProcessingTime__" };
+				"__ProcessingTime__",
+				"__Arcs__",
+				"__ConstructionTime__",
+				"__TrainingTime__"};
 		return out;
 	}
 	
@@ -766,7 +781,10 @@ public class ReconstructionTest {
 				"Previous Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]",
 				"Previous Compensation of employees (current LCU) [GC.XPN.COMP.CN]",
 				"Previous Gross capital formation (current LCU) [NE.GDI.TOTL.CN]",
-				"__ProcessingTime__" };
+				"__ProcessingTime__",
+				"__Arcs__",
+				"__ConstructionTime__",
+				"__TrainingTime__" };
 	return out;
 	}
 

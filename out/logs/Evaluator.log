@@ -4913,3 +4913,164 @@ Scientific and technical journal articles [IP.JRN.ARTC.SC]: min 0.0; max 1.0; av
 Industry, value added (% of GDP) [NV.IND.TOTL.ZS]: min 0.42857142857142855; max 1.0; average 0.6284013605442177
 Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]: min 0.125; max 0.875; average 0.4974489795918367
 GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]: min 0.5714285714285714; max 1.0; average 0.8183106575963719
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document is invalid: no grammar found.
+Filtering by Country Name equal to United States...
+Conforming data to network...
+
+RESULTS
+at Apr 28, 2016 12:36:18 PM
+-------
+Processed split in 2.30203839 seconds; 20 folds remain
+Processed split in 1.193621397 seconds; 19 folds remain
+Processed split in 0.936595266 seconds; 18 folds remain
+Processed split in 1.090182968 seconds; 17 folds remain
+Processed split in 0.968067086 seconds; 16 folds remain
+Processed split in 0.951398159 seconds; 15 folds remain
+Processed split in 0.823309141 seconds; 14 folds remain
+Processed split in 0.822184048 seconds; 13 folds remain
+Processed split in 0.799128195 seconds; 12 folds remain
+Processed split in 0.778716938 seconds; 11 folds remain
+Processed split in 0.759304243 seconds; 10 folds remain
+Processed split in 0.655725035 seconds; 9 folds remain
+Processed split in 0.854091314 seconds; 8 folds remain
+Processed split in 0.946652136 seconds; 7 folds remain
+Processed split in 0.90650559 seconds; 6 folds remain
+Processed split in 0.606639301 seconds; 5 folds remain
+Processed split in 0.817305796 seconds; 4 folds remain
+Processed split in 0.703691945 seconds; 3 folds remain
+Processed split in 0.675907171 seconds; 2 folds remain
+Processed split in 0.607487965 seconds; 1 folds remain
+Processed split in 0.689542222 seconds; 0 folds remain
+Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.47698412698412695
+__ProcessingTime__: min 0.606639301; max 2.30203839; average 0.8994330621904761
+Gross capital formation (current LCU) [NE.GDI.TOTL.CN]: min 0.7142857142857143; max 1.0; average 0.9081632653061226
+GDP (constant LCU) [NY.GDP.MKTP.KN]: min 0.875; max 1.0; average 0.9940476190476191
+Previous Gross capital formation (current LCU) [NE.GDI.TOTL.CN]: min 0.75; max 1.0; average 0.9209183673469388
+Compensation of employees (current LCU) [GC.XPN.COMP.CN]: min 0.0; max 1.0; average 0.6222222222222222
+Previous Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.5; max 1.0; average 0.8348072562358277
+Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.5714285714285714; max 1.0; average 0.8172902494331066
+Capital-labour ratio: min 0.0; max 1.0; average 0.8738095238095239
+Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]: min 0.14285714285714285; max 1.0; average 0.5072562358276643
+Lending interest rate (%) [FR.INR.LEND]: min 0.5; max 1.0; average 0.7380952380952381
+Previous Compensation of employees (current LCU) [GC.XPN.COMP.CN]: min 0.0; max 1.0; average 0.5066666666666666
+Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]: min 0.875; max 1.0; average 0.9880952380952381
+Previous Final consumption expenditure (constant LCU) [NE.CON.TOTL.KN]: min 0.625; max 1.0; average 0.9081632653061226
+Previous Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.5444444444444445
+Exogenous spending: min 0.375; max 1.0; average 0.7508503401360545
+Inflation, consumer prices (annual %) [FP.CPI.TOTL.ZG]: min 0.125; max 0.75; average 0.44047619047619047
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document is invalid: no grammar found.
+Filtering by Country Name equal to Euro area...
+Conforming data to network...
+
+RESULTS
+at Apr 28, 2016 1:33:55 PM
+-------
+Processed split in 1.586563178 seconds; 20 folds remain
+Processed split in 0.547964631 seconds; 19 folds remain
+Processed split in 0.418043774 seconds; 18 folds remain
+Processed split in 0.744800578 seconds; 17 folds remain
+Processed split in 0.428546351 seconds; 16 folds remain
+Processed split in 0.430529796 seconds; 15 folds remain
+Processed split in 0.715724283 seconds; 14 folds remain
+Processed split in 0.528725203 seconds; 13 folds remain
+Processed split in 0.671802348 seconds; 12 folds remain
+Processed split in 0.211898169 seconds; 11 folds remain
+Processed split in 1.121802406 seconds; 10 folds remain
+Processed split in 0.668237845 seconds; 9 folds remain
+Processed split in 0.590582506 seconds; 8 folds remain
+Processed split in 0.375719996 seconds; 7 folds remain
+Processed split in 0.47020955 seconds; 6 folds remain
+Processed split in 0.31673413 seconds; 5 folds remain
+Processed split in 0.341209743 seconds; 4 folds remain
+Processed split in 0.464592066 seconds; 3 folds remain
+Processed split in 0.508090523 seconds; 2 folds remain
+Processed split in 0.539633016 seconds; 1 folds remain
+Processed split in 0.269862675 seconds; 0 folds remain
+Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]: min 0.0; max 0.6666666666666666; average 0.32063492063492066
+Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.3929824561403509
+Lending interest rate (%) [FR.INR.LEND]: min 0.0; max 1.0; average 0.46568627450980393
+__ProcessingTime__: min 0.211898169; max 1.586563178; average 0.5691082270000001
+Previous Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.4411764705882353
+Previous Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.6754901960784313
+Inflation, consumer prices (annual %) [FP.CPI.TOTL.ZG]: min 0.375; max 0.875; average 0.6607142857142857
+Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.4403508771929825
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document is invalid: no grammar found.
+Filtering by Country Name equal to Euro area...
+Conforming data to network...
+
+RESULTS
+at May 1, 2016 2:10:46 AM
+-------
+Processed split in 1.620551352 seconds; 20 folds remain
+Processed split in 0.483375529 seconds; 19 folds remain
+Processed split in 0.383706217 seconds; 18 folds remain
+Processed split in 0.512801207 seconds; 17 folds remain
+Processed split in 0.510263764 seconds; 16 folds remain
+Processed split in 0.423074775 seconds; 15 folds remain
+Processed split in 0.575610337 seconds; 14 folds remain
+Processed split in 0.489793802 seconds; 13 folds remain
+Processed split in 0.628170522 seconds; 12 folds remain
+Processed split in 0.408101466 seconds; 11 folds remain
+Processed split in 0.329739382 seconds; 10 folds remain
+Processed split in 0.317936737 seconds; 9 folds remain
+Processed split in 0.348052062 seconds; 8 folds remain
+Processed split in 0.59968584 seconds; 7 folds remain
+Processed split in 0.757092815 seconds; 6 folds remain
+Processed split in 0.314890894 seconds; 5 folds remain
+Processed split in 0.419533069 seconds; 4 folds remain
+Processed split in 0.305593204 seconds; 3 folds remain
+Processed split in 0.37413438 seconds; 2 folds remain
+Processed split in 0.522676831 seconds; 1 folds remain
+Processed split in 0.388361616 seconds; 0 folds remain
+Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]: min 0.0; max 1.0; average 0.5555555555555556
+Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.6071428571428571
+Lending interest rate (%) [FR.INR.LEND]: min 0.0; max 1.0; average 0.2261904761904762
+__ProcessingTime__: min 0.305593204; max 1.620551352; average 0.510149800047619
+Previous Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.373015873015873
+Previous Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.5277777777777777
+Inflation, consumer prices (annual %) [FP.CPI.TOTL.ZG]: min 0.25; max 0.875; average 0.6190476190476191
+Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.3492063492063492
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not set, which is probably not what is desired.  Parser will use a default ErrorHandler to print the first 0  errors.  Please call the setErrorHandler method to fix this.
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document root element "BIF", must match DOCTYPE root "null".
+Error: URI=file:/C:/Users/Fernando/OneDrive/Documents/University%20of%20Missouri/Thesis/Program/SmartBayes/Smets-Woulters.xml Line=9: Document is invalid: no grammar found.
+Filtering by Country Name equal to Euro area...
+Conforming data to network...
+
+RESULTS
+at May 1, 2016 2:14:02 AM
+-------
+Processed split in 1.097314254 seconds; 20 folds remain
+Processed split in 0.434396377 seconds; 19 folds remain
+Processed split in 0.454141926 seconds; 18 folds remain
+Processed split in 0.429517555 seconds; 17 folds remain
+Processed split in 0.375192788 seconds; 16 folds remain
+Processed split in 0.295020524 seconds; 15 folds remain
+Processed split in 0.283788975 seconds; 14 folds remain
+Processed split in 0.470179342 seconds; 13 folds remain
+Processed split in 0.336064752 seconds; 12 folds remain
+Processed split in 0.356938813 seconds; 11 folds remain
+Processed split in 0.312377388 seconds; 10 folds remain
+Processed split in 0.360904565 seconds; 9 folds remain
+Processed split in 0.390459624 seconds; 8 folds remain
+Processed split in 0.337383059 seconds; 7 folds remain
+Processed split in 0.300292045 seconds; 6 folds remain
+Processed split in 0.28243419 seconds; 5 folds remain
+Processed split in 0.286002683 seconds; 4 folds remain
+Processed split in 0.273230543 seconds; 3 folds remain
+Processed split in 0.370931228 seconds; 2 folds remain
+Processed split in 0.408609297 seconds; 1 folds remain
+Processed split in 0.291943333 seconds; 0 folds remain
+Wage and salaried workers, total (% of total employed) [SL.EMP.WORK.ZS]: min 0.0; max 1.0; average 0.4256235827664399
+Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.4714285714285714
+Lending interest rate (%) [FR.INR.LEND]: min 0.0; max 1.0; average 0.39285714285714285
+__ProcessingTime__: min 0.273230543; max 1.097314254; average 0.38795825052380956
+Previous Net capital account (BoP, current US$) [BN.TRF.KOGT.CD]: min 0.0; max 1.0; average 0.37222222222222223
+Previous Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.5563492063492064
+Inflation, consumer prices (annual %) [FP.CPI.TOTL.ZG]: min 0.25; max 0.875; average 0.5773809523809523
+Portfolio Investment, net (BoP, current US$) [BN.KLT.PTXL.CD]: min 0.0; max 1.0; average 0.2833333333333333

@@ -18,90 +18,20 @@
 
 <BIF VERSION="0.3">
 <NETWORK>
-<NAME>Data_Extract_From_World_Development_Indicators_Data-weka.filters.unsupervised.instance.SubsetByExpression-ECLASS is &apos;PLW&apos;-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R1-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R5-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R6-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R7-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R8-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R9-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R10-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R11-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R13-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-B3-M-1.0-R15-unset-class-temporarily-weka.filters.unsupervised.attribute.Reorder-R4,16,10,13,2,14,6,5,9,7,1,8,12,11,3,15-weka.filters.unsupervised.attribute.ReplaceMissingValues</NAME>
-<VARIABLE TYPE="nature">
-<NAME>Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]</NAME>
-<OUTCOME>Q1</OUTCOME>
-<OUTCOME>Q2</OUTCOME>
-<OUTCOME>Q3</OUTCOME>
-<PROPERTY>position = (-870,512)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]</NAME>
-<OUTCOME>Q1</OUTCOME>
-<OUTCOME>Q2</OUTCOME>
-<OUTCOME>Q3</OUTCOME>
-<PROPERTY>position = (0,384)</PROPERTY>
-</VARIABLE>
+<NAME>Data_Extract_From_World_Development_Indicators_Data-weka.filters.unsupervised.instance.SubsetByExpression-ECLASS is &apos;PLW&apos;-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R1-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R15-weka.filters.unsupervised.attribute.Remove-R17-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R2-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R3-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R4-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R5-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R8-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R10-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R11-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R12-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R13-unset-class-temporarily-weka.filters.unsupervised.attribute.Discretize-F-B3-M-1.0-R14-unset-class-temporarily-weka.filters.unsupervised.attribute.Reorder-R4,10,9,2,16,8,14,11,6,3,12,5,1,15,13,7-weka.filters.unsupervised.attribute.ReplaceMissingValues</NAME>
 <VARIABLE TYPE="nature">
 <NAME>Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]</NAME>
-<OUTCOME>&apos;(-inf-75.27305]&apos;</OUTCOME>
-<OUTCOME>&apos;(75.27305-81.645783]&apos;</OUTCOME>
-<OUTCOME>&apos;(81.645783-inf)&apos;</OUTCOME>
+<OUTCOME>&apos;(-inf-81.005741]&apos;</OUTCOME>
+<OUTCOME>&apos;(81.005741-85.230671]&apos;</OUTCOME>
+<OUTCOME>&apos;(85.230671-inf)&apos;</OUTCOME>
 <PROPERTY>position = (-652,512)</PROPERTY>
 </VARIABLE>
 <VARIABLE TYPE="nature">
-<NAME>GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</NAME>
-<OUTCOME>&apos;(-inf-13277.77765]&apos;</OUTCOME>
-<OUTCOME>&apos;(13277.77765-14582.01616]&apos;</OUTCOME>
-<OUTCOME>&apos;(14582.01616-inf)&apos;</OUTCOME>
-<PROPERTY>position = (-544,128)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]</NAME>
-<OUTCOME>Q1</OUTCOME>
-<OUTCOME>Q2</OUTCOME>
-<OUTCOME>Q3</OUTCOME>
-<PROPERTY>position = (-544,0)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]</NAME>
-<OUTCOME>Q1</OUTCOME>
-<OUTCOME>Q2</OUTCOME>
-<OUTCOME>Q3</OUTCOME>
-<PROPERTY>position = (-362,384)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]</NAME>
-<OUTCOME>&apos;(-inf-2.079759]&apos;</OUTCOME>
-<OUTCOME>&apos;(2.079759-3.441516]&apos;</OUTCOME>
-<OUTCOME>&apos;(3.441516-inf)&apos;</OUTCOME>
-<PROPERTY>position = (-435,512)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Scientific and technical journal articles [IP.JRN.ARTC.SC]</NAME>
-<OUTCOME>&apos;(-inf-1.3]&apos;</OUTCOME>
-<OUTCOME>&apos;(1.3-2.6]&apos;</OUTCOME>
-<OUTCOME>&apos;(2.6-inf)&apos;</OUTCOME>
-<PROPERTY>position = (0,0)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</NAME>
-<OUTCOME>&apos;(-inf--4.566682]&apos;</OUTCOME>
-<OUTCOME>&apos;(-4.566682-3.166681]&apos;</OUTCOME>
-<OUTCOME>&apos;(3.166681-inf)&apos;</OUTCOME>
-<PROPERTY>position = (0,128)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
 <NAME>Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]</NAME>
-<OUTCOME>&apos;(-inf-8.164886]&apos;</OUTCOME>
-<OUTCOME>&apos;(8.164886-13.344307]&apos;</OUTCOME>
-<OUTCOME>&apos;(13.344307-inf)&apos;</OUTCOME>
+<OUTCOME>&apos;(-inf-4.315198]&apos;</OUTCOME>
+<OUTCOME>&apos;(4.315198-4.797486]&apos;</OUTCOME>
+<OUTCOME>&apos;(4.797486-inf)&apos;</OUTCOME>
 <PROPERTY>position = (0,512)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Industry, value added (% of GDP) [NV.IND.TOTL.ZS]</NAME>
-<OUTCOME>&apos;(-inf-13.671463]&apos;</OUTCOME>
-<OUTCOME>&apos;(13.671463-19.318197]&apos;</OUTCOME>
-<OUTCOME>&apos;(19.318197-inf)&apos;</OUTCOME>
-<PROPERTY>position = (-217,512)</PROPERTY>
-</VARIABLE>
-<VARIABLE TYPE="nature">
-<NAME>Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]</NAME>
-<OUTCOME>&apos;(-inf-95206666.666667]&apos;</OUTCOME>
-<OUTCOME>&apos;(95206666.666667-190403333.333333]&apos;</OUTCOME>
-<OUTCOME>&apos;(190403333.333333-inf)&apos;</OUTCOME>
-<PROPERTY>position = (-816,0)</PROPERTY>
 </VARIABLE>
 <VARIABLE TYPE="nature">
 <NAME>Labor force with tertiary education (% of total) [SL.TLF.TERT.ZS]</NAME>
@@ -112,10 +42,73 @@
 </VARIABLE>
 <VARIABLE TYPE="nature">
 <NAME>Previous GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</NAME>
-<OUTCOME>&apos;(-inf-13277.77765]&apos;</OUTCOME>
-<OUTCOME>&apos;(13277.77765-14582.01616]&apos;</OUTCOME>
-<OUTCOME>&apos;(14582.01616-inf)&apos;</OUTCOME>
+<OUTCOME>&apos;(-inf-13450.18832]&apos;</OUTCOME>
+<OUTCOME>&apos;(13450.18832-14269.92907]&apos;</OUTCOME>
+<OUTCOME>&apos;(14269.92907-inf)&apos;</OUTCOME>
 <PROPERTY>position = (-544,256)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]</NAME>
+<OUTCOME>Q1</OUTCOME>
+<OUTCOME>Q2</OUTCOME>
+<OUTCOME>Q3</OUTCOME>
+<PROPERTY>position = (-544,0)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Scientific and technical journal articles [IP.JRN.ARTC.SC]</NAME>
+<OUTCOME>&apos;(-inf-0.45]&apos;</OUTCOME>
+<OUTCOME>&apos;(0.45-2.3]&apos;</OUTCOME>
+<OUTCOME>&apos;(2.3-inf)&apos;</OUTCOME>
+<PROPERTY>position = (0,0)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Previous GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</NAME>
+<OUTCOME>&apos;(-inf--1.940677]&apos;</OUTCOME>
+<OUTCOME>&apos;(-1.940677-6.153853]&apos;</OUTCOME>
+<OUTCOME>&apos;(6.153853-inf)&apos;</OUTCOME>
+<PROPERTY>position = (0,256)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]</NAME>
+<OUTCOME>&apos;(-inf-0.937336]&apos;</OUTCOME>
+<OUTCOME>&apos;(0.937336-1.216103]&apos;</OUTCOME>
+<OUTCOME>&apos;(1.216103-inf)&apos;</OUTCOME>
+<PROPERTY>position = (-435,512)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]</NAME>
+<OUTCOME>Q1</OUTCOME>
+<OUTCOME>Q2</OUTCOME>
+<OUTCOME>Q3</OUTCOME>
+<PROPERTY>position = (-870,512)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</NAME>
+<OUTCOME>&apos;(-inf--1.940677]&apos;</OUTCOME>
+<OUTCOME>&apos;(-1.940677-6.153853]&apos;</OUTCOME>
+<OUTCOME>&apos;(6.153853-inf)&apos;</OUTCOME>
+<PROPERTY>position = (0,128)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</NAME>
+<OUTCOME>&apos;(-inf-13450.18832]&apos;</OUTCOME>
+<OUTCOME>&apos;(13450.18832-14269.92907]&apos;</OUTCOME>
+<OUTCOME>&apos;(14269.92907-inf)&apos;</OUTCOME>
+<PROPERTY>position = (-544,128)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]</NAME>
+<OUTCOME>&apos;(-inf-28570000]&apos;</OUTCOME>
+<OUTCOME>&apos;(28570000-46185000]&apos;</OUTCOME>
+<OUTCOME>&apos;(46185000-inf)&apos;</OUTCOME>
+<PROPERTY>position = (-816,0)</PROPERTY>
+</VARIABLE>
+<VARIABLE TYPE="nature">
+<NAME>Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]</NAME>
+<OUTCOME>Q1</OUTCOME>
+<OUTCOME>Q2</OUTCOME>
+<OUTCOME>Q3</OUTCOME>
+<PROPERTY>position = (-362,384)</PROPERTY>
 </VARIABLE>
 <VARIABLE TYPE="nature">
 <NAME>Trademark applications, total [IP.TMK.TOTL]</NAME>
@@ -125,82 +118,29 @@
 <PROPERTY>position = (-272,0)</PROPERTY>
 </VARIABLE>
 <VARIABLE TYPE="nature">
-<NAME>Previous GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</NAME>
-<OUTCOME>&apos;(-inf--4.566682]&apos;</OUTCOME>
-<OUTCOME>&apos;(-4.566682-3.166681]&apos;</OUTCOME>
-<OUTCOME>&apos;(3.166681-inf)&apos;</OUTCOME>
-<PROPERTY>position = (0,256)</PROPERTY>
+<NAME>Industry, value added (% of GDP) [NV.IND.TOTL.ZS]</NAME>
+<OUTCOME>&apos;(-inf-9.364432]&apos;</OUTCOME>
+<OUTCOME>&apos;(9.364432-13.25007]&apos;</OUTCOME>
+<OUTCOME>&apos;(13.25007-inf)&apos;</OUTCOME>
+<PROPERTY>position = (-217,512)</PROPERTY>
 </VARIABLE>
-<DEFINITION>
-<FOR>Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]</FOR>
-<TABLE>
-0.9797979797979798 0.010101010101010102 0.010101010101010102 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]</FOR>
-<TABLE>
-0.9797979797979798 0.010101010101010102 0.010101010101010102 
-</TABLE>
-</DEFINITION>
+<VARIABLE TYPE="nature">
+<NAME>Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]</NAME>
+<OUTCOME>Q1</OUTCOME>
+<OUTCOME>Q2</OUTCOME>
+<OUTCOME>Q3</OUTCOME>
+<PROPERTY>position = (0,384)</PROPERTY>
+</VARIABLE>
 <DEFINITION>
 <FOR>Services, etc., value added (% of GDP) [NV.SRV.TETC.ZS]</FOR>
 <TABLE>
-0.09090909090909091 0.1111111111111111 0.797979797979798 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</FOR>
-<TABLE>
-0.15151515151515152 0.7373737373737373 0.1111111111111111 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]</FOR>
-<TABLE>
-0.9797979797979798 0.010101010101010102 0.010101010101010102 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]</FOR>
-<TABLE>
-0.9797979797979798 0.010101010101010102 0.010101010101010102 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]</FOR>
-<TABLE>
-0.9191919191919192 0.050505050505050504 0.030303030303030304 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Scientific and technical journal articles [IP.JRN.ARTC.SC]</FOR>
-<TABLE>
-0.8383838383838383 0.09090909090909091 0.0707070707070707 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</FOR>
-<TABLE>
-0.13131313131313133 0.13131313131313133 0.7373737373737373 
+0.13131313131313133 0.7373737373737373 0.13131313131313133 
 </TABLE>
 </DEFINITION>
 <DEFINITION>
 <FOR>Agriculture, value added (% of GDP) [NV.AGR.TOTL.ZS]</FOR>
 <TABLE>
-0.9191919191919192 0.050505050505050504 0.030303030303030304 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Industry, value added (% of GDP) [NV.IND.TOTL.ZS]</FOR>
-<TABLE>
-0.8383838383838383 0.09090909090909091 0.0707070707070707 
-</TABLE>
-</DEFINITION>
-<DEFINITION>
-<FOR>Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]</FOR>
-<TABLE>
-0.9191919191919192 0.030303030303030304 0.050505050505050504 
+0.13131313131313133 0.7575757575757576 0.1111111111111111 
 </TABLE>
 </DEFINITION>
 <DEFINITION>
@@ -212,7 +152,61 @@
 <DEFINITION>
 <FOR>Previous GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</FOR>
 <TABLE>
-0.15151515151515152 0.7575757575757576 0.09090909090909091 
+0.7171717171717171 0.13131313131313133 0.15151515151515152 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>General government final consumption expenditure (% of GDP) [NE.CON.GOVT.ZS]</FOR>
+<TABLE>
+0.9797979797979798 0.010101010101010102 0.010101010101010102 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Scientific and technical journal articles [IP.JRN.ARTC.SC]</FOR>
+<TABLE>
+0.8181818181818182 0.09090909090909091 0.09090909090909091 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Previous GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</FOR>
+<TABLE>
+0.7373737373737373 0.15151515151515152 0.1111111111111111 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Manufacturing, value added (% of GDP) [NV.IND.MANF.ZS]</FOR>
+<TABLE>
+0.7575757575757576 0.15151515151515152 0.09090909090909091 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Unemployment, total (% of total labor force) [SL.UEM.TOTL.ZS]</FOR>
+<TABLE>
+0.9797979797979798 0.010101010101010102 0.010101010101010102 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</FOR>
+<TABLE>
+0.13131313131313133 0.7373737373737373 0.13131313131313133 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>GDP per capita, PPP (constant 2011 international $) [NY.GDP.PCAP.PP.KD]</FOR>
+<TABLE>
+0.13131313131313133 0.7373737373737373 0.13131313131313133 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Net official development assistance and official aid received (constant 2012 US$) [DT.ODA.ALLD.KD]</FOR>
+<TABLE>
+0.13131313131313133 0.7575757575757576 0.1111111111111111 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Labor force with secondary education (% of total) [SL.TLF.SECO.ZS]</FOR>
+<TABLE>
+0.9797979797979798 0.010101010101010102 0.010101010101010102 
 </TABLE>
 </DEFINITION>
 <DEFINITION>
@@ -222,9 +216,18 @@
 </TABLE>
 </DEFINITION>
 <DEFINITION>
-<FOR>Previous GDP growth (annual %) [NY.GDP.MKTP.KD.ZG]</FOR>
+<FOR>Industry, value added (% of GDP) [NV.IND.TOTL.ZS]</FOR>
+<GIVEN>Scientific and technical journal articles [IP.JRN.ARTC.SC]</GIVEN>
 <TABLE>
-0.15151515151515152 0.1111111111111111 0.7373737373737373 
+0.8795180722891566 0.10843373493975904 0.012048192771084338 
+0.09090909090909091 0.45454545454545453 0.45454545454545453 
+0.09090909090909091 0.2727272727272727 0.6363636363636364 
+</TABLE>
+</DEFINITION>
+<DEFINITION>
+<FOR>Labor force with primary education (% of total) [SL.TLF.PRIM.ZS]</FOR>
+<TABLE>
+0.9797979797979798 0.010101010101010102 0.010101010101010102 
 </TABLE>
 </DEFINITION>
 </NETWORK>

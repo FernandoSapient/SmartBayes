@@ -447,8 +447,10 @@ public class Evaluator {
 	 *            the path of the file containing the Bayesian network to train;
 	 *            at at {@code args[2]} the path of the output file in which to
 	 *            store the trained network; and optionally, at {@code args[3]}
-	 *            a filtering criterion and, at {@code args[4]}, "true" 
-	 *            if frequency discrtization is desired.
+	 *            a filtering criterion, at {@code args[4]}, "true" 
+	 *            if frequency discretization is desired, at {@code args[5]} a prefix to
+	 *            identify attributes that require shifting to create, and at
+	 *            {@code args[6]} the amount by which this shift should be..
 	 * @throws Exception
 	 *             If any of the files could not be read
 	 * @since {@code bayesianEvaluator} 0.01 2016-04-10
@@ -457,7 +459,7 @@ public class Evaluator {
 	public static void main(String[] args) throws Exception {
 		if (args.length < 3) {
 			System.err
-					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization]");
+					.println("Usage: java Trainer <input data file> <input XMLBIF file> <output XMLBIF file> [Filter criterion] [UseFrequencyDiscretization] [Shift Prefix] [Shift ammount]");
 			return;
 		}
 	
@@ -477,10 +479,21 @@ public class Evaluator {
 			data = Trainer.filterByCriterion(args[3], data, 0);
 		}
 	
+		// Add shifted attributes
+		if (args.length > 5) {
+			String prefix = args[5];
+			int amount;
+			if (args.length > 6)
+				amount = Integer.parseInt(args[6]);
+			else
+				amount = 1;
+			Trainer.detectAndAddAllShifted(data, wekaBayes, prefix, amount);
+		}
+
 		System.out.println("Conforming data to network...");
 		if (args.length >= 5)
 			data = Trainer.conformToNetwork(data, wekaBayes,
-					Boolean.getBoolean(args[4]));
+					Boolean.parseBoolean(args[4]));
 		else
 			data = Trainer.conformToNetwork(data, wekaBayes, false);
 	

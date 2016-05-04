@@ -306,21 +306,21 @@ public class Trainer {
 						+ " but no such attribute exists in the data set");
 			assert (data.attribute(j).isNumeric());
 			if (data.attributeStats(j).missingCount == data.numInstances()
-					|| data.numDistinctValues(j) < bn.getCardinality(i)) {
+					|| data.numDistinctValues(j) <= bn.getCardinality(i)) {
 				Attribute a = new Attribute(data.attribute(j).name(),
 						Arrays.asList(Main.genValues(bn.getCardinality(i))));
 				data.deleteAttributeAt(j);
 				data.insertAttributeAt(a, j);
 				;
 			}/*
-			 * else if(data.numDistinctValues(j) < bn.getCardinality(i)){
-			 * //TODO: add a handling case here (if there's 2 values, the ranges
-			 * should be (-inf val1](val1 val2)[val2 +inf]) throw new
-			 * ArithmeticException
-			 * (bn.getNodeName(i)+" requires discretizing into "
-			 * +bn.getCardinality
-			 * (i)+" values, but only "+data.numDistinctValues(j)
-			 * +" distinct values were found in the data");
+			 * else if(data.numDistinctValues(j) <= bn.getCardinality(i)){
+			 * //TODO: add a handling case here (for 2 values, 3 bins,
+			 * //the ranges should be (-inf val1](val1 val2)[val2 +inf]) 
+			 * throw new ArithmeticException
+			 * (bn.getNodeName(i) + " requires discretizing into "
+			 * + bn.getCardinality
+			 * (i) + " values, but only " + data.numDistinctValues(j)
+			 * + " distinct values were found in the data");
 			 * 
 			 * }
 			 */else {
@@ -423,33 +423,6 @@ public class Trainer {
 	}
 
 	/**
-	 * Makes a copy of the attribute {@code name} shifting all its values by
-	 * {@code amount}
-	 * 
-	 * @param data
-	 *            {@code Instances} set where attribute {@code name} lives, and
-	 *            to which the new attribute will be added
-	 * @param prefix
-	 *            Prefix to add to the name of the attribute to distinguish it
-	 *            from {@code name}
-	 * @param name
-	 *            The name of the attribute to be copied and shifted
-	 * @param amount
-	 *            number of instance positions by which to shift the values by.
-	 * @see #shiftBy(List, int)
-	 */
-	public static void addShifted(Instances data, String prefix, String name,
-			int amount) {
-		Attribute a = data.attribute(name).copy(prefix + name);
-		List<String> atts = getAttributeNames(data);
-		int index = atts.indexOf(name);
-		List<Double> values = ReconstructionTest.arrayToList(data
-				.attributeToDoubleArray(index));
-		ReconstructionTest.addAttributeAt(data, a, data.numAttributes() - 1,
-				shiftBy(values, amount));
-	}
-
-	/**
 	 * Creates a copy of the list where all element indices are shifted ahead by
 	 * the amount indicated. Specifically, the value at each position
 	 * {@code list.get(j)} will be found in position {@code j+i} in the returned
@@ -486,6 +459,71 @@ public class Trainer {
 	}
 
 	/**
+	 * Makes a copy of the attribute {@code name} shifting all its values by
+	 * {@code amount}
+	 * 
+	 * @param data
+	 *            {@code Instances} set where attribute {@code name} lives, and
+	 *            to which the new attribute will be added
+	 * @param prefix
+	 *            Prefix to add to the name of the attribute to distinguish it
+	 *            from {@code name}
+	 * @param name
+	 *            The name of the attribute to be copied and shifted
+	 * @param amount
+	 *            number of instance positions by which to shift the values by.
+	 * @throws ArrayIndexOutOfBoundsException
+	 *             if {@code name} does not exist in {@code data}
+	 * @see #shiftBy(List, int)
+	 */
+	public static void addShifted(Instances data, String prefix, String name,
+			int amount) throws ArrayIndexOutOfBoundsException {
+		Attribute a = data.attribute(name).copy(prefix + name);
+		List<String> atts = getAttributeNames(data);
+		int index = atts.indexOf(name);
+		List<Double> values = ReconstructionTest.arrayToList(data
+				.attributeToDoubleArray(index));
+		ReconstructionTest.addAttributeAt(data, a, data.numAttributes() - 1,
+				shiftBy(values, amount));
+	}
+
+	/**
+	 * Finds all the nodes in {@code bn} that start with the given
+	 * {@code prefix} and fills them out with the data from an attribute with a
+	 * name matching the removal of said prefix
+	 * 
+	 * @param data
+	 *            {@code Instances} where the attribute with the unshifted data
+	 *            lives and to which the shifted data must be added
+	 * @param bn
+	 *            Bayesian network containing the names of the nodes {@cod data}
+	 *            must have
+	 * @param prefix
+	 *            A prefix with which shifted attirbute names must start, to
+	 *            distinguish them from unshifted attributes
+	 * @param amount
+	 *            number of instance positions by which to shift the values by.
+	 * @throws ArrayIndexOutOfBoundsException
+	 *             if an attribute with the shift {@cod prefix} exists in the
+	 *             Bayesian network, but the corresponding unshifted data does
+	 *             not exist in {@code data}
+	 */
+	public static void detectAndAddAllShifted(Instances data,
+			EditableBayesNet bn, String prefix, int amount)
+			throws ArrayIndexOutOfBoundsException {
+		List<String> names = getNodeNames(bn);
+		for (int i = names.size() - 1; i >= 0; i--) {
+			if (names.get(i).startsWith(prefix)) {
+				String originalName = names.get(i).substring(prefix.length());
+				// If we ever use column vectors again:
+				// data.put(names.get(i), Trainer.shiftBy(data.get(i),
+				// amount));
+				addShifted(data, prefix, originalName, amount);
+			}
+		}
+	}
+
+	/**
 	 * Trains a Bayesian network (provided in an XML BIF file) using the given
 	 * data. The data file must be on one of Weka's accepted file formats (ARFF,
 	 * C4.5, CSV, JSON, LibSVM, MatLab, DAT, BSI, or XRFF, as of Weka version
@@ -512,7 +550,7 @@ public class Trainer {
 	 *            a filtering criterion, at {@code args[4]}, "true" if frequency
 	 *            discretization is desired, at {@code args[5]} a prefix to
 	 *            identify attributes that require shifting to create, and at
-	 *            {@code args[6]} the ammount by which this shift should be.
+	 *            {@code args[6]} the amount by which this shift should be.
 	 * @throws Exception
 	 *             If any of the files could not be read
 	 * @since 0.01 2016-04-02
@@ -544,27 +582,21 @@ public class Trainer {
 
 		// Add shifted attributes
 		if (args.length > 5) {
-			List<String> names = getNodeNames(bn);
-			for (int i = names.size() - 1; i >= 0; i--) {
-				if (names.get(i).startsWith(args[5])) {
-					String originalName = names.get(i).substring(
-							args[5].length());
-					int amount;
-					if (args.length > 6)
-						amount = Integer.parseInt(args[6]);
-					else
-						amount = 1;
-					// If we ever use column vectors again:
-					// data.put(names.get(i), Trainer.shiftBy(data.get(i),
-					// amount));
-					addShifted(data, args[5], originalName, amount);
-				}
-			}
+			String prefix = args[5];
+			int amount;
+			if (args.length > 6)
+				amount = Integer.parseInt(args[6]);
+			else
+				amount = 1;
+			detectAndAddAllShifted(data, bn, prefix, amount);
+			// TODO: create a conformToNework overload method that does this
+			// when it recieves the prefix and adjust WorldBankModelBuilders
+			// to use it accordingly
 		}
 
 		System.out.println("Conforming data to network...");
 		if (args.length > 4)
-			data = conformToNetwork(data, bn, Boolean.getBoolean(args[4]));
+			data = conformToNetwork(data, bn, Boolean.parseBoolean(args[4]));
 		else
 			data = conformToNetwork(data, bn, false);
 
